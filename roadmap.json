@@ -102,6 +102,17 @@
                 "Zaplanuj sesje szkoleniowe dla uczestników pilotażu",
                 "Stwórz rejestr ryzyka ze strategiami mitygacji"
               ]
+            },
+            {
+              "id": "p1-gate",
+              "headingId": "headingP1Gate",
+              "title": "Decyzja: czy przechodzimy do kolejnej fazy",
+              "content": [
+                "Dane są dostępne i zgodne z przepisami (tak/nie).",
+                "Cele i mierniki są ustalone.",
+                "Wyznaczono właścicieli zadań i zaakceptowano zidentyfikowane ryzyka.",
+                "Budżet i ramy kosztowe są zatwierdzone."
+              ]
             }
           ]
         }
