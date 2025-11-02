@@ -35,12 +35,12 @@
             {
               "id": "p0-gate",
               "headingId": "headingP0Gate",
-              "title": "Stage-gate: GO/NOGO do Fundamentu",
+              "title": "Decyzja: czy przechodzimy do kolejnej fazy",
               "content": [
-                "Dane dostępne i zgodne (TAK/NIE)",
-                "Zdefiniowane KPI oraz baseline (P0/P50/P90)",
-                "Przypisani właściciele (RACI) i akceptacja ryzyk",
-                "Zatwierdzony budżet i ramy kosztowe"
+                          "Dane są dostępne i zgodne z przepisami (tak/nie).",
+                          "Cele i mierniki są ustalone.",
+                          "Wyznaczono właścicieli zadań i zaakceptowano zidentyfikowane ryzyka.",
+                          "Budżet i ramy kosztowe są zatwierdzone."
               ]
             }
           ]
