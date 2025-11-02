@@ -3,11 +3,11 @@
     {
       "id": "phase0",
       "title": "Readiness & Data Baseline",
-      "subtitle": "(Tydzień 0)",
+      "subtitle": "",
       "icon": "clipboard-check",
       "weeks": [
         {
-          "title": "Tydzień 0: Dane, Zgodność, Zakres",
+          "title": "Dane, Zgodność, Zakres",
           "accordionId": "accordionPhase0",
           "items": [
             {
@@ -50,11 +50,11 @@
     {
       "id": "phase1",
       "title": "Fundament",
-      "subtitle": "(Tygodnie 1-2)",
+      "subtitle": "",
       "icon": "building-fill-gear",
       "weeks": [
         {
-          "title": "Tydzień 1: Planowanie Strategiczne",
+          "title": "Planowanie Strategiczne",
           "accordionId": "accordionPhase1Week1",
           "items": [
             {
@@ -92,7 +92,7 @@
           ]
         },
         {
-          "title": "Tydzień 2: Wybór Przypadków Użycia i Planowanie",
+          "title": "Wybór Przypadków Użycia i Planowanie",
           "accordionId": "accordionPhase1Week2",
           "items": [
             {
@@ -135,11 +135,11 @@
     {
       "id": "phase2",
       "title": "Program Pilotażowy",
-      "subtitle": "(Tygodnie 3-4)",
+      "subtitle": "",
       "icon": "rocket-takeoff",
       "weeks": [
         {
-          "title": "Tydzień 3: Przygotowanie Pilotażu i Szkolenie",
+          "title": "Przygotowanie Pilotażu i Szkolenie",
           "accordionId": "accordionPhase2Week3",
           "items": [
             {
@@ -191,7 +191,7 @@
           ]
         },
         {
-          "title": "Tydzień 4: Realizacja i Ewaluacja Pilotażu",
+          "title": "Realizacja i Ewaluacja Pilotażu",
           "accordionId": "accordionPhase2Week4",
           "items": [
             {
@@ -246,11 +246,11 @@
     {
       "id": "phase3",
       "title": "Ekspansja",
-      "subtitle": "(Tygodnie 5-8)",
+      "subtitle": "",
       "icon": "arrows-expand",
       "weeks": [
         {
-          "title": "Tygodnie 5-6: Doskonalenie Procesów i Dokumentacja",
+          "title": "Doskonalenie Procesów i Dokumentacja",
           "accordionId": "accordionPhase3Week56",
           "items": [
             {
@@ -278,7 +278,7 @@
           ]
         },
         {
-          "title": "Tygodnie 7-8: Wdrożenie Etapowe",
+          "title": "Wdrożenie Etapowe",
           "accordionId": "accordionPhase3Week78",
           "items": [
             {
@@ -310,11 +310,11 @@
     {
       "id": "phase4",
       "title": "Integracja",
-      "subtitle": "(Miesiące 3-6)",
+      "subtitle": "",
       "icon": "boxes",
       "weeks": [
         {
-          "title": "Miesiąc 3: Optymalizacja i Ekspansja",
+          "title": "Optymalizacja i Ekspansja",
           "accordionId": "accordionPhase4Month3",
           "items": [
             {
@@ -341,7 +341,7 @@
           ]
         },
         {
-          "title": "Miesiąc 4: Szkolenia i Zarządzanie Wiedzą",
+          "title": "Szkolenia i Zarządzanie Wiedzą",
           "accordionId": "accordionPhase4Month4",
           "items": [
             {
@@ -367,7 +367,7 @@
           ]
         },
         {
-          "title": "Miesiąc 5: Zaangażowanie Klientów",
+          "title": "Zaangażowanie Klientów",
           "accordionId": "accordionPhase4Month5",
           "items": [
             {
@@ -394,7 +394,7 @@
           ]
         },
         {
-          "title": "Miesiąc 6: Rozwój i Zarządzanie",
+          "title": "Rozwój i Zarządzanie",
           "accordionId": "accordionPhase4Month6",
           "items": [
             {
