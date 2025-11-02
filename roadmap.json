@@ -1,53 +1,6 @@
 {
   "phases": [
     {
-      "id": "phase0",
-      "title": "Sprawdzenie gotowości danych",
-      "subtitle": "(Tydzień 0)",
-      "icon": "clipboard-check",
-      "weeks": [
-        {
-          "title": "Tydzień 0: Dane, Zgodność, Zakres",
-          "accordionId": "accordionPhase0",
-          "items": [
-            {
-              "id": "p0-data",
-              "headingId": "headingP0Data",
-              "title": "Inwentaryzacja Danych",
-              "content": [
-                "Mapa źródeł danych: system, właściciel, lokalizacja, retencja",
-                "Identyfikacja PII/dane osobowe (RODO) i potrzeb anonimizacji/pseudonimizacji",
-                "Ocena jakości danych: kompletność, świeżość, dostępność, uprawnienia",
-                "Plan dostępu: role i zakresy (least privilege)"
-              ]
-            },
-            {
-              "id": "p0-compliance",
-              "headingId": "headingP0Compliance",
-              "title": "Zgodność i Ryzyka",
-              "content": [
-                "DPIA/TRA (Ocena skutków dla ochrony danych/Ocena zagrożeń i ryzyka bezpieczeństwa informacji/IT) dla wybranych przypadków użycia",
-                "Zasady przetwarzania i udostępniania danych (w tym chmura/egress)",
-                "Definicja zakresu niedozwolonego (np. brak zastosowań klinicznych/diagnostycznych w pilocie)",
-                "Ustalenie właścicieli: Data Owner, Process Owner, Security/Compliance"
-              ]
-            },
-            {
-              "id": "p0-gate",
-              "headingId": "headingP0Gate",
-              "title": "Decyzja: czy przechodzimy do kolejnej fazy",
-              "content": [
-                          "Dane są dostępne i zgodne z przepisami (tak/nie).",
-                          "Cele i mierniki są ustalone.",
-                          "Wyznaczono właścicieli zadań i zaakceptowano zidentyfikowane ryzyka.",
-                          "Budżet i ramy kosztowe są zatwierdzone."
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "phase1",
       "title": "Fundament",
       "subtitle": "(Tygodnie 1-2)",
@@ -104,6 +57,28 @@
                 "Wybierz 2-3 początkowe przypadki użycia z najwyższymi wynikami",
                 "Udokumentuj obecne procesy wraz z problemami i wąskimi gardłami",
                 "Zaplanuj, jak AI może rozwiązać te problemy"
+              ]
+            },
+            {
+              "id": "p0-data",
+              "headingId": "headingP0Data",
+              "title": "Inwentaryzacja Danych",
+              "content": [
+                "Mapa źródeł danych: system, właściciel, lokalizacja, retencja",
+                "Identyfikacja PII/dane osobowe (RODO) i potrzeb anonimizacji/pseudonimizacji",
+                "Ocena jakości danych: kompletność, świeżość, dostępność, uprawnienia",
+                "Plan dostępu: role i zakresy (least privilege)"
+              ]
+            },
+            {
+              "id": "p0-compliance",
+              "headingId": "headingP0Compliance",
+              "title": "Zgodność i Ryzyka",
+              "content": [
+                "DPIA/TRA (Ocena skutków dla ochrony danych/Ocena zagrożeń i ryzyka bezpieczeństwa informacji/IT) dla wybranych przypadków użycia",
+                "Zasady przetwarzania i udostępniania danych (w tym chmura/egress)",
+                "Definicja zakresu niedozwolonego (np. brak zastosowań klinicznych/diagnostycznych w pilocie)",
+                "Ustalenie właścicieli: Data Owner, Process Owner, Security/Compliance"
               ]
             },
             {
