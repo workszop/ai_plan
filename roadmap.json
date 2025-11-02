@@ -323,7 +323,7 @@
           ]
         },
         {
-          "title": "Miesiąc 6: Zrównoważony Rozwój i Zarządzanie",
+          "title": "Miesiąc 6: Rozwój i Zarządzanie",
           "accordionId": "accordionPhase4Month6",
           "items": [
             {
@@ -353,7 +353,7 @@
     },
     {
       "id": "ongoing",
-      "title": "Bieżące Wsparcie i Zrównoważony Rozwój",
+      "title": "Bieżące Wsparcie i Rozwój",
       "subtitle": "",
       "icon": "infinity",
       "weeks": [
