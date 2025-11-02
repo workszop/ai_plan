@@ -1,0 +1,527 @@
+{
+  "phases": [
+    {
+      "id": "phase1",
+      "title": "Fundament",
+      "subtitle": "(Tygodnie 1-2)",
+      "icon": "building-fill-gear",
+      "weeks": [
+        {
+          "title": "Tydzień 1: Planowanie Strategiczne",
+          "accordionId": "accordionPhase1Week1",
+          "items": [
+            {
+              "id": "collapseOne1",
+              "headingId": "headingOne1",
+              "title": "Współpraca Kadry Kierowniczej",
+              "content": [
+                "Zabezpiecz wsparcie kadry zarządzającej z jasno określonymi obowiązkami",
+                "Ustanów parametry budżetowe dla wstępnej implementacji",
+                "Opracuj wstępną politykę AI dotyczącą bezpieczeństwa, prywatności, etyki i przejrzystości",
+                "Stwórz plan komunikacji w celu ogłoszenia inicjatywy"
+              ]
+            },
+            {
+              "id": "collapseTwo1",
+              "headingId": "headingTwo1",
+              "title": "Wybór Ambasadorów AI",
+              "content": [
+                "Zidentyfikuj 2-3 ambasadorów AI na każdy dział w oparciu o zdolności techniczne, wpływy i otwartość na innowacje",
+                "Przydziel oficjalny czas (5-10 godzin tygodniowo) na obowiązki ambasadorów AI",
+                "Stwórz dedykowane kanały komunikacji i zaplanuj cotygodniowe spotkania"
+              ]
+            },
+            {
+              "id": "collapseThree1",
+              "headingId": "headingThree1",
+              "title": "Wyznaczanie Celów i Mierniki Sukcesu",
+              "content": [
+                "Ustanów cele SMART dla wdrożenia AI",
+                "Zdefiniuj konkretne KPI, takie jak zaoszczędzony czas, oszczędności kosztów, poprawa jakości i wskaźniki adopcji",
+                "Stwórz bazowe pomiary obecnej wydajności",
+                "Ustanów mechanizmy śledzenia postępów"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tydzień 2: Wybór Przypadków Użycia i Planowanie",
+          "accordionId": "accordionPhase1Week2",
+          "items": [
+            {
+              "id": "collapseOne2",
+              "headingId": "headingOne2",
+              "title": "Identyfikacja Przypadków Użycia",
+              "content": [
+                "Przeprowadź spotkania działowe w celu identyfikacji początkowych przypadków użycia o wysokiej wartości i niskim ryzyku przy użyciu macierzy kryteriów",
+                "Wybierz 2-3 początkowe przypadki użycia z najwyższymi wynikami",
+                "Udokumentuj obecne procesy wraz z problemami i wąskimi gardłami",
+                "Zaplanuj, jak AI może rozwiązać te problemy"
+              ]
+            },
+            {
+              "id": "collapseTwo2",
+              "headingId": "headingTwo2",
+              "title": "Wybór Narzędzi",
+              "content": [
+                "Oceń narzędzia AI na podstawie bezpieczeństwa, funkcjonalności, możliwości integracji, cen i wymagań szkoleniowych",
+                "Wybierz 2-3 narzędzia do początkowego pilotażu",
+                "Zażądaj demonstracji wykorzystujących scenariusze oparte na Twoich konkretnych przypadkach użycia",
+                "Rozpocznij proces zakupu z przeglądem IT i prawnym"
+              ]
+            },
+            {
+              "id": "collapseThree2",
+              "headingId": "headingThree2",
+              "title": "Planowanie Wdrożenia",
+              "content": [
+                "Stwórz szczegółowe plany wdrożenia dla każdego przypadku użycia z mapami procesów, harmonogramami i wymaganiami zasobowymi",
+                "Opracuj plan komunikacji dla ogłoszenia w całej organizacji",
+                "Zaplanuj sesje szkoleniowe dla uczestników pilotażu",
+                "Stwórz rejestr ryzyka ze strategiami mitygacji"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase2",
+      "title": "Program Pilotażowy",
+      "subtitle": "(Tygodnie 3-4)",
+      "icon": "rocket-takeoff",
+      "weeks": [
+        {
+          "title": "Tydzień 3: Przygotowanie Pilotażu i Szkolenie",
+          "accordionId": "accordionPhase2Week3",
+          "items": [
+            {
+              "id": "collapseOne3",
+              "headingId": "headingOne3",
+              "title": "Konfiguracja Środowiska",
+              "content": [
+                "Sfinalizuj umowy z wybranymi dostawcami narzędzi AI",
+                "Skonfiguruj konta użytkowników z odpowiednimi uprawnieniami",
+                "Skonfiguruj ustawienia bezpieczeństwa i przetestuj integracje",
+                "Przygotuj i wyczyść dane do wstępnych testów zapewniając zgodność z przepisami o prywatności",
+                "Ustanów protokoły zarządzania danymi"
+              ]
+            },
+            {
+              "id": "collapseTwo3",
+              "headingId": "headingTwo3",
+              "title": "Szkolenie Ambasadorów i Zespołu Pilotażowego",
+              "content": [
+                "Przeprowadź intensywne sesje szkoleniowe obejmujące funkcjonalność narzędzi, inżynierię promptów, kontrolę jakości i rozwiązywanie problemów",
+                "Opracuj biblioteki promptów specyficzne dla przypadków użycia z przykładami",
+                "Stwórz przewodniki szybkiego dostępu ze zrzutami ekranu",
+                "Skonfiguruj środowiska piaskownicy do praktyki"
+              ]
+            },
+            {
+              "id": "collapseThree3",
+              "headingId": "headingThree3",
+              "title": "Uruchomienie Pilotażu",
+              "content": [
+                "Przeprowadź spotkanie inauguracyjne w celu przeglądu celów, wyjaśnienia ról i ustalenia oczekiwań",
+                "Rozdystrybuuj szczegółowe przydziały zadań z jasnymi terminami",
+                "Zaplanuj codzienne odprawy podczas pierwszego tygodnia",
+                "Wdróż mechanizmy feedbacku dotyczące problemów i ulepszeń"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tydzień 4: Realizacja i Ewaluacja Pilotażu",
+          "accordionId": "accordionPhase2Week4",
+          "items": [
+            {
+              "id": "collapseOne4",
+              "headingId": "headingOne4",
+              "title": "Nadzorowane Wdrożenie",
+              "content": [
+                "Rozpocznij używanie narzędzi AI na niekrytycznych materiałach",
+                "Dokumentuj proces krok po kroku, notując poświęcony czas, użyte prompty i oceny jakości",
+                "Przeprowadzaj codzienne przeglądy wyników z ekspertami merytorycznymi",
+                "Udoskonalaj prompty i procesy w oparciu o początkowe wyniki"
+              ]
+            },
+            {
+              "id": "collapseTwo4",
+              "headingId": "headingTwo4",
+              "title": "Przejście do Rzeczywistej Pracy",
+              "content": [
+                "Rozpocznij ostrożne nadzorowane użytkowanie w odpowiednich działaniach biznesowych",
+                "Wdróż obowiązkowe protokoły przeglądu z jasnymi kryteriami",
+                "Śledź oszczędności czasu i poprawę jakości za pomocą ustrukturyzowanych metryk",
+                "Zidentyfikuj nowe przypadki użycia odkryte podczas wdrażania"
+              ]
+            },
+            {
+              "id": "collapseThree4",
+              "headingId": "headingThree4",
+              "title": "Wstępna Ewaluacja",
+              "content": [
+                "Przeprowadź kompleksowe spotkanie przeglądowe pilotażu",
+                "Zbierz metryki ilościowe (zaoszczędzony czas, wskaźniki błędów, zadowolenie użytkowników)",
+                "Udokumentuj wyciągnięte wnioski i wymagane dostosowania",
+                "Podejmij decyzję opartą na danych dotyczącą rozszerzonego wdrożenia"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase3",
+      "title": "Ekspansja",
+      "subtitle": "(Tygodnie 5-8)",
+      "icon": "arrows-expand",
+      "weeks": [
+        {
+          "title": "Tygodnie 5-6: Doskonalenie Procesów i Dokumentacja",
+          "accordionId": "accordionPhase3Week56",
+          "items": [
+            {
+              "id": "collapseOne5",
+              "headingId": "headingOne5",
+              "title": "Rozwój Dokumentacji",
+              "content": [
+                "Udoskonal standardowe procedury operacyjne na podstawie wyników pilotażu",
+                "Stwórz kompleksową dokumentację, w tym wytyczne dotyczące narzędzi, podręczniki i biblioteki promptów",
+                "Opracuj listy kontrolne jakości i wytyczne etyczne",
+                "Ustanów formalny proces przeglądu pracy generowanej przez AI"
+              ]
+            },
+            {
+              "id": "collapseTwo5",
+              "headingId": "headingTwo5",
+              "title": "Materiały Szkoleniowe",
+              "content": [
+                "Opracuj wieloformatowe materiały szkoleniowe (filmy, przykłady, ćwiczenia)",
+                "Stwórz język ujawniania informacji dla klientów, gdy jest to właściwe",
+                "Przygotuj moduły szkoleniowe dostosowane do konkretnych ról",
+                "Zaprojektuj przewodniki rozwiązywania problemów i FAQ"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Tygodnie 7-8: Wdrożenie Etapowe",
+          "accordionId": "accordionPhase3Week78",
+          "items": [
+            {
+              "id": "collapseOne6",
+              "headingId": "headingOne6",
+              "title": "Przygotowanie do Wdrożenia",
+              "content": [
+                "Opracuj szczegółowy harmonogram wdrożenia według działów",
+                "Zidentyfikuj i przeszkol dodatkowych ambasadorów dla każdej nowej grupy",
+                "Dostosuj materiały szkoleniowe do każdego działu",
+                "Stwórz \"Godziny Konsultacyjne AI\" dla wsparcia wdrożenia"
+              ]
+            },
+            {
+              "id": "collapseTwo6",
+              "headingId": "headingTwo6",
+              "title": "Realizacja i Monitorowanie",
+              "content": [
+                "Rozpocznij wdrożenie w dodatkowych działach z kompleksowym szkoleniem",
+                "Wdróż mentoring rówieśniczy dla nowych użytkowników",
+                "Śledź wskaźniki adopcji i adresuj punkty oporu",
+                "Dziel się wskaźnikami sukcesu z kadrą kierowniczą"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase4",
+      "title": "Integracja",
+      "subtitle": "(Miesiące 3-6)",
+      "icon": "boxes",
+      "weeks": [
+        {
+          "title": "Miesiąc 3: Optymalizacja i Ekspansja",
+          "accordionId": "accordionPhase4Month3",
+          "items": [
+            {
+              "id": "collapseOne7",
+              "headingId": "headingOne7",
+              "title": "Optymalizacja Procesów",
+              "content": [
+                "Przeanalizuj dane użytkowania, aby zidentyfikować wąskie gardła i nieefektywności",
+                "Udoskonal przepływy pracy i zaktualizuj dokumentację najlepszymi praktykami",
+                "Wdróż ulepszone środki kontroli jakości"
+              ]
+            },
+            {
+              "id": "collapseTwo7",
+              "headingId": "headingTwo7",
+              "title": "Nowe Przypadki Użycia",
+              "content": [
+                "Zidentyfikuj następny poziom przypadków użycia na podstawie początkowego sukcesu",
+                "Opracuj plany wdrożenia dla nowych aplikacji",
+                "Rozpocznij testowanie z wybranymi zespołami stosując podejście pilotażowe",
+                "Zaktualizuj materiały szkoleniowe, aby uwzględnić nowe przypadki użycia"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Miesiąc 4: Szkolenia i Zarządzanie Wiedzą",
+          "accordionId": "accordionPhase4Month4",
+          "items": [
+            {
+              "id": "collapseOne8",
+              "headingId": "headingOne8",
+              "title": "Szkolenia Formalne",
+              "content": [
+                "Opracuj formalny program szkoleniowy dla nowych pracowników",
+                "Uwzględnij kompetencje AI w planach rozwoju zawodowego",
+                "Stwórz program certyfikacji dla zaawansowanych użytkowników"
+              ]
+            },
+            {
+              "id": "collapseTwo8",
+              "headingId": "headingTwo8",
+              "title": "Zarządzanie Wiedzą",
+              "content": [
+                "Wdróż system zarządzania wiedzą dla zasobów AI",
+                "Ustanów regularne sesje dzielenia się wiedzą",
+                "Stwórz wspólnoty praktyki wokół konkretnych przypadków użycia AI"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Miesiąc 5: Zaangażowanie Klientów",
+          "accordionId": "accordionPhase4Month5",
+          "items": [
+            {
+              "id": "collapseOne9",
+              "headingId": "headingOne9",
+              "title": "Komunikacja Zewnętrzna",
+              "content": [
+                "Opracuj materiały skierowane do klientów, podkreślające możliwości AI",
+                "Stwórz przejrzyste polityki ujawniania informacji dla komunikacji zewnętrznej",
+                "Przeprowadź sesje edukacyjne dla klientów na temat AI w Twojej branży"
+              ]
+            },
+            {
+              "id": "collapseTwo9",
+              "headingId": "headingTwo9",
+              "title": "Możliwości Biznesowe",
+              "content": [
+                "Zidentyfikuj możliwości zaprezentowania AI jako przewagi konkurencyjnej",
+                "Rozważ nowe modele cenowe wykorzystujące efektywność AI",
+                "Opracuj metryki dotyczące korzyści dla klientów, takie jak czas realizacji i oszczędności kosztów",
+                "Zidentyfikuj nowe możliwości biznesowe umożliwione przez AI"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Miesiąc 6: Zrównoważony Rozwój i Zarządzanie",
+          "accordionId": "accordionPhase4Month6",
+          "items": [
+            {
+              "id": "collapseOne10",
+              "headingId": "headingOne10",
+              "title": "Struktura Zarządzania",
+              "content": [
+                "Ustanów stały komitet zarządzania AI",
+                "Sformalizuj kompleksowe polityki dotyczące oceny narzędzi, bezpieczeństwa danych i etyki",
+                "Wdróż polityki dotyczące kontroli jakości i standardów szkoleniowych"
+              ]
+            },
+            {
+              "id": "collapseTwo10",
+              "headingId": "headingTwo10",
+              "title": "Planowanie Długoterminowe",
+              "content": [
+                "Opracuj długoterminowy budżet na narzędzia AI i szkolenia",
+                "Stwórz mapę drogową innowacji AI na następne 12 miesięcy",
+                "Wdróż regularny cykl przeglądów inicjatyw AI",
+                "Rozważ programy motywacyjne zachęcające do adopcji i innowacji"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ongoing",
+      "title": "Bieżące Wsparcie i Zrównoważony Rozwój",
+      "subtitle": "",
+      "icon": "infinity",
+      "weeks": [
+        {
+          "title": "Regularne Działania",
+          "accordionId": "accordionOngoingActivities",
+          "items": [
+            {
+              "id": "collapseOne11",
+              "headingId": "headingOne11",
+              "title": "Rutynowe Punkty Kontrolne",
+              "content": [
+                "<strong>Co dwa tygodnie:</strong> Spotkania z ambasadorami AI, wirtualne biuro wsparcia, dzielenie się promptami i szybkie sesje szkoleniowe",
+                "<strong>Miesięcznie:</strong> Przegląd metryk użytkowania, aktualizacja dokumentacji, uznawanie innowacyjnych zastosowań i spotkania grup użytkowników"
+              ]
+            },
+            {
+              "id": "collapseTwo11",
+              "headingId": "headingTwo11",
+              "title": "Przeglądy Strategiczne",
+              "content": [
+                "<strong>Kwartalnie:</strong> Ocena ROI, przegląd nowych narzędzi, aktualizacja materiałów szkoleniowych, prowadzenie sesji przypominających i dzielenie się historiami sukcesu",
+                "<strong>Rocznie:</strong> Przeprowadzenie kompleksowego przeglądu, porównanie ze standardami branżowymi, aktualizacja polityk zarządzania, planowanie strategiczne, raportowanie do kierownictwa i planowanie budżetu"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "challenges",
+      "title": "Typowe Wyzwania Wdrożeniowe i Rozwiązania",
+      "subtitle": "",
+      "icon": "exclamation-triangle",
+      "weeks": [
+        {
+          "title": "",
+          "accordionId": "accordionChallenges",
+          "items": [
+            {
+              "id": "collapseOne12",
+              "headingId": "headingOne12",
+              "title": "Wyzwania Ludzkie i Procesowe",
+              "content": [
+                "<strong>Niespójna Adopcja:</strong> Sparuj opierający się personel z entuzjastycznymi ambasadorami, prezentuj konkretne przykłady, grywalizuj szkolenia, zapewnij ukierunkowane wsparcie i twórz szybkie zwycięstwa",
+                "<strong>Obawy Jakościowe:</strong> Wdróż protokoły przeglądu odpowiednie do roli, opracuj wzorce jakości, stwórz wyspecjalizowane zespoły QA, dokumentuj wnioski z błędów i używaj automatycznych kontroli jakości"
+              ]
+            },
+            {
+              "id": "collapseTwo12",
+              "headingId": "headingTwo12",
+              "title": "Wyzwania Techniczne i Zgodności",
+              "content": [
+                "<strong>Bezpieczeństwo Danych i Prywatność:</strong> Sprawdzaj narzędzia AI pod kątem zgodności z bezpieczeństwem, ustanów jasne polityki przetwarzania danych, wdróż zabezpieczenia techniczne, przeprowadzaj regularne audyty i komunikuj się przejrzyście",
+                "<strong>Względy Etyczne:</strong> Konsultuj się z zespołami etyki i zgodności, ustanów jasne wytyczne dotyczące atrybucji, opracuj szablony ujawniania informacji i stwórz ścieżki eskalacji dla wątpliwości",
+                "<strong>Integracja z Systemami Legacy:</strong> Zmapuj wymagane integracje wcześnie, zaangażuj interesariuszy IT, opracuj niezbędne API, testuj dokładnie i stwórz plany awaryjne"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "industry",
+      "title": "Wytyczne Wdrożeniowe Specyficzne dla Branży",
+      "subtitle": "",
+      "icon": "building",
+      "weeks": [
+        {
+          "title": "",
+          "accordionId": "accordionIndustry",
+          "items": [
+            {
+              "id": "collapseOne13",
+              "headingId": "headingOne13",
+              "title": "Usługi Finansowe i Opieka Zdrowotna",
+              "content": [
+                "<strong>Usługi Finansowe:</strong> Skup się na przeglądzie dokumentów, ocenie ryzyka i monitorowaniu zgodności; wdróż dodatkowe zabezpieczenia i opracuj ścieżki audytu",
+                "<strong>Opieka Zdrowotna:</strong> Priorytetyzuj niediagnostyczne aplikacje administracyjne, zapewnij zgodność z HIPAA i wyraźnie odgraniczaj użycie administracyjne od klinicznego"
+              ]
+            },
+            {
+              "id": "collapseTwo13",
+              "headingId": "headingTwo13",
+              "title": "Produkcja i Handel Detaliczny",
+              "content": [
+                "<strong>Produkcja:</strong> Podkreśl kontrolę jakości, konserwację predykcyjną i optymalizację zapasów; zintegruj z IoT i zbuduj narzędzia wizualizacji",
+                "<strong>Handel Detaliczny:</strong> Skoncentruj się na obsłudze klienta, zarządzaniu zapasami i prognozowaniu popytu; opracuj ramy jakości i narzędzia optymalizacji marketingu"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "success",
+      "title": "Pomiar Sukcesu",
+      "subtitle": "",
+      "icon": "graph-up",
+      "weeks": [
+        {
+          "title": "Kluczowe Wskaźniki Efektywności",
+          "accordionId": "accordionSuccess",
+          "items": [
+            {
+              "id": "collapseOne14",
+              "headingId": "headingOne14",
+              "title": "Metryki Operacyjne",
+              "content": [
+                "Efektywność: Czas na proces, zaoszczędzone godziny pracy i usprawnienia przepustowości",
+                "Jakość: Wskaźniki błędów, satysfakcja klientów i wymagania dotyczące przeróbek"
+              ]
+            },
+            {
+              "id": "collapseTwo14",
+              "headingId": "headingTwo14",
+              "title": "Metryki Strategiczne",
+              "content": [
+                "Wpływ na Biznes: Oszczędności kosztów, wzrost przychodów i utrzymanie klientów",
+                "Innowacje: Nowe przypadki użycia, wskaźniki adopcji i aplikacje międzyfunkcyjne"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "conclusion",
+      "title": "Podsumowanie",
+      "subtitle": "",
+      "icon": "check-circle",
+      "weeks": [
+        {
+          "title": "",
+          "accordionId": "accordionConclusion",
+          "items": [
+            {
+              "id": "collapseOne15",
+              "headingId": "headingOne15",
+              "title": "Kluczowe Wnioski",
+              "content": [
+                "Wdrażanie AI w Twojej organizacji to podróż wymagająca starannego planowania, strategicznej realizacji i bieżącego wsparcia. Postępując zgodnie z tą mapą drogową, możesz przekształcić sposób pracy Twojej organizacji, dostarczając znaczącą wartość poprzez zwiększoną efektywność, poprawioną jakość i nowe możliwości."
+              ],
+              "isParagraph": true
+            },
+            {
+              "id": "collapseTwo15",
+              "headingId": "headingTwo15",
+              "title": "Ostatnie Przemyślenia",
+              "content": [
+                "Pamiętaj, że udane wdrożenie AI równoważy wymagania techniczne z czynnikami ludzkimi, takimi jak zarządzanie zmianą, szkolenie i względy etyczne. Zacznij od małych kroków, mierz konsekwentnie i skaluj rozważnie, aby osiągnąć trwały sukces z AI w Twojej organizacji."
+              ],
+              "isParagraph": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "svgIcons": {
+    "building-fill-gear": "<path d=\"M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7.256A4.5 4.5 0 0 0 12.5 8a4.5 4.5 0 0 0-3.59 1.787A.5.5 0 0 0 9 9.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .39-.187A4.5 4.5 0 0 0 8.5 13v.5a.5.5 0 0 1-.5.5H12a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.5-.5V9h-.5a.5.5 0 0 1-.5-.5v-.5a.5.5 0 0 1 .5-.5H6V7h-.5a.5.5 0 0 1-.5-.5V6H4.5a.5.5 0 0 1-.5-.5V5H3V1.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 .5.5V2H5a.5.5 0 0 1 .5.5V3H6a.5.5 0 0 1 .5.5V4h.5a.5.5 0 0 1 .5.5V5h.5a.5.5 0 0 1 .5.5V6H9a.5.5 0 0 1 .5.5V7h.5a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5H9v.5a.5.5 0 0 1-.5.5H8v.5a.5.5 0 0 1-.5.5H7v-6.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v6.5H4.5a.5.5 0 0 1-.5-.5V10H3.5a.5.5 0 0 1-.5-.5V9H2V2Z\"/><path d=\"M8.5 14.25a3.25 3.25 0 1 0 0-6.5 3.25 3.25 0 0 0 0 6.5m.5-5.25a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5m1.655 2.565 1.156 1.156a.75.75 0 0 1-1.06 1.06l-1.156-1.156a2.5 2.5 0 0 1-.35.267V14.5a.75.75 0 0 1-1.5 0v-.911a2.5 2.5 0 0 1-1.404-3.958.75.75 0 0 1 1.06 1.06 1 1 0 1 0 1.516-.832.75.75 0 0 1 1.456-.364l.001.006a2.5 2.5 0 0 1-.636 2.509.75.75 0 0 1-.333.215\"/>",
+    "rocket-takeoff": "<path d=\"M9.752 6.193c.599.6 1.73.437 2.528-.362s.96-1.932.362-2.531c-.599-.6-1.73-.438-2.528.361-.798.8-.96 1.933-.362 2.532\"/><path d=\"M15.811 3.312c-.363 1.534-1.334 3.626-3.64 6.218l-.24 2.408a2.56 2.56 0 0 1-.732 1.526L8.817 15.85a.51.51 0 0 1-.867-.434l.27-1.899c.04-.28-.013-.593-.131-.956a9 9 0 0 0-.249-.657l-.082-.202c-.815-.197-1.578-.662-2.191-1.277-.614-.615-1.079-1.379-1.275-2.195l-.203-.083a10 10 0 0 0-.655-.248c-.363-.119-.675-.172-.955-.132l-1.896.27A.51.51 0 0 1 .15 7.17l2.382-2.386c.41-.41.947-.67 1.524-.734h.006l2.4-.238C9.005 1.55 11.087.582 12.623.208c.89-.217 1.59-.424 2.053-.216.265.12.455.84.62.271q.17.018.33.039c.18.324.196 1.024-.019 1.911-.07.3-.176.682-.372 1.099\"/>",
+    "arrows-expand": "<path fill-rule=\"evenodd\" d=\"M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10\"/>",
+    "boxes": "<path d=\"M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434zM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567zM7.5 9.933l-2.75 1.571v3.134l2.75-1.571zm1 3.134 2.75 1.571v-3.134L8.5 9.933zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567zm2.242-2.433V3.504L8.5 5.076V8.21zM7.5 8.21V5.076L4.75 3.504v3.134zM5.258 2.643 8 4.21l2.742-1.567L8 1.076zM15 9.933l-2.75 1.571v3.134L15 13.067z\"/>",
+    "infinity": "<path d=\"M5.68 5.792 7.345 7.75 5.681 9.708a2.75 2.75 0 1 1 0-3.916ZM8 6.978 6.416 5.113l-.014-.015a3.75 3.75 0 1 0 0 5.304l.014-.015L8 8.522l1.584 1.865.014.015a3.75 3.75 0 1 0 0-5.304l-.014.015zm.656.772 1.663-1.958a2.75 2.75 0 1 1 0 3.916z\"/>",
+    "exclamation-triangle": "<path d=\"M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z\"/><path d=\"M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z\"/>",
+    "building": "<path d=\"M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z\"/><path d=\"M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3z\"/>",
+    "graph-up": "<path fill-rule=\"evenodd\" d=\"M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07\"/>",
+    "check-circle": "<path d=\"M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16\"/><path d=\"m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05\"/>"
+  }
+}
