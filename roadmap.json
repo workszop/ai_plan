@@ -2,7 +2,7 @@
   "phases": [
     {
       "id": "phase0",
-      "title": "Readiness & Data Baseline",
+      "title": "Sprawdzenie gotowości danych",
       "subtitle": "(Tydzień 0)",
       "icon": "clipboard-check",
       "weeks": [
@@ -16,7 +16,7 @@
               "title": "Inwentaryzacja Danych",
               "content": [
                 "Mapa źródeł danych: system, właściciel, lokalizacja, retencja",
-                "Identyfikacja PII/RODO i potrzeb anonimizacji/pseudonimizacji",
+                "Identyfikacja PII/dane osobowe (RODO) i potrzeb anonimizacji/pseudonimizacji",
                 "Ocena jakości danych: kompletność, świeżość, dostępność, uprawnienia",
                 "Plan dostępu: role i zakresy (least privilege)"
               ]
@@ -26,7 +26,7 @@
               "headingId": "headingP0Compliance",
               "title": "Zgodność i Ryzyka",
               "content": [
-                "DPIA/TRA dla wybranych przypadków użycia",
+                "DPIA/TRA (Ocena skutków dla ochrony danych/Ocena zagrożeń i ryzyka bezpieczeństwa informacji/IT) dla wybranych przypadków użycia",
                 "Zasady przetwarzania i udostępniania danych (w tym chmura/egress)",
                 "Definicja zakresu niedozwolonego (np. brak zastosowań klinicznych/diagnostycznych w pilocie)",
                 "Ustalenie właścicieli: Data Owner, Process Owner, Security/Compliance"
