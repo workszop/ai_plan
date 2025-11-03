@@ -474,38 +474,6 @@
       ]
     },
     {
-      "id": "industry",
-      "title": "Wytyczne Wdrożeniowe Specyficzne dla Branży",
-      "subtitle": "",
-      "icon": "building",
-      "weeks": [
-        {
-          "title": "",
-          "accordionId": "accordionIndustry",
-          "items": [
-            {
-              "id": "collapseOne13",
-              "headingId": "headingOne13",
-              "title": "Usługi Finansowe i Opieka Zdrowotna",
-              "content": [
-                "<strong>Usługi Finansowe:</strong> Skup się na przeglądzie dokumentów, ocenie ryzyka i monitorowaniu zgodności; wdróż dodatkowe zabezpieczenia i opracuj ścieżki audytu",
-                "<strong>Opieka Zdrowotna:</strong> Priorytetyzuj niediagnostyczne aplikacje administracyjne, zapewnij zgodność z HIPAA i wyraźnie odgraniczaj użycie administracyjne od klinicznego"
-              ]
-            },
-            {
-              "id": "collapseTwo13",
-              "headingId": "headingTwo13",
-              "title": "Produkcja i Handel Detaliczny",
-              "content": [
-                "<strong>Produkcja:</strong> Podkreśl kontrolę jakości, konserwację predykcyjną i optymalizację zapasów; zintegruj z IoT i zbuduj narzędzia wizualizacji",
-                "<strong>Handel Detaliczny:</strong> Skoncentruj się na obsłudze klienta, zarządzaniu zapasami i prognozowaniu popytu; opracuj ramy jakości i narzędzia optymalizacji marketingu"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "success",
       "title": "Pomiar Sukcesu",
       "subtitle": "",
@@ -532,38 +500,6 @@
                 "Wpływ na Biznes: Oszczędności kosztów, wzrost przychodów i utrzymanie klientów",
                 "Innowacje: Nowe przypadki użycia, wskaźniki adopcji i aplikacje międzyfunkcyjne"
               ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "conclusion",
-      "title": "Podsumowanie",
-      "subtitle": "",
-      "icon": "check-circle",
-      "weeks": [
-        {
-          "title": "",
-          "accordionId": "accordionConclusion",
-          "items": [
-            {
-              "id": "collapseOne15",
-              "headingId": "headingOne15",
-              "title": "Kluczowe Wnioski",
-              "content": [
-                "Wdrażanie AI w Twojej organizacji to podróż wymagająca starannego planowania, strategicznej realizacji i bieżącego wsparcia. Postępując zgodnie z tą mapą drogową, możesz przekształcić sposób pracy Twojej organizacji, dostarczając znaczącą wartość poprzez zwiększoną efektywność, poprawioną jakość i nowe możliwości."
-              ],
-              "isParagraph": true
-            },
-            {
-              "id": "collapseTwo15",
-              "headingId": "headingTwo15",
-              "title": "Ostatnie Przemyślenia",
-              "content": [
-                "Pamiętaj, że udane wdrożenie AI równoważy wymagania techniczne z czynnikami ludzkimi, takimi jak zarządzanie zmianą, szkolenie i względy etyczne. Zacznij od małych kroków, mierz konsekwentnie i skaluj rozważnie, aby osiągnąć trwały sukces z AI w Twojej organizacji."
-              ],
-              "isParagraph": true
             }
           ]
         }
