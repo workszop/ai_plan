@@ -1,60 +1,13 @@
 {
   "phases": [
     {
-      "id": "phase0",
-      "title": "Readiness & Data Baseline",
-      "subtitle": "",
-      "icon": "clipboard-check",
-      "weeks": [
-        {
-          "title": "Dane, Zgodność, Zakres",
-          "accordionId": "accordionPhase0",
-          "items": [
-            {
-              "id": "p0-data",
-              "headingId": "headingP0Data",
-              "title": "Inwentaryzacja Danych",
-              "content": [
-                "Mapa źródeł danych: system, właściciel, lokalizacja, retencja",
-                "Identyfikacja PII/RODO i potrzeb anonimizacji/pseudonimizacji",
-                "Ocena jakości danych: kompletność, świeżość, dostępność, uprawnienia",
-                "Plan dostępu: role i zakresy (least privilege)"
-              ]
-            },
-            {
-              "id": "p0-compliance",
-              "headingId": "headingP0Compliance",
-              "title": "Zgodność i Ryzyka",
-              "content": [
-                "DPIA/TRA dla wybranych przypadków użycia",
-                "Zasady przetwarzania i udostępniania danych (w tym chmura/egress)",
-                "Definicja zakresu niedozwolonego (np. brak zastosowań klinicznych/diagnostycznych w pilocie)",
-                "Ustalenie właścicieli: Data Owner, Process Owner, Security/Compliance"
-              ]
-            },
-            {
-              "id": "p0-gate",
-              "headingId": "headingP0Gate",
-              "title": "Stage-gate: GO/NOGO do Fundamentu",
-              "content": [
-                "Dane dostępne i zgodne (TAK/NIE)",
-                "Zdefiniowane KPI oraz baseline (P0/P50/P90)",
-                "Przypisani właściciele (RACI) i akceptacja ryzyk",
-                "Zatwierdzony budżet i ramy kosztowe"
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "phase1",
       "title": "Fundament",
-      "subtitle": "",
+      "subtitle": "(Tygodnie 1-2)",
       "icon": "building-fill-gear",
       "weeks": [
         {
-          "title": "Planowanie Strategiczne",
+          "title": "Tydzień 1: Planowanie Strategiczne",
           "accordionId": "accordionPhase1Week1",
           "items": [
             {
@@ -83,8 +36,8 @@
               "headingId": "headingThree1",
               "title": "Wyznaczanie Celów i Mierniki Sukcesu",
               "content": [
-                "Ustanów cele SMART dla wdrożenia AI",
-                "Zdefiniuj konkretne KPI, takie jak zaoszczędzony czas, oszczędności kosztów, poprawa jakości i wskaźniki adopcji",
+                "Ustanów cele SMART (Konkretne, Mierzalne, Osiągalne, Istotne, Określone w czasie) dla wdrożenia AI",
+                "Zdefiniuj konkretne KPI (Kluczowe Wskaźniki Efektywności), takie jak zaoszczędzony czas, oszczędności kosztów, poprawa jakości i wskaźniki adopcji",
                 "Stwórz bazowe pomiary obecnej wydajności",
                 "Ustanów mechanizmy śledzenia postępów"
               ]
@@ -92,7 +45,7 @@
           ]
         },
         {
-          "title": "Wybór Przypadków Użycia i Planowanie",
+          "title": "Tydzień 2: Wybór Przypadków Użycia i Planowanie",
           "accordionId": "accordionPhase1Week2",
           "items": [
             {
@@ -107,6 +60,28 @@
               ]
             },
             {
+              "id": "p0-data",
+              "headingId": "headingP0Data",
+              "title": "Inwentaryzacja Danych",
+              "content": [
+                "Mapa źródeł danych: system, właściciel, lokalizacja, retencja",
+                "Identyfikacja PII/dane osobowe (RODO) i potrzeb anonimizacji/pseudonimizacji",
+                "Ocena jakości danych: kompletność, świeżość, dostępność, uprawnienia",
+                "Plan dostępu: role i zakresy (least privilege)"
+              ]
+            },
+            {
+              "id": "p0-compliance",
+              "headingId": "headingP0Compliance",
+              "title": "Zgodność i Ryzyka",
+              "content": [
+                "DPIA/TRA (Ocena skutków dla ochrony danych/Ocena zagrożeń i ryzyka bezpieczeństwa informacji/IT) dla wybranych przypadków użycia",
+                "Zasady przetwarzania i udostępniania danych (w tym chmura/egress)",
+                "Definicja zakresu niedozwolonego (np. brak zastosowań klinicznych/diagnostycznych w pilocie)",
+                "Ustalenie właścicieli: Data Owner, Process Owner, Security/Compliance"
+              ]
+            },
+            {
               "id": "collapseTwo2",
               "headingId": "headingTwo2",
               "title": "Wybór Narzędzi",
@@ -114,7 +89,7 @@
                 "Oceń narzędzia AI na podstawie bezpieczeństwa, funkcjonalności, możliwości integracji, cen i wymagań szkoleniowych",
                 "Wybierz 2-3 narzędzia do początkowego pilotażu",
                 "Zażądaj demonstracji wykorzystujących scenariusze oparte na Twoich konkretnych przypadkach użycia",
-                "Rozpocznij proces zakupu z przeglądem IT i prawnym"
+                "Rozpocznij proces zakupu z przeglądem działu IT (technologie informatyczne) i prawnym"
               ]
             },
             {
@@ -127,6 +102,17 @@
                 "Zaplanuj sesje szkoleniowe dla uczestników pilotażu",
                 "Stwórz rejestr ryzyka ze strategiami mitygacji"
               ]
+            },
+            {
+              "id": "p1-gate",
+              "headingId": "headingP1Gate",
+              "title": "Decyzja: czy przechodzimy do kolejnej fazy",
+              "content": [
+                "Dane są dostępne i zgodne z przepisami (tak/nie).",
+                "Cele i mierniki są ustalone.",
+                "Wyznaczono właścicieli zadań i zaakceptowano zidentyfikowane ryzyka.",
+                "Budżet i ramy kosztowe są zatwierdzone."
+              ]
             }
           ]
         }
@@ -135,11 +121,11 @@
     {
       "id": "phase2",
       "title": "Program Pilotażowy",
-      "subtitle": "",
+      "subtitle": "(Tygodnie 3-4)",
       "icon": "rocket-takeoff",
       "weeks": [
         {
-          "title": "Przygotowanie Pilotażu i Szkolenie",
+          "title": "Tydzień 3: Przygotowanie Pilotażu i Szkolenie",
           "accordionId": "accordionPhase2Week3",
           "items": [
             {
@@ -191,7 +177,7 @@
           ]
         },
         {
-          "title": "Realizacja i Ewaluacja Pilotażu",
+          "title": "Tydzień 4: Realizacja i Ewaluacja Pilotażu",
           "accordionId": "accordionPhase2Week4",
           "items": [
             {
@@ -246,11 +232,11 @@
     {
       "id": "phase3",
       "title": "Ekspansja",
-      "subtitle": "",
+      "subtitle": "(Tygodnie 5-8)",
       "icon": "arrows-expand",
       "weeks": [
         {
-          "title": "Doskonalenie Procesów i Dokumentacja",
+          "title": "Tygodnie 5-6: Doskonalenie Procesów i Dokumentacja",
           "accordionId": "accordionPhase3Week56",
           "items": [
             {
@@ -278,7 +264,7 @@
           ]
         },
         {
-          "title": "Wdrożenie Etapowe",
+          "title": "Tygodnie 7-8: Wdrożenie Etapowe",
           "accordionId": "accordionPhase3Week78",
           "items": [
             {
@@ -310,11 +296,11 @@
     {
       "id": "phase4",
       "title": "Integracja",
-      "subtitle": "",
+      "subtitle": "(Miesiące 3-6)",
       "icon": "boxes",
       "weeks": [
         {
-          "title": "Optymalizacja i Ekspansja",
+          "title": "Miesiąc 3: Optymalizacja i Ekspansja",
           "accordionId": "accordionPhase4Month3",
           "items": [
             {
@@ -341,7 +327,7 @@
           ]
         },
         {
-          "title": "Szkolenia i Zarządzanie Wiedzą",
+          "title": "Miesiąc 4: Szkolenia i Zarządzanie Wiedzą",
           "accordionId": "accordionPhase4Month4",
           "items": [
             {
@@ -367,7 +353,7 @@
           ]
         },
         {
-          "title": "Zaangażowanie Klientów",
+          "title": "Miesiąc 5: Zaangażowanie Klientów",
           "accordionId": "accordionPhase4Month5",
           "items": [
             {
@@ -394,7 +380,7 @@
           ]
         },
         {
-          "title": "Rozwój i Zarządzanie",
+          "title": "Miesiąc 6: Rozwój i Zarządzanie",
           "accordionId": "accordionPhase4Month6",
           "items": [
             {
