@@ -231,7 +231,7 @@
     },
     {
       "id": "phase3",
-      "title": "Ekspansja",
+      "title": "Wdrożenie",
       "subtitle": "(Tygodnie 5-8)",
       "icon": "arrows-expand",
       "weeks": [
@@ -311,17 +311,6 @@
                 "Przeanalizuj dane użytkowania, aby zidentyfikować wąskie gardła i nieefektywności",
                 "Udoskonal przepływy pracy i zaktualizuj dokumentację najlepszymi praktykami",
                 "Wdróż ulepszone środki kontroli jakości"
-              ]
-            },
-            {
-              "id": "collapseTwo7",
-              "headingId": "headingTwo7",
-              "title": "Nowe Przypadki Użycia",
-              "content": [
-                "Zidentyfikuj następny poziom przypadków użycia na podstawie początkowego sukcesu",
-                "Opracuj plany wdrożenia dla nowych aplikacji",
-                "Rozpocznij testowanie z wybranymi zespołami stosując podejście pilotażowe",
-                "Zaktualizuj materiały szkoleniowe, aby uwzględnić nowe przypadki użycia"
               ]
             }
           ]
