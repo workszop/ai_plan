@@ -34,6 +34,17 @@
             {
               "id": "collapseThree1",
               "headingId": "headingThree1",
+              "title": "Identyfikacja Przypadków Użycia",
+              "content": [
+                "Przeprowadź spotkania działowe w celu identyfikacji początkowych przypadków użycia o wysokiej wartości i niskim ryzyku przy użyciu macierzy kryteriów",
+                "Wybierz 2-3 początkowe przypadki użycia z najwyższymi wynikami",
+                "Udokumentuj obecne procesy wraz z problemami i wąskimi gardłami",
+                "Zaplanuj, jak AI może rozwiązać te problemy"
+              ]
+            },
+            {
+              "id": "collapseFour1",
+              "headingId": "headingFour1",
               "title": "Wyznaczanie Celów i Mierniki Sukcesu",
               "content": [
                 "Ustanów cele SMART (Konkretne, Mierzalne, Osiągalne, Istotne, Określone w czasie) dla wdrożenia AI",
@@ -51,17 +62,6 @@
             {
               "id": "collapseOne2",
               "headingId": "headingOne2",
-              "title": "Identyfikacja Przypadków Użycia",
-              "content": [
-                "Przeprowadź spotkania działowe w celu identyfikacji początkowych przypadków użycia o wysokiej wartości i niskim ryzyku przy użyciu macierzy kryteriów",
-                "Wybierz 2-3 początkowe przypadki użycia z najwyższymi wynikami",
-                "Udokumentuj obecne procesy wraz z problemami i wąskimi gardłami",
-                "Zaplanuj, jak AI może rozwiązać te problemy"
-              ]
-            },
-            {
-              "id": "p0-data",
-              "headingId": "headingP0Data",
               "title": "Inwentaryzacja Danych",
               "content": [
                 "Mapa źródeł danych: system, właściciel, lokalizacja, retencja",
@@ -71,8 +71,8 @@
               ]
             },
             {
-              "id": "p0-compliance",
-              "headingId": "headingP0Compliance",
+              "id": "collapseTwo2",
+              "headingId": "headingTwo2",
               "title": "Zgodność i Ryzyka",
               "content": [
                 "DPIA/TRA (Ocena skutków dla ochrony danych/Ocena zagrożeń i ryzyka bezpieczeństwa informacji/IT) dla wybranych przypadków użycia",
@@ -82,8 +82,8 @@
               ]
             },
             {
-              "id": "collapseTwo2",
-              "headingId": "headingTwo2",
+              "id": "collapseThree2",
+              "headingId": "headingThree2",
               "title": "Wybór Narzędzi",
               "content": [
                 "Oceń narzędzia AI na podstawie bezpieczeństwa, funkcjonalności, możliwości integracji, cen i wymagań szkoleniowych",
@@ -93,8 +93,8 @@
               ]
             },
             {
-              "id": "collapseThree2",
-              "headingId": "headingThree2",
+              "id": "collapseFour2",
+              "headingId": "headingFour2",
               "title": "Planowanie Wdrożenia",
               "content": [
                 "Stwórz szczegółowe plany wdrożenia dla każdego przypadku użycia z mapami procesów, harmonogramami i wymaganiami zasobowymi",
