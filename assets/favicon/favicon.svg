@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- qweb favicon: square quantica-pink tile + white Q mark (geometry from quantica-logo.svg).
+       Literal hex on purpose: SVG files cannot read CSS custom properties. No double hyphens in XML comments. -->
+  <rect width="64" height="64" rx="12" fill="#d20757"/>
+  <g transform="translate(13 5.8) scale(0.18)" stroke-linejoin="round">
+    <polygon fill="#FFFFFF" stroke="#FFFFFF" stroke-width="13" points="105.50,7.51 202.92,63.75 202.92,176.25 132.96,216.64 193.78,251.75 193.78,283.46 8.08,176.25 8.08,63.75"/>
+    <polygon fill="#d20757" stroke="#d20757" stroke-width="23" points="105.50,58.11 159.10,89.05 159.10,150.95 105.50,181.89 51.90,150.95 51.90,89.05"/>
+  </g>
+</svg>

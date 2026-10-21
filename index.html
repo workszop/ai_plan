@@ -1,705 +1,796 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Interaktywna mapa drogowa wdrożenia AI</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    /* Modern color scheme with gradients */
-    :root {
-      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --info-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-      --primary-color: #667eea;
-      --secondary-color: #764ba2;
-      --accent-color: #4facfe;
-      --text-dark: #2d3748;
-      --text-light: #718096;
-      --bg-light: #f7fafc;
-      --bg-white: #ffffff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg?v=1">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png?v=1">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16.png?v=1">
+<link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png?v=1">
+<meta name="theme-color" content="#d20757">
+<title>Mapa drogowa wdrożenia AI</title>
+<meta name="description" content="Cztery fazy wdrożenia AI w organizacji: fundament, pilotaż, wdrożenie, integracja. Bramki decyzyjne, lista kontrolna z zapisem postępu i kalendarz AI Act.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+  @keyframes boot-reveal { to { visibility: visible; } }
+  html:not(.app-ready) body { visibility: hidden; animation: boot-reveal 0s 4s forwards; }
+  @media print { html:not(.app-ready) body { visibility: visible; animation: none; } }
+</style>
+<noscript><style>html:not(.app-ready) body { visibility: visible; animation: none; }</style></noscript>
+<style>
+/* ─── qweb tokens ─── */
+:root {
+  --quantica-pink:    #d20757;
+  --rose-pink:        #d20757;
+  --deep-berry:       #8A004C;
+  --magenta-tint:     #FFE6F1;
+  --violet-primary:   #7030A0;
+  --violet-deep:      #4F1F75;
+  --ink:              #0A1F2C;
+  --ink-2:            #0d2538;
+  --mist:             #F4EEFA;
+  --near-black:       #111111;
+  --white:            #FFFFFF;
+  --fg-1:             #111111;
+  --fg-2:             #111111;
+  --fg-3:             #4B5563;
+  --bg-1:             #FFFFFF;
+  --bg-2:             #F5F6F8;
+  --border-1:         #E6E8EC;
+  --border-2:         #D1D5DB;
+  --font-display:     "Manrope", system-ui, -apple-system, sans-serif;
+  --font-sans:        "Manrope", system-ui, -apple-system, sans-serif;
+  --font-mono:        "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --radius-sm:        6px;
+  --radius-md:        10px;
+  --radius-lg:        16px;
+  --shadow-pink-soft: 0 6px 18px rgba(210, 7, 87, 0.10);
+  --shadow-card:      0 10px 30px -12px rgba(10, 20, 40, 0.12);
+  --nav-h: 64px;
+  --content-w: 1120px;
+  --pink-a45: rgba(210, 7, 87, 0.45);
+  --pink-a07: rgba(210, 7, 87, 0.07);
+  --pink-a04: rgba(210, 7, 87, 0.04);
+  --pink-a03: rgba(210, 7, 87, 0.03);
+}
 
-    body {
-      background: linear-gradient(180deg, #f7fafc 0%, #edf2f7 100%);
-      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      color: var(--text-dark);
-      scroll-behavior: smooth;
-      line-height: 1.7;
-    }
+/* ─── Base ─── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 12px); }
+body { font-family: var(--font-sans); color: var(--fg-2); background: var(--bg-1); line-height: 1.6; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+img { max-width: 100%; }
+a { color: var(--quantica-pink); }
+.wrap { max-width: var(--content-w); margin: 0 auto; padding: 0 28px; }
+.icon { width: 18px; height: 18px; stroke-width: 2; }
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 600ms ease, transform 600ms ease; }
+.reveal.visible { opacity: 1; transform: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.eyebrow { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--quantica-pink); }
 
-    header {
-      background: var(--primary-gradient);
-      position: relative;
-      overflow: hidden;
-    }
+/* ─── Nav ─── */
+.nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 40; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-1); }
+.nav-inner { max-width: var(--content-w); margin: 0 auto; padding: 0 28px; height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.nav-logo img { height: 30px; width: auto; display: block; }
+.nav-links { display: flex; align-items: center; gap: 26px; }
+.nav-links a { font-size: 13.5px; font-weight: 500; color: var(--fg-1); text-decoration: none; letter-spacing: 0.01em; }
+.nav-links a:hover, .nav-links a.active { color: var(--quantica-pink); }
+.nav-cta { background: var(--quantica-pink); color: var(--white) !important; font-weight: 700; padding: 9px 20px; border-radius: 999px; box-shadow: var(--shadow-pink-soft); transition: background 200ms; }
+.nav-cta:hover { background: var(--deep-berry); }
+.nav-burger { display: none; background: none; border: 0; color: var(--fg-1); cursor: pointer; padding: 6px; }
+.nav-burger .icon { width: 22px; height: 22px; }
+.nav-progress { position: absolute; left: 0; bottom: -1px; height: 3px; width: 0%; background: var(--quantica-pink); transition: width 300ms ease; }
+@media (max-width: 768px) {
+  .nav-inner { padding: 0 20px; }
+  .nav-burger { display: inline-flex; }
+  .nav-links { display: none; }
+  .nav-links.open { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; position: absolute; top: var(--nav-h); left: 0; right: 0; padding: 20px; background: var(--bg-1); border-bottom: 1px solid var(--border-1); box-shadow: var(--shadow-card); }
+}
 
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,144C960,149,1056,139,1152,122.7C1248,107,1344,85,1392,74.7L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
-      background-size: cover;
-      background-position: bottom;
-      opacity: 0.3;
-    }
+/* ─── Hero ─── */
+.hero { position: relative; min-height: 88svh; display: flex; align-items: center; color: var(--white); padding: calc(var(--nav-h) + 48px) 0 84px; background: var(--ink); overflow: hidden; }
+canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero-q { position: absolute; right: -6%; top: 50%; transform: translateY(-50%); width: min(46vw, 640px); opacity: 0.16; pointer-events: none; }
+.hero-q img { width: 100%; display: block; }
+.hero-inner { position: relative; z-index: 2; width: 100%; }
+.hero-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(48px, 8.5vw, 120px); line-height: 0.98; letter-spacing: -0.03em; color: var(--white); }
+.hero-title em { font-style: normal; color: var(--rose-pink); }
+.hero-tagline { font-size: clamp(17px, 2vw, 22px); line-height: 1.6; color: rgba(255, 255, 255, 0.92); margin-top: 24px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+.hero-footer { position: absolute; bottom: 22px; left: 0; right: 0; z-index: 2; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.85); }
+@media (max-width: 768px) { .hero { min-height: auto; padding: calc(var(--nav-h) + 56px) 0 110px; } .hero-q { width: 70vw; right: -18%; opacity: 0.12; } .hero-footer { flex-direction: column; gap: 6px; } }
 
-    .navbar {
-      background: rgba(255, 255, 255, 0.98) !important;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      transition: all 0.3s ease;
-      border-bottom: 1px solid rgba(102, 126, 234, 0.1);
-    }
+/* ─── Pills ─── */
+.pill { font-family: var(--font-sans); font-weight: 700; font-size: 14px; text-decoration: none; padding: 13px 28px; border-radius: 999px; display: inline-flex; align-items: center; gap: 9px; cursor: pointer; border: 0; transition: transform 200ms, background 200ms, color 200ms; }
+.pill:hover { transform: translateY(-1px); }
+.pill-solid { background: var(--quantica-pink); color: var(--white); box-shadow: var(--shadow-pink-soft); }
+.pill-solid:hover { background: var(--deep-berry); }
+.pill-outline { border: 1.5px solid var(--white); color: var(--white); background: transparent; }
+.pill-outline:hover { background: rgba(255, 255, 255, 0.1); }
+.pill-ghost { border: 1.5px solid var(--border-2); color: var(--fg-1); background: var(--bg-1); padding: 9px 18px; font-size: 13px; }
+.pill-ghost:hover { border-color: var(--quantica-pink); color: var(--quantica-pink); }
+.pill .icon { width: 17px; height: 17px; }
 
-    .navbar-brand {
-      color: var(--primary-color) !important;
-      font-weight: 700;
-      font-size: 1.3rem;
-      transition: all 0.3s ease;
-    }
+/* ─── Sections ─── */
+.section { padding: 88px 0; }
+.section-alt { background: var(--bg-2); }
+.h-section { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 4vw, 42px); line-height: 1.08; letter-spacing: -0.025em; color: var(--fg-1); margin-bottom: 22px; }
+.h-pink { color: var(--quantica-pink); }
+.section p { font-size: 15.5px; line-height: 1.75; margin-bottom: 14px; max-width: 780px; }
+.section p strong { color: var(--quantica-pink); font-weight: 700; }
+.section-head .eyebrow { margin-bottom: 14px; }
+@media (max-width: 768px) { .section { padding: 60px 0; } }
 
-    .navbar-brand:hover {
-      color: var(--secondary-color) !important;
-      transform: translateY(-2px);
-    }
+/* ─── Bento ─── */
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 26px; }
+.cell { background: var(--bg-1); border: 1px solid var(--border-1); border-radius: 18px; padding: 30px 32px; display: flex; flex-direction: column; box-shadow: var(--shadow-card); transition: border-color 250ms, background 250ms; }
+.cell:hover { border-color: var(--pink-a45); background: var(--pink-a03); }
+.cell-2 { grid-column: span 2; }
+.cell-3 { grid-column: span 3; }
+.cell-6 { grid-column: span 6; }
+.cell-tag { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--quantica-pink); margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.cell-tag .icon { width: 19px; height: 19px; color: var(--quantica-pink); }
+.cell h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -0.015em; color: var(--fg-1); margin-bottom: 10px; }
+.cell p { font-size: 14.5px; line-height: 1.7; margin: 0; max-width: none; }
+.cell ul { list-style: none; margin: 4px 0 0; }
+.cell li { font-size: 14px; line-height: 1.6; padding-left: 24px; position: relative; margin-bottom: 9px; color: var(--fg-1); }
+.cell li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 7px; height: 7px; border-radius: 50%; background: var(--quantica-pink); box-shadow: 0 0 10px var(--pink-a45); }
+.cell-note { border-top: 1px solid var(--border-1); padding-top: 14px; margin-top: auto; font-size: 14px; line-height: 1.65; }
+.cell-note strong { color: var(--quantica-pink); }
+@media (max-width: 900px) { .cell-2, .cell-3 { grid-column: span 6; } }
+@media (max-width: 768px) { .cell { padding: 24px 22px; } }
 
-    .nav-link {
-      color: var(--text-dark) !important;
-      font-weight: 500;
-      position: relative;
-      transition: all 0.3s ease;
-      padding: 0.5rem 1rem !important;
-      margin: 0 0.2rem;
-      border-radius: 0.5rem;
-    }
+/* ─── Overview stepper ─── */
+.stepper { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 26px; position: relative; }
+.step { text-decoration: none; color: var(--fg-1); background: var(--bg-1); border: 1px solid var(--border-1); border-radius: 18px; padding: 24px 22px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 8px; position: relative; transition: border-color 250ms, background 250ms; }
+.step:hover { border-color: var(--pink-a45); background: var(--pink-a03); }
+.step-num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--quantica-pink); display: flex; justify-content: space-between; align-items: center; }
+.step-num .icon { width: 18px; height: 18px; color: var(--quantica-pink); }
+.step h3 { font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: -0.015em; }
+.step-meta { font-family: var(--font-mono); font-size: 11.5px; color: var(--fg-3); letter-spacing: 0.02em; }
+.step-bar { height: 5px; border-radius: 999px; background: var(--border-1); overflow: hidden; margin-top: auto; }
+.step-bar i { display: block; height: 100%; width: 0%; background: var(--quantica-pink); transition: width 300ms ease; }
+.step.step-ongoing { border-style: dashed; }
+@media (max-width: 900px) { .stepper { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .stepper { grid-template-columns: 1fr; } }
 
-    .nav-link:hover {
-      color: var(--primary-color) !important;
-      background: rgba(102, 126, 234, 0.1);
-    }
+/* ─── Phase sections ─── */
+.phase-head { display: grid; grid-template-columns: auto 1fr auto; gap: 28px; align-items: start; }
+.phase-num { font-family: var(--font-display); font-weight: 800; font-size: clamp(56px, 8vw, 96px); line-height: 0.9; letter-spacing: -0.04em; color: var(--quantica-pink); }
+.phase-head .eyebrow { margin-bottom: 12px; }
+.phase-head .h-section { margin-bottom: 14px; }
+.phase-goal { font-size: 16.5px; line-height: 1.7; max-width: 720px; }
+.phase-stat { text-align: right; min-width: 150px; }
+.phase-stat .num { font-family: var(--font-display); font-weight: 700; font-size: 34px; letter-spacing: -0.03em; line-height: 1; color: var(--fg-1); }
+.phase-stat .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-3); margin-top: 6px; }
+.phase-stat .bar { height: 6px; border-radius: 999px; background: var(--border-1); overflow: hidden; margin-top: 12px; }
+.phase-stat .bar i { display: block; height: 100%; width: 0%; background: var(--quantica-pink); transition: width 300ms ease; }
+.outcomes { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 22px 32px; }
+.outcomes .cell-tag { margin: 0; flex: 0 0 auto; }
+.outcome-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 500; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border-2); background: var(--bg-1); color: var(--fg-1); }
+.chip .icon { flex: none; width: 14px; height: 14px; color: var(--quantica-pink); }
+.stage-title { display: flex; align-items: baseline; gap: 14px; margin-top: 44px; font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; color: var(--fg-1); }
+.stage-title .stage-num { font-family: var(--font-mono); font-weight: 500; font-size: 12.5px; letter-spacing: 0.1em; color: var(--quantica-pink); }
+.stage-title + .bento { margin-top: 18px; }
+.cell[data-done="true"] { border-color: var(--pink-a45); }
+.task-list { list-style: none; margin: 6px 0 0; }
+.task-list li { padding-left: 0; margin: 0; }
+.task-list li::before { display: none; }
+.task { display: flex; gap: 12px; align-items: flex-start; padding: 7px 0; font-size: 14px; line-height: 1.55; color: var(--fg-1); cursor: pointer; border-top: 1px solid var(--border-1); }
+.task:first-child { border-top: 0; }
+.task input { appearance: none; -webkit-appearance: none; flex: none; width: 18px; height: 18px; margin-top: 2px; border: 1.5px solid var(--border-2); border-radius: 5px; background: var(--bg-1); cursor: pointer; position: relative; transition: background 150ms, border-color 150ms; }
+.task input:checked { background: var(--quantica-pink); border-color: var(--quantica-pink); }
+.task input:checked::after { content: ""; position: absolute; left: 5px; top: 1.5px; width: 5px; height: 9px; border: solid var(--white); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.task input:focus-visible { outline: 2px solid var(--quantica-pink); outline-offset: 2px; }
+.task input:checked + span { color: var(--fg-3); text-decoration: line-through; text-decoration-color: var(--border-2); }
+.gate { border: 1.5px solid var(--quantica-pink); background: var(--pink-a04); box-shadow: var(--shadow-pink-soft); }
+.gate:hover { border-color: var(--quantica-pink); background: var(--pink-a07); }
+.gate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+.gate h3 { font-size: clamp(22px, 3vw, 26px); }
+.gate .task-list { grid-column: 2; }
+.gate-text { grid-column: 1; }
+.gate-text p { max-width: 460px; }
+.gate-next { margin-top: 18px; }
+.gate-done { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--quantica-pink); margin-top: 12px; display: none; }
+.gate[data-done="true"] .gate-done { display: block; }
+@media (max-width: 768px) {
+  .phase-head { grid-template-columns: 1fr; gap: 14px; }
+  .phase-stat { text-align: left; }
+  .gate-grid { grid-template-columns: 1fr; }
+  .gate .task-list, .gate-text { grid-column: auto; }
+}
 
-    .nav-link.active {
-      color: var(--primary-color) !important;
-      background: rgba(102, 126, 234, 0.15);
-    }
+/* ─── Regulation timeline ─── */
+.timeline { list-style: none; margin-top: 30px; position: relative; padding-left: 34px; }
+.timeline::before { content: ""; position: absolute; left: 9px; top: 6px; bottom: 6px; width: 2px; background: var(--border-2); }
+.tl-item { position: relative; padding: 0 0 26px; display: grid; grid-template-columns: 150px 1fr; gap: 18px; }
+.tl-item::before { content: ""; position: absolute; left: -31px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg-1); border: 2px solid var(--border-2); }
+.tl-item[data-status="past"]::before { background: var(--quantica-pink); border-color: var(--quantica-pink); box-shadow: 0 0 10px var(--pink-a45); }
+.tl-item[data-status="next"]::before { border-color: var(--quantica-pink); }
+.tl-date { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.04em; color: var(--fg-1); font-weight: 500; }
+.tl-status { display: block; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-3); margin-top: 4px; }
+.tl-item[data-status="past"] .tl-status, .tl-item[data-status="next"] .tl-status { color: var(--quantica-pink); }
+.tl-item h3 { font-family: var(--font-display); font-weight: 700; font-size: 17px; letter-spacing: -0.01em; margin-bottom: 4px; }
+.tl-item p { font-size: 14.5px; line-height: 1.65; margin: 0; color: var(--fg-3); max-width: 700px; }
+.sources { margin-top: 10px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.02em; color: var(--fg-3); }
+.sources a { margin-right: 18px; }
+@media (max-width: 640px) { .tl-item { grid-template-columns: 1fr; gap: 6px; } }
 
-    /* Dropdown styles */
-    .dropdown-menu {
-      border: none;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      border-radius: 0.75rem;
-      padding: 0.5rem 0;
-      margin-top: 0.5rem;
-    }
+/* ─── Violet note ─── */
+.note-violet { background: var(--mist); border: 1.5px solid var(--violet-primary); border-radius: var(--radius-md); padding: 22px 26px; margin: 26px 0 0; max-width: 860px; display: flex; gap: 18px; align-items: flex-start; }
+.note-violet p { margin: 0; font-size: 15.5px; line-height: 1.7; color: var(--fg-1); font-weight: 500; max-width: none; }
+.note-violet .note-icon { flex: none; width: 46px; height: 46px; border-radius: var(--radius-md); background: rgba(112, 48, 160, 0.12); display: flex; align-items: center; justify-content: center; }
+.note-violet .note-icon .icon { width: 23px; height: 23px; color: var(--violet-primary); }
 
-    .dropdown-item {
-      padding: 0.6rem 1.5rem;
-      color: var(--text-dark);
-      transition: all 0.2s ease;
-      font-weight: 500;
-    }
+/* ─── Contact panel ─── */
+.contact { background: radial-gradient(ellipse 70% 60% at 80% 50%, rgba(112, 48, 160, 0.28) 0%, transparent 65%), radial-gradient(ellipse 50% 70% at 0% 0%, rgba(210, 7, 87, 0.30) 0%, transparent 65%), linear-gradient(135deg, var(--ink) 0%, var(--ink-2) 100%); color: var(--white); padding: 52px 56px; border-radius: var(--radius-lg); position: relative; overflow: hidden; }
+.contact-q { position: absolute; right: -50px; top: 50%; transform: translateY(-50%); width: 280px; opacity: 0.14; pointer-events: none; }
+.contact h2 { color: var(--white); font-family: var(--font-display); font-size: clamp(26px, 3.4vw, 36px); font-weight: 700; margin-bottom: 14px; letter-spacing: -0.025em; line-height: 1.1; position: relative; z-index: 1; }
+.contact p { color: rgba(255, 255, 255, 0.92); font-size: 15px; margin-bottom: 26px; max-width: 560px; position: relative; z-index: 1; }
+.contact-pills { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 30px; position: relative; z-index: 1; }
+.contact .pill-solid { background: var(--white); color: var(--quantica-pink); }
+.contact .pill-solid:hover { background: var(--magenta-tint); }
+.contact-label { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rose-pink); margin-bottom: 14px; position: relative; z-index: 1; }
+.contact-info { display: flex; flex-wrap: wrap; gap: 34px; align-items: flex-start; border-top: 1px solid rgba(255, 255, 255, 0.16); padding-top: 22px; position: relative; z-index: 1; }
+.contact-meta { font-size: 13px; line-height: 1.7; color: var(--white); }
+.contact-meta a { color: var(--white); }
+.contact-logo img { height: 40px; width: auto; display: block; }
+@media (max-width: 768px) { .contact { padding: 34px 24px; } }
 
-    .dropdown-item:hover {
-      background: rgba(102, 126, 234, 0.1);
-      color: var(--primary-color);
-      padding-left: 1.75rem;
-    }
+/* ─── Footer ─── */
+.footer { padding: 26px 0; border-top: 1px solid var(--border-1); font-family: var(--font-mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--fg-3); }
+.footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.footer a { color: var(--fg-3); }
 
-    .dropdown-divider {
-      margin: 0.5rem 0;
-      border-color: rgba(102, 126, 234, 0.15);
-    }
+/* ─── Help overlay + toast ─── */
+.help { position: fixed; inset: 0; z-index: 60; background: rgba(10, 31, 44, 0.6); display: none; align-items: center; justify-content: center; padding: 20px; }
+.help[open] { display: flex; }
+.help-card { background: var(--bg-1); border-radius: 18px; padding: 30px 32px; max-width: 440px; width: 100%; box-shadow: var(--shadow-card); }
+.help-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; margin-bottom: 14px; }
+.help-card dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 14px; }
+.help-card dt { font-family: var(--font-mono); font-size: 12px; color: var(--quantica-pink); }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); z-index: 50; background: var(--ink); color: var(--white); font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.03em; padding: 12px 20px; border-radius: 999px; opacity: 0; pointer-events: none; transition: opacity 250ms, transform 250ms; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.tools { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; align-items: center; }
+.tools .meta { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); letter-spacing: 0.03em; }
 
-    .nav-item.dropdown .nav-link.dropdown-toggle {
-      position: relative;
-    }
-
-    .nav-item.dropdown .nav-link.dropdown-toggle::after {
-      margin-left: 0.5rem;
-      transition: transform 0.3s ease;
-    }
-
-    .nav-item.dropdown .nav-link.dropdown-toggle[aria-expanded="true"]::after {
-      transform: rotate(180deg);
-    }
-
-    header h1, header p {
-      color: #fff;
-      position: relative;
-      z-index: 1;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    header h1 {
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-
-    .phase {
-      background: var(--bg-white);
-      margin-bottom: 2rem;
-      padding: 2.5rem;
-      border-radius: 1rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 1px solid rgba(102, 126, 234, 0.1);
-      border-left: 5px solid transparent;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .phase::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 5px;
-      height: 100%;
-      background: var(--primary-gradient);
-      transition: all 0.4s ease;
-    }
-
-    .phase:hover {
-      box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
-      transform: translateY(-5px);
-    }
-
-    .phase:hover::before {
-      width: 8px;
-    }
-
-    .phase h2 {
-      color: var(--text-dark);
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 1rem;
-      font-size: 1.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .phase h2 .text-muted {
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text-light) !important;
-      margin-left: auto;
-    }
-
-    .phase h3 {
-      color: var(--primary-color);
-      font-weight: 600;
-      margin-top: 1.5rem;
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
-    }
-
-    .phase-badge {
-      display: inline-block;
-      padding: 0.35rem 0.8rem;
-      border-radius: 2rem;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-left: 0.5rem;
-      background: var(--primary-gradient);
-      color: white;
-      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-    }
-
-    .accordion-button {
-      background-color: #f7fafc;
-      color: var(--text-dark);
-      font-weight: 600;
-      border-left: 4px solid var(--accent-color);
-      transition: all 0.3s ease;
-      padding: 1rem 1.5rem;
-      font-size: 1rem;
-    }
-
-    .accordion-button:not(.collapsed) {
-      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(79, 172, 254, 0.1) 100%);
-      color: var(--primary-color);
-      border-left: 4px solid var(--primary-color);
-      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
-    }
-
-    .accordion-button:hover {
-      background-color: rgba(102, 126, 234, 0.05);
-      transform: translateX(2px);
-    }
-
-    .accordion-button::after {
-      filter: hue-rotate(240deg);
-    }
-
-    .accordion-body {
-      background-color: var(--bg-white);
-      border-left: 4px solid #e2e8f0;
-      padding: 1.5rem;
-    }
-
-    .accordion-body ul {
-      margin: 0;
-      padding-left: 1.5rem;
-    }
-
-    .accordion-body li {
-      margin-bottom: 0.75rem;
-      line-height: 1.7;
-      color: var(--text-dark);
-    }
-
-    .accordion-body li strong {
-      color: var(--primary-color);
-    }
-
-    pre {
-      background: #2d3748;
-      padding: 1.5rem;
-      border-radius: 0.75rem;
-      overflow-x: auto;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .lead {
-      letter-spacing: 0.3px;
-      font-size: 1.3rem;
-      font-weight: 400;
-      opacity: 0.95;
-    }
-
-    .footer {
-      background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
-      color: white;
-      border-top: 3px solid var(--primary-color);
-    }
-
-    .footer a {
-      transition: all 0.3s ease;
-    }
-
-    .footer a:hover {
-      transform: translateY(-2px);
-      opacity: 0.8;
-    }
-
-    /* Enhanced animations */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-
-    .phase {
-      animation: fadeInUp 0.6s ease forwards;
-      opacity: 0;
-    }
-
-    .phase:nth-child(1) { animation-delay: 0.1s; }
-    .phase:nth-child(2) { animation-delay: 0.2s; }
-    .phase:nth-child(3) { animation-delay: 0.3s; }
-    .phase:nth-child(4) { animation-delay: 0.4s; }
-    .phase:nth-child(5) { animation-delay: 0.5s; }
-    .phase:nth-child(6) { animation-delay: 0.6s; }
-    .phase:nth-child(7) { animation-delay: 0.7s; }
-    .phase:nth-child(8) { animation-delay: 0.8s; }
-
-    /* Scroll indicator */
-    .scroll-indicator {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: rgba(102, 126, 234, 0.2);
-      z-index: 9999;
-    }
-
-    .scroll-progress {
-      height: 100%;
-      background: var(--primary-gradient);
-      width: 0%;
-      transition: width 0.1s ease;
-      box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
-    }
-
-    /* Improved mobile responsiveness */
-    @media (max-width: 768px) {
-      .navbar-brand {
-        font-size: 1.1rem;
-      }
-
-      .phase {
-        padding: 1.5rem;
-      }
-
-      .phase h2 {
-        font-size: 1.4rem;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .phase h2 .text-muted {
-        margin-left: 0;
-        margin-top: 0.5rem;
-      }
-
-      header h1 {
-        font-size: 1.75rem;
-      }
-
-      header h1 svg {
-        width: 32px;
-        height: 32px;
-      }
-
-      .lead {
-        font-size: 1rem;
-      }
-
-      .nav-link {
-        padding: 0.75rem 1rem !important;
-      }
-    }
-  </style>
+/* ─── Motion + print ─── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+@media print {
+  .nav, canvas[data-dots], .hero-q, .tools, .help, .toast, .contact-pills, .hero-actions { display: none !important; }
+  .hero { min-height: auto; padding: 40px 0; background: var(--ink) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .reveal { opacity: 1; transform: none; }
+  .section { padding: 36px 0; }
+  .cell, .step { break-inside: avoid; box-shadow: none; }
+  .task input:checked + span { text-decoration: none; }
+}
+</style>
 </head>
-<body data-bs-spy="scroll" data-bs-target="#navbarNav" data-bs-offset="70">
-  <!-- Scroll Progress Indicator -->
-  <div class="scroll-indicator">
-    <div class="scroll-progress" id="scrollProgress"></div>
-  </div>
+<body>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-robot me-2" viewBox="0 0 16 16">
-          <path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a24.8 24.8 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"/>
-          <path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"/>
-        </svg>
-        Mapa AI
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#phase0">Start</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#phase1">Fundament</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#phase2">Pilotaż</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#phase3">Wdrożenie</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#phase4">Integracja</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#ongoing">Wsparcie</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Więcej
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#challenges">Wyzwania</a></li>
-              <li><a class="dropdown-item" href="#success">Pomiar Sukcesu</a></li>
-            </ul>
-          </li>
-        </ul>
+<nav class="nav" aria-label="Nawigacja">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#top"><img src="assets/quantica-logo-color.png" alt="Quantica Lab" width="72" height="30"></a>
+    <button class="nav-burger" aria-label="Menu" aria-expanded="false"><i data-lucide="menu" class="icon"></i></button>
+    <div class="nav-links">
+      <a href="#przeglad">Przegląd</a>
+      <a href="#faza-1">Fazy</a>
+      <a href="#wsparcie">Wsparcie</a>
+      <a href="#regulacje">Regulacje</a>
+      <a href="#wyzwania">Wyzwania</a>
+      <a href="#mierniki">Mierniki</a>
+      <a class="nav-cta" href="#faza-1">Zacznij od fazy 1</a>
+    </div>
+  </div>
+  <div class="nav-progress" id="navProgress" aria-hidden="true"></div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas data-dots aria-hidden="true"></canvas>
+  <div class="hero-q" aria-hidden="true"><img src="assets/quantica-q-mark-white.png" alt=""></div>
+  <div class="wrap hero-inner">
+    <h1 class="hero-title">Mapa drogowa wdrożenia <em>AI</em></h1>
+    <p class="hero-tagline">Cztery fazy, od pierwszej decyzji zarządu do AI działającej jak każdy inny proces w firmie. Każda faza ma cel, konkretne działania do odhaczenia i bramkę decyzyjną, która mówi, czy iść dalej.</p>
+    <div class="hero-actions">
+      <a class="pill pill-solid" href="#faza-1"><i data-lucide="play" class="icon"></i>Zacznij od fazy 1</a>
+      <a class="pill pill-outline" href="#przeglad"><i data-lucide="arrow-down" class="icon"></i>Zobacz przegląd</a>
+    </div>
+  </div>
+  <div class="hero-footer wrap"><div>quanticalab.ai</div><div id="heroMeta">4 fazy</div></div>
+</header>
+
+<section class="section" id="jak">
+  <div class="wrap">
+    <div class="reveal section-head">
+      <div class="eyebrow">Jak korzystać</div>
+      <h2 class="h-section">Trzy zasady tej <span class="h-pink">mapy</span></h2>
+    </div>
+    <div class="bento">
+      <div class="cell cell-2 reveal">
+        <div class="cell-tag">Kolejność<i data-lucide="list-ordered" class="icon"></i></div>
+        <h3>Fazy i bramki</h3>
+        <p>Idź po kolei. Każda faza kończy się bramką decyzyjną: cztery warunki, które muszą być spełnione, zanim zaczniesz następną. Jeśli któregoś brakuje, wracasz, nie przeskakujesz.</p>
+      </div>
+      <div class="cell cell-2 reveal">
+        <div class="cell-tag">Postęp<i data-lucide="check-square" class="icon"></i></div>
+        <h3>Lista kontrolna</h3>
+        <p>Każde działanie ma pole do odhaczenia. Postęp zapisuje się w tej przeglądarce, więc możesz wracać do mapy przez cały projekt. Pasek pod nawigacją pokazuje, ile już za Tobą.</p>
+      </div>
+      <div class="cell cell-2 reveal">
+        <div class="cell-tag">Zgodność<i data-lucide="scale" class="icon"></i></div>
+        <h3>AI Act w tle</h3>
+        <p>Klasyfikację ryzyka, przejrzystość i rejestr systemów wplatamy w działania, a nie odkładamy na koniec. Kalendarz regulacyjny niżej pokazuje, które terminy już obowiązują.</p>
       </div>
     </div>
-  </nav>
+  </div>
+</section>
 
-  <!-- Header -->
-  <header class="py-4 mb-4 text-center">
-    <div class="container">
-      <h1 class="display-5 mb-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" class="bi bi-robot mb-2" viewBox="0 0 16 16">
-          <path d="M6 12.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5M3 8.062C3 6.76 4.235 5.765 5.53 5.886a26.6 26.6 0 0 0 4.94 0C11.765 5.765 13 6.76 13 8.062v1.157a.93.93 0 0 1-.765.935c-.845.147-2.34.346-4.235.346s-3.39-.2-4.235-.346A.93.93 0 0 1 3 9.219zm4.542-.827a.25.25 0 0 0-.217.068l-.92.9a24.8 24.8 0 0 1-1.871-.183.25.25 0 0 0-.068.495c.55.076 1.232.149 2.02.193a.25.25 0 0 0 .189-.071l.754-.736.847 1.71a.25.25 0 0 0 .404.062l.932-.97a25 25 0 0 0 1.922-.188.25.25 0 0 0-.068-.495c-.538.074-1.207.145-1.98.189a.25.25 0 0 0-.166.076l-.754.785-.842-1.7a.25.25 0 0 0-.182-.135"/>
-          <path d="M8.5 1.866a1 1 0 1 0-1 0V3h-2A4.5 4.5 0 0 0 1 7.5V8a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1v-.5A4.5 4.5 0 0 0 10.5 3h-2zM14 7.5V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.5A3.5 3.5 0 0 1 5.5 4h5A3.5 3.5 0 0 1 14 7.5"/>
-        </svg>
-        <br>Mapa drogowa wdrożenia AI
-      </h1>
-      <p class="lead mb-0">Przewodnik wdrażania AI w Twojej organizacji</p>
+<section class="section section-alt" id="przeglad">
+  <div class="wrap">
+    <div class="reveal section-head">
+      <div class="eyebrow">Przegląd</div>
+      <h2 class="h-section">Cztery fazy i jeden <span class="h-pink">stały rytm</span></h2>
+      <p>Orientacyjnie około sześciu miesięcy od decyzji do stanu docelowego. Czas zależy od wielkości organizacji i liczby przypadków użycia; ważniejsza od kalendarza jest kolejność i bramki.</p>
     </div>
-  </header>
+    <div class="stepper reveal" id="stepper"></div>
+    <div class="tools reveal">
+      <span class="meta" id="progressMeta">0 / 0 działań</span>
+      <button class="pill pill-ghost" id="btnReset" type="button"><i data-lucide="rotate-ccw" class="icon"></i>Wyczyść postęp</button>
+      <button class="pill pill-ghost" id="btnHelp" type="button"><i data-lucide="keyboard" class="icon"></i>Skróty klawiszowe</button>
+      <button class="pill pill-ghost" id="btnPrint" type="button"><i data-lucide="printer" class="icon"></i>Drukuj / PDF</button>
+    </div>
+  </div>
+</section>
 
-  <!-- Main Content -->
-  <div class="container">
-    <!-- Roadmap Container (Loaded Dynamically) -->
-    <div id="roadmap-container">
-      <div class="text-center py-5">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Ładowanie...</span>
+<div id="phases"></div>
+
+<section class="section section-alt" id="wsparcie">
+  <div class="wrap">
+    <div class="reveal section-head">
+      <div class="eyebrow">Po fazie 4</div>
+      <h2 class="h-section" id="ongoingTitle"></h2>
+      <p id="ongoingLead"></p>
+    </div>
+    <div class="bento" id="ongoingGrid"></div>
+  </div>
+</section>
+
+<section class="section" id="regulacje">
+  <div class="wrap">
+    <div class="reveal section-head">
+      <div class="eyebrow">AI Act i ustawa krajowa</div>
+      <h2 class="h-section" id="regTitle"></h2>
+      <p id="regLead"></p>
+    </div>
+    <ol class="timeline reveal" id="timeline"></ol>
+    <div class="sources reveal" id="regSources"></div>
+    <div class="note-violet reveal">
+      <div class="note-icon"><i data-lucide="info" class="icon"></i></div>
+      <p>Większość pilotaży w firmach dotyczy systemów minimalnego ryzyka lub z obowiązkiem przejrzystości. Jeśli przypadek użycia dotyczy rekrutacji, oceny pracowników, kredytów lub dostępu do usług, traktuj go jako wysokiego ryzyka i planuj zgodność od pierwszego dnia.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="wyzwania">
+  <div class="wrap">
+    <div class="reveal section-head">
+      <div class="eyebrow">Przeszkody</div>
+      <h2 class="h-section" id="chTitle"></h2>
+      <p id="chLead"></p>
+    </div>
+    <div class="bento" id="chGrid"></div>
+  </div>
+</section>
+
+<section class="section" id="mierniki">
+  <div class="wrap">
+    <div class="reveal section-head">
+      <div class="eyebrow">KPI</div>
+      <h2 class="h-section" id="mTitle"></h2>
+      <p id="mLead"></p>
+    </div>
+    <div class="bento" id="mGrid"></div>
+  </div>
+</section>
+
+<section class="section section-alt" id="kontakt">
+  <div class="wrap reveal">
+    <div class="contact">
+      <div class="contact-q" aria-hidden="true"><img src="assets/quantica-q-mark-white.png" alt=""></div>
+      <div class="contact-label">Kontakt</div>
+      <h2>Chcesz przejść tę mapę z kimś, kto już ją przechodził?</h2>
+      <p>Quantica Lab prowadzi warsztaty z wyboru przypadków użycia, pilotaże i szkolenia zespołów. Zaczynamy od fazy 1, nie od narzędzia.</p>
+      <div class="contact-pills">
+        <a class="pill pill-solid" href="mailto:kontakt@quanticalab.ai"><i data-lucide="mail" class="icon"></i>Napisz do nas</a>
+        <a class="pill pill-outline" href="https://quanticalab.ai" target="_blank" rel="noopener"><i data-lucide="external-link" class="icon"></i>quanticalab.ai</a>
+      </div>
+      <div class="contact-info">
+        <div class="contact-logo"><img src="assets/quantica-logo-white.png" alt="Quantica Lab"></div>
+        <div class="contact-meta"><strong>Quantica Lab</strong><br><a href="mailto:kontakt@quanticalab.ai">kontakt@quanticalab.ai</a><br>quanticalab.ai</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap"><div>quanticalab.ai</div><div id="footMeta"><a href="https://github.com/workszop/ai_plan">github.com/workszop/ai_plan</a></div></div>
+</footer>
+
+<div class="help" id="help" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+  <div class="help-card">
+    <h3 id="helpTitle">Skróty klawiszowe</h3>
+    <dl>
+      <dt>1 - 4</dt><dd>Przejdź do fazy 1-4</dd>
+      <dt>0</dt><dd>Wróć na górę</dd>
+      <dt>P</dt><dd>Przegląd</dd>
+      <dt>R</dt><dd>Kalendarz regulacyjny</dd>
+      <dt>?</dt><dd>Ten ekran</dd>
+      <dt>Esc</dt><dd>Zamknij</dd>
+    </dl>
+    <div class="tools"><button class="pill pill-ghost" id="btnHelpClose" type="button">Zamknij</button></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<div class="sr-only" id="live" aria-live="polite"></div>
+
+<script src="roadmap.js"></script>
+<script src="https://unpkg.com/lucide@1.27.0/dist/umd/lucide.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  // ─── Constants ───
+  const STORAGE_KEY = "aiPlan.progress.v2";
+  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const FONT_WAIT_MS = 1500;
+  const BRAND_FONTS = ["400 1em Manrope", "700 1em Manrope", "800 1em Manrope", "400 1em \"Geist Mono\""];
+  const DATA = window.ROADMAP;
+
+  // ─── State ───
+  const state = { done: loadProgress(), total: 0 };
+
+  // ─── DOM refs ───
+  const $ = (sel) => document.querySelector(sel);
+  const phasesEl = $("#phases");
+  const stepperEl = $("#stepper");
+  const navProgress = $("#navProgress");
+  const progressMeta = $("#progressMeta");
+  const liveEl = $("#live");
+  const toastEl = $("#toast");
+  const helpEl = $("#help");
+
+  // ─── Helpers ───
+  function loadProgress() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (e) { return {}; }
+  }
+  function saveProgress() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.done)); } catch (e) { /* private mode */ }
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c])); }
+  function pad(n) { return String(n).padStart(2, "0"); }
+  // Bento rows must sum to 6: n divisible by 3 -> all span 2; even -> span 3; 5/7 -> span 2s then two span 3s; 1 -> span 6.
+  function spans(n) {
+    if (n === 1) return [6];
+    if (n % 3 === 0) return Array(n).fill(2);
+    if (n % 2 === 0) return Array(n).fill(3);
+    return Array(n - 2).fill(2).concat([3, 3]);
+  }
+  function taskHtml(id, text) {
+    const checked = state.done[id] ? " checked" : "";
+    return `<li><label class="task"><input type="checkbox" data-task="${id}"${checked}><span>${esc(text)}</span></label></li>`;
+  }
+  function phaseIds(phase) {
+    const ids = [];
+    phase.stages.forEach((s, si) => s.items.forEach((it, ii) => it.actions.forEach((a, ai) => ids.push(`${phase.id}/${si}/${ii}/${ai}`))));
+    phase.gate.checks.forEach((c, ci) => ids.push(`${phase.id}/gate/${ci}`));
+    return ids;
+  }
+  function countDone(ids) { return ids.filter((id) => state.done[id]).length; }
+  function daysBetween(a, b) { return Math.round((b - a) / 86400000); }
+  function regStatus(dateStr, today) {
+    const d = new Date(dateStr + "T00:00:00");
+    const diff = daysBetween(today, d);
+    if (diff <= 0) return { key: "past", label: "obowiązuje" };
+    if (diff <= 120) return { key: "next", label: `za ${diff} dni` };
+    return { key: "future", label: "nadchodzi" };
+  }
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toast.t);
+    toast.t = setTimeout(() => toastEl.classList.remove("show"), 2200);
+  }
+  function icons() { if (window.lucide) window.lucide.createIcons(); }
+
+  // ─── Render ───
+  function renderStepper() {
+    const steps = DATA.phases.map((p) => `
+      <a class="step" href="#faza-${p.num}" data-step="${p.id}">
+        <div class="step-num"><span>Faza ${p.num}</span><i data-lucide="${p.icon}" class="icon"></i></div>
+        <h3>${esc(p.title)}</h3>
+        <div class="step-meta">${esc(p.duration)} · <span data-step-count>0/0</span></div>
+        <div class="step-bar"><i data-step-bar></i></div>
+      </a>`).join("");
+    const ongoing = `
+      <a class="step step-ongoing" href="#wsparcie">
+        <div class="step-num"><span>Dalej</span><i data-lucide="infinity" class="icon"></i></div>
+        <h3>${esc(DATA.ongoing.title)}</h3>
+        <div class="step-meta">stały rytm</div>
+      </a>`;
+    stepperEl.innerHTML = steps + ongoing;
+  }
+
+  function renderPhase(p, idx) {
+    const alt = idx % 2 === 0 ? "" : " section-alt";
+    const next = DATA.phases[idx + 1];
+    const nextHref = next ? `#faza-${next.num}` : "#wsparcie";
+    const nextLabel = next ? `Dalej: faza ${next.num}, ${next.title}` : "Dalej: bieżące wsparcie";
+    const outcomes = p.outcomes.map((o) => `<span class="chip"><i data-lucide="check" class="icon"></i>${esc(o)}</span>`).join("");
+    const stages = p.stages.map((s, si) => {
+      const sp = spans(s.items.length);
+      const cells = s.items.map((it, ii) => `
+        <div class="cell cell-${sp[ii]} reveal" data-item>
+          <div class="cell-tag">${p.num}.${si + 1}.${ii + 1}<i data-lucide="${p.icon}" class="icon"></i></div>
+          <h3>${esc(it.title)}</h3>
+          <ul class="task-list">${it.actions.map((a, ai) => taskHtml(`${p.id}/${si}/${ii}/${ai}`, a)).join("")}</ul>
+        </div>`).join("");
+      return `<h3 class="stage-title reveal"><span class="stage-num">ETAP ${p.num}.${si + 1}</span>${esc(s.title)}</h3><div class="bento">${cells}</div>`;
+    }).join("");
+    const gate = `
+      <div class="bento">
+        <div class="cell cell-6 gate reveal" data-gate>
+          <div class="gate-grid">
+            <div class="gate-text">
+              <div class="cell-tag">Bramka decyzyjna<i data-lucide="door-open" class="icon"></i></div>
+              <h3>${esc(p.gate.title)}</h3>
+              <p>Odhacz wszystkie warunki. Jeśli któregoś brakuje, zostań w tej fazie i domknij go, zanim pójdziesz dalej.</p>
+              <div class="gate-done">Wszystkie warunki spełnione</div>
+              <div class="gate-next"><a class="pill pill-solid" href="${nextHref}">${esc(nextLabel)}<i data-lucide="arrow-right" class="icon"></i></a></div>
+            </div>
+            <ul class="task-list">${p.gate.checks.map((c, ci) => taskHtml(`${p.id}/gate/${ci}`, c)).join("")}</ul>
+          </div>
         </div>
-        <p class="mt-3">Ładowanie mapy drogowej...</p>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // SVG Icon mapping for Bootstrap Icons
-    const svgIcons = {
-      'building-fill-gear': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-building-fill-gear me-2" viewBox="0 0 16 16">
-        <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7.256A4.5 4.5 0 0 0 12.5 8a4.5 4.5 0 0 0-3.59 1.787A.5.5 0 0 0 9 9.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .39-.187A4.5 4.5 0 0 0 8.5 13v.5a.5.5 0 0 1-.5.5H12a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.5-.5V9h-.5a.5.5 0 0 1-.5-.5v-.5a.5.5 0 0 1 .5-.5H6V7h-.5a.5.5 0 0 1-.5-.5V6H4.5a.5.5 0 0 1-.5-.5V5H3V1.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 .5.5V2H5a.5.5 0 0 1 .5.5V3H6a.5.5 0 0 1 .5.5V4h.5a.5.5 0 0 1 .5.5V5h.5a.5.5 0 0 1 .5.5V6H9a.5.5 0 0 1 .5.5V7h.5a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5H9v.5a.5.5 0 0 1-.5.5H8v.5a.5.5 0 0 1-.5.5H7v-6.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v6.5H4.5a.5.5 0 0 1-.5-.5V10H3.5a.5.5 0 0 1-.5-.5V9H2V2Z"/>
-        <path d="M8.5 14.25a3.25 3.25 0 1 0 0-6.5 3.25 3.25 0 0 0 0 6.5m.5-5.25a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5m1.655 2.565 1.156 1.156a.75.75 0 0 1-1.06 1.06l-1.156-1.156a2.5 2.5 0 0 1-.35.267V14.5a.75.75 0 0 1-1.5 0v-.911a2.5 2.5 0 0 1-1.404-3.958.75.75 0 0 1 1.06 1.06 1 1 0 1 0 1.516-.832.75.75 0 0 1 1.456-.364l.001.006a2.5 2.5 0 0 1-.636 2.509.75.75 0 0 1-.333.215"/>
-      </svg>`,
-      'rocket-takeoff': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-rocket-takeoff me-2" viewBox="0 0 16 16">
-        <path d="M9.752 6.193c.599.6 1.73.437 2.528-.362s.96-1.932.362-2.531c-.599-.6-1.73-.438-2.528.361-.798.8-.96 1.933-.362 2.532"/>
-        <path d="M15.811 3.312c-.363 1.534-1.334 3.626-3.64 6.218l-.24 2.408a2.56 2.56 0 0 1-.732 1.526L8.817 15.85a.51.51 0 0 1-.867-.434l.27-1.899c.04-.28-.013-.593-.131-.956a9 9 0 0 0-.249-.657l-.082-.202c-.815-.197-1.578-.662-2.191-1.277-.614-.615-1.079-1.379-1.275-2.195l-.203-.083a10 10 0 0 0-.655-.248c-.363-.119-.675-.172-.955-.132l-1.896.27A.51.51 0 0 1 .15 7.17l2.382-2.386c.41-.41.947-.67 1.524-.734h.006l2.4-.238C9.005 1.55 11.087.582 12.623.208c.89-.217 1.59-.424 2.053-.216.265.12.455.84.62.271q.17.018.33.039c.18.324.196 1.024-.019 1.911-.07.3-.176.682-.372 1.099"/>
-      </svg>`,
-      'arrows-expand': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrows-expand me-2" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10"/>
-      </svg>`,
-      'boxes': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-boxes me-2" viewBox="0 0 16 16">
-        <path d="M7.752.066a.5.5 0 0 1 .496 0l3.75 2.143a.5.5 0 0 1 .252.434v3.995l3.498 2A.5.5 0 0 1 16 9.07v4.286a.5.5 0 0 1-.252.434l-3.75 2.143a.5.5 0 0 1-.496 0l-3.502-2-3.502 2.001a.5.5 0 0 1-.496 0l-3.75-2.143A.5.5 0 0 1 0 13.357V9.071a.5.5 0 0 1 .252-.434L3.75 6.638V2.643a.5.5 0 0 1 .252-.434zM4.25 7.504 1.508 9.071l2.742 1.567 2.742-1.567zM7.5 9.933l-2.75 1.571v3.134l2.75-1.571zm1 3.134 2.75 1.571v-3.134L8.5 9.933zm.508-3.996 2.742 1.567 2.742-1.567-2.742-1.567zm2.242-2.433V3.504L8.5 5.076V8.21zM7.5 8.21V5.076L4.75 3.504v3.134zM5.258 2.643 8 4.21l2.742-1.567L8 1.076zM15 9.933l-2.75 1.571v3.134L15 13.067z"/>
-      </svg>`,
-      'infinity': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-infinity me-2" viewBox="0 0 16 16">
-        <path d="M5.68 5.792 7.345 7.75 5.681 9.708a2.75 2.75 0 1 1 0-3.916ZM8 6.978 6.416 5.113l-.014-.015a3.75 3.75 0 1 0 0 5.304l.014-.015L8 8.522l1.584 1.865.014.015a3.75 3.75 0 1 0 0-5.304l-.014.015zm.656.772 1.663-1.958a2.75 2.75 0 1 1 0 3.916z"/>
-      </svg>`,
-      'exclamation-triangle': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle me-2" viewBox="0 0 16 16">
-        <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"/>
-        <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"/>
-      </svg>`,
-      'building': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-building me-2" viewBox="0 0 16 16">
-        <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
-        <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3z"/>
-      </svg>`,
-      'graph-up': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-graph-up me-2" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07"/>
-      </svg>`,
-      'check-circle': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check-circle me-2" viewBox="0 0 16 16">
-        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-        <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
-      </svg>`,
-      'clipboard-check': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clipboard-check me-2" viewBox="0 0 16 16">
-        <path d="M4 1.5A1.5 1.5 0 0 1 5.5 0h5A1.5 1.5 0 0 1 12 1.5V2h1.5A1.5 1.5 0 0 1 15 3.5v11A1.5 1.5 0 0 1 13.5 16h-11A1.5 1.5 0 0 1 1 14.5v-11A1.5 1.5 0 0 1 2.5 2H4zm1 0a.5.5 0 0 0-.5.5V2h7v-.5a.5.5 0 0 0-.5-.5z"/>
-        <path d="M10.97 7.03a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 0 1-1.06 0l-1.5-1.5a.75.75 0 1 1 1.06-1.06L7.5 9.94l2.44-2.91a.75.75 0 0 1 1.03 0"/>
-      </svg>`
-    };
-
-    // Function to render accordion item
-    function renderAccordionItem(item, parentId) {
-      const contentHTML = item.isParagraph
-        ? `<p>${item.content.join(' ')}</p>`
-        : `<ul>${item.content.map(c => `<li>${c}</li>`).join('')}</ul>`;
-
-      return `
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="${item.headingId}">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#${item.id}" aria-expanded="false" aria-controls="${item.id}">
-              ${item.title}
-            </button>
-          </h2>
-          <div id="${item.id}" class="accordion-collapse collapse" aria-labelledby="${item.headingId}" data-bs-parent="#${parentId}">
-            <div class="accordion-body">
-              ${contentHTML}
+      </div>`;
+    return `
+      <section class="section phase${alt}" id="faza-${p.num}" data-phase="${p.id}" data-done="0" data-total="0">
+        <div class="wrap">
+          <div class="phase-head reveal">
+            <div class="phase-num" aria-hidden="true">${pad(p.num)}</div>
+            <div>
+              <div class="eyebrow">Faza ${p.num} · ${esc(p.duration)}</div>
+              <h2 class="h-section">${esc(p.title)}</h2>
+              <p class="phase-goal">${esc(p.goal)}</p>
+            </div>
+            <div class="phase-stat"><div class="num" data-phase-num>0%</div><div class="lbl" data-phase-lbl>0 / 0 działań</div><div class="bar"><i data-phase-bar></i></div></div>
+          </div>
+          <div class="bento">
+            <div class="cell cell-6 outcomes reveal">
+              <div class="cell-tag">Na koniec fazy masz</div>
+              <div class="outcome-chips">${outcomes}</div>
             </div>
           </div>
+          ${stages}
+          ${gate}
         </div>
-      `;
-    }
+      </section>`;
+  }
 
-    // Function to render week section
-    function renderWeek(week) {
-      const weekTitle = week.title ? `<h3>${week.title}</h3>` : '';
-      return `
-        <div class="mb-3">
-          ${weekTitle}
-          <div class="accordion" id="${week.accordionId}">
-            ${week.items.map(item => renderAccordionItem(item, week.accordionId)).join('')}
-          </div>
-        </div>
-      `;
-    }
+  function renderOngoing() {
+    $("#ongoingTitle").innerHTML = `${esc(DATA.ongoing.title)} w <span class="h-pink">czterech rytmach</span>`;
+    $("#ongoingLead").textContent = DATA.ongoing.lead;
+    const sp = spans(DATA.ongoing.cadences.length);
+    $("#ongoingGrid").innerHTML = DATA.ongoing.cadences.map((c, i) => `
+      <div class="cell cell-${sp[i]} reveal">
+        <div class="cell-tag">${esc(c.period)}<i data-lucide="${c.icon}" class="icon"></i></div>
+        <ul>${c.actions.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>
+      </div>`).join("");
+  }
 
-    // Function to render phase
-    function renderPhase(phase) {
-      const subtitle = phase.subtitle ? `<span class="text-muted">${phase.subtitle}</span>` : '';
-      return `
-        <div class="phase" id="${phase.id}">
-          <h2>
-            ${svgIcons[phase.icon] || ''}
-            ${phase.title} ${subtitle}
-          </h2>
-          ${phase.weeks.map(week => renderWeek(week)).join('')}
-        </div>
-      `;
-    }
+  function renderRegulation() {
+    const r = DATA.regulation;
+    $("#regTitle").innerHTML = `${esc(r.title)}: co już <span class="h-pink">obowiązuje</span>`;
+    $("#regLead").textContent = r.lead;
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const events = r.events.slice().sort((a, b) => a.date.localeCompare(b.date));
+    $("#timeline").innerHTML = events.map((e) => {
+      const st = regStatus(e.date, today);
+      return `<li class="tl-item" data-status="${st.key}" data-date="${e.date}">
+        <div><div class="tl-date">${e.date}</div><span class="tl-status">${st.label}</span></div>
+        <div><h3>${esc(e.title)}</h3><p>${esc(e.desc)}</p></div>
+      </li>`;
+    }).join("");
+    $("#regSources").innerHTML = "Źródła: " + r.sources.map((s) => `<a href="${s.url}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join("");
+  }
 
-    // Load and render roadmap data
-    async function loadRoadmap() {
-      try {
-        const response = await fetch('roadmap.json');
-        if (!response.ok) {
-          throw new Error('Failed to load roadmap data');
-        }
-        const data = await response.json();
+  function renderChallenges() {
+    const c = DATA.challenges;
+    $("#chTitle").innerHTML = `${esc(c.title)} i <span class="h-pink">gotowe odpowiedzi</span>`;
+    $("#chLead").textContent = c.lead;
+    const sp = spans(c.items.length);
+    $("#chGrid").innerHTML = c.items.map((it, i) => `
+      <div class="cell cell-${sp[i]} reveal">
+        <div class="cell-tag">Wyzwanie<i data-lucide="${it.icon}" class="icon"></i></div>
+        <h3>${esc(it.title)}</h3>
+        <p>${esc(it.problem)}</p>
+        <div class="cell-note"><strong>Rozwiązanie:</strong> ${esc(it.fix)}</div>
+      </div>`).join("");
+  }
 
-        const container = document.getElementById('roadmap-container');
-        container.innerHTML = data.phases.map(phase => renderPhase(phase)).join('');
+  function renderMetrics() {
+    const m = DATA.metrics;
+    $("#mTitle").innerHTML = `${esc(m.title)} w <span class="h-pink">czterech grupach</span>`;
+    $("#mLead").textContent = m.lead;
+    const sp = spans(m.groups.length);
+    $("#mGrid").innerHTML = m.groups.map((g, i) => `
+      <div class="cell cell-${sp[i]} reveal">
+        <div class="cell-tag">${esc(g.title)}<i data-lucide="${g.icon}" class="icon"></i></div>
+        <ul>${g.items.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+      </div>`).join("");
+  }
 
-        // Re-initialize observers for animations after content is loaded
-        const observerOptions = {
-          threshold: 0.1,
-          rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.style.opacity = '1';
-              entry.target.style.transform = 'translateY(0)';
-            }
-          });
-        }, observerOptions);
-
-        document.querySelectorAll('.accordion-item').forEach(item => {
-          observer.observe(item);
-        });
-      } catch (error) {
-        console.error('Error loading roadmap:', error);
-        document.getElementById('roadmap-container').innerHTML = `
-          <div class="alert alert-danger" role="alert">
-            <h4 class="alert-heading">Błąd ładowania</h4>
-            <p>Nie udało się załadować mapy drogowej. Sprawdź, czy plik roadmap.json istnieje.</p>
-          </div>
-        `;
-      }
-    }
-
-    // Load roadmap when DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', loadRoadmap);
-    } else {
-      loadRoadmap();
-    }
-  </script>
-
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer py-3 mt-5">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-6 text-center text-md-start">
-          <p class="mb-0 small">© 2025 Mapa drogowa wdrożenia AI</p>
-        </div>
-        <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
-          <a href="#" class="text-white text-decoration-none small">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle me-1" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
-            </svg>
-            Wróć do góry
-          </a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Bootstrap JS Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Custom JavaScript for enhanced interactions -->
-  <script>
-    // Scroll progress indicator
-    window.addEventListener('scroll', function() {
-      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
-      document.getElementById('scrollProgress').style.width = scrolled + '%';
-    });
-
-    // Active navigation link highlighting (scrollspy enhancement)
-    const sections = document.querySelectorAll('.phase');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.pageYOffset >= sectionTop - 100) {
-          current = section.getAttribute('id');
-        }
+  function renderProgress(announce) {
+    let allDone = 0, allTotal = 0;
+    DATA.phases.forEach((p) => {
+      const ids = phaseIds(p);
+      const done = countDone(ids);
+      allDone += done; allTotal += ids.length;
+      const pct = ids.length ? Math.round(done / ids.length * 100) : 0;
+      const sec = document.querySelector(`[data-phase="${p.id}"]`);
+      sec.dataset.done = done; sec.dataset.total = ids.length;
+      sec.querySelector("[data-phase-num]").textContent = pct + "%";
+      sec.querySelector("[data-phase-lbl]").textContent = `${done} / ${ids.length} działań`;
+      sec.querySelector("[data-phase-bar]").style.width = pct + "%";
+      const gate = sec.querySelector("[data-gate]");
+      const gateIds = p.gate.checks.map((c, ci) => `${p.id}/gate/${ci}`);
+      gate.dataset.done = countDone(gateIds) === gateIds.length ? "true" : "false";
+      sec.querySelectorAll("[data-item]").forEach((cell) => {
+        const boxes = cell.querySelectorAll("input");
+        cell.dataset.done = Array.from(boxes).every((b) => b.checked) ? "true" : "false";
       });
-
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + current) {
-          link.classList.add('active');
-        }
-      });
+      const step = stepperEl.querySelector(`[data-step="${p.id}"]`);
+      step.querySelector("[data-step-count]").textContent = `${done}/${ids.length}`;
+      step.querySelector("[data-step-bar]").style.width = pct + "%";
     });
+    state.total = allTotal;
+    const pct = allTotal ? Math.round(allDone / allTotal * 100) : 0;
+    navProgress.style.width = pct + "%";
+    progressMeta.textContent = `${allDone} / ${allTotal} działań · ${pct}%`;
+    document.body.dataset.progress = pct;
+    document.body.dataset.done = allDone;
+    document.body.dataset.total = allTotal;
+    if (announce) liveEl.textContent = `Postęp: ${allDone} z ${allTotal} działań, ${pct} procent.`;
+  }
 
-    // Smooth scroll for all anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
+  function renderAll() {
+    renderStepper();
+    phasesEl.innerHTML = DATA.phases.map(renderPhase).join("");
+    renderOngoing();
+    renderRegulation();
+    renderChallenges();
+    renderMetrics();
+    const actions = DATA.phases.reduce((n, p) => n + p.stages.reduce((m, s) => m + s.items.reduce((k, it) => k + it.actions.length, 0), 0), 0);
+    $("#heroMeta").textContent = `${DATA.phases.length} fazy · ${actions} działań · aktualizacja ${DATA.meta.updated}`;
+    renderProgress(false);
+    icons();
+  }
+
+  // ─── Behaviour: dots, reveal, nav ───
+  function initDots(canvas) {
+    const ctx = canvas.getContext("2d");
+    const dots = [];
+    function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+    resize();
+    window.addEventListener("resize", resize);
+    for (let i = 0; i < 70; i++) {
+      dots.push({ x: Math.random(), y: Math.random(), r: 1 + Math.random() * 2.2, vx: (Math.random() - 0.5) * 0.0004, vy: (Math.random() - 0.5) * 0.0004, o: 0.12 + Math.random() * 0.5 });
+    }
+    function frame() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      dots.forEach((d) => {
+        d.x = (d.x + d.vx + 1) % 1; d.y = (d.y + d.vy + 1) % 1;
+        ctx.beginPath();
+        ctx.arc(d.x * canvas.width, d.y * canvas.height, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(210, 7, 87, " + d.o + ")";   // canvas cannot read var(--quantica-pink)
+        ctx.fill();
       });
-    });
-
-    // Add entrance animations on scroll
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
+      if (!REDUCED_MOTION) requestAnimationFrame(frame);
+    }
+    frame();
+  }
+  function initReveal() {
+    const els = document.querySelectorAll(".reveal");
+    if (REDUCED_MOTION || !("IntersectionObserver" in window)) { els.forEach((el) => el.classList.add("visible")); return; }
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("visible"); obs.unobserve(en.target); } });
+    }, { threshold: 0.08 });
+    els.forEach((el) => obs.observe(el));
+  }
+  function initMobileNav() {
+    const btn = $(".nav-burger"), links = $(".nav-links");
+    btn.addEventListener("click", () => { const open = links.classList.toggle("open"); btn.setAttribute("aria-expanded", open ? "true" : "false"); });
+    links.addEventListener("click", (e) => { if (e.target.tagName === "A") links.classList.remove("open"); });
+  }
+  function initActiveNav() {
+    const links = Array.from(document.querySelectorAll(".nav-links a:not(.nav-cta)"));
+    const targets = links.map((a) => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+    if (!("IntersectionObserver" in window)) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        const id = "#" + en.target.id;
+        links.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === id || (id.startsWith("#faza-") && a.getAttribute("href") === "#faza-1")));
       });
-    }, observerOptions);
+    }, { rootMargin: "-40% 0px -55% 0px" });
+    targets.forEach((t) => obs.observe(t));
+    document.querySelectorAll(".phase").forEach((t) => obs.observe(t));
+  }
 
-    // Observe all accordion items
-    document.querySelectorAll('.accordion-item').forEach(item => {
-      observer.observe(item);
+  // ─── Listeners ───
+  document.addEventListener("change", (e) => {
+    const box = e.target.closest("input[data-task]");
+    if (!box) return;
+    if (box.checked) state.done[box.dataset.task] = 1; else delete state.done[box.dataset.task];
+    saveProgress();
+    renderProgress(true);
+  });
+  $("#btnReset").addEventListener("click", () => {
+    const n = Object.keys(state.done).length;
+    if (!n) { toast("Nic do wyczyszczenia"); return; }
+    state.done = {};
+    saveProgress();
+    document.querySelectorAll("input[data-task]").forEach((b) => { b.checked = false; });
+    renderProgress(true);
+    toast(`Wyczyszczono ${n} odhaczeń`);
+  });
+  $("#btnHelp").addEventListener("click", () => helpEl.setAttribute("open", ""));
+  $("#btnHelpClose").addEventListener("click", () => helpEl.removeAttribute("open"));
+  helpEl.addEventListener("click", (e) => { if (e.target === helpEl) helpEl.removeAttribute("open"); });
+  $("#btnPrint").addEventListener("click", () => window.print());
+  document.addEventListener("keydown", (e) => {
+    if (e.target.matches("input, textarea") || e.ctrlKey || e.metaKey || e.altKey) return;
+    const go = (sel) => { const el = document.querySelector(sel); if (el) { el.scrollIntoView({ behavior: REDUCED_MOTION ? "auto" : "smooth" }); } };
+    if (e.key >= "1" && e.key <= "4") go(`#faza-${e.key}`);
+    else if (e.key === "0") go("#top");
+    else if (e.key === "p" || e.key === "P") go("#przeglad");
+    else if (e.key === "r" || e.key === "R") go("#regulacje");
+    else if (e.key === "?") helpEl.toggleAttribute("open");
+    else if (e.key === "Escape") helpEl.removeAttribute("open");
+  });
+
+  // ─── Probe (DOM contract) ───
+  window.ROADMAP_CHECK = function () {
+    const errors = [];
+    document.querySelectorAll(".bento").forEach((grid, gi) => {
+      const sum = Array.from(grid.children).reduce((n, c) => n + Number((c.className.match(/cell-(\d)/) || [0, 0])[1]), 0);
+      if (sum % 6 !== 0) errors.push(`bento ${gi}: spans sum ${sum}`);
     });
-  </script>
+    const boxes = document.querySelectorAll("input[data-task]").length;
+    if (boxes !== state.total) errors.push(`checkboxes ${boxes} != total ${state.total}`);
+    if (/\u2014/.test(document.body.innerText)) errors.push("em-dash in text");
+    const dates = Array.from(document.querySelectorAll(".tl-item")).map((li) => li.dataset.date);
+    if (dates.join() !== dates.slice().sort().join()) errors.push("timeline unsorted");
+    if (!document.documentElement.classList.contains("app-ready")) errors.push("app not ready");
+    return { phases: DATA.phases.length, tasks: state.total, done: Number(document.body.dataset.done), progress: Number(document.body.dataset.progress), errors };
+  };
+
+  // ─── Init ───
+  if (!DATA) { document.body.innerHTML = "<p style='padding:40px;font-family:monospace'>Brak pliku roadmap.js</p>"; document.documentElement.classList.add("app-ready"); return; }
+  renderAll();
+  document.querySelectorAll("canvas[data-dots]").forEach(initDots);
+  initReveal();
+  initMobileNav();
+  initActiveNav();
+  Promise.race([
+    Promise.all(BRAND_FONTS.map((f) => document.fonts.load(f).catch(() => null))),
+    new Promise((r) => setTimeout(r, FONT_WAIT_MS))
+  ]).then(() => document.documentElement.classList.add("app-ready"));
+})();
+</script>
 </body>
 </html>
