@@ -38,7 +38,6 @@
     dialogOpener: null,
     currentTaskId: "",
     revision: 0,
-    decisionDrafts: Object.create(null),
     toastTimer: 0,
     saveTimer: 0
   };
@@ -205,7 +204,7 @@
     state.storageState = status;
     state.storageError = message || "";
     document.querySelectorAll("[data-save-label]").forEach((element) => {
-      element.textContent = message || ({ saved: "Zapis lokalny gotowy", unsaved: "Niezapisane zmiany - pobierz kopię", error: "Nie udało się zapisać - pobierz kopię", corrupt: "Odczyt przerwany - użyj kopii" }[status] || "Stan zapisu nieznany");
+      element.textContent = message || ({ saved: "Zapis lokalny gotowy", unsaved: "Niezapisane zmiany – pobierz kopię", error: "Nie udało się zapisać – pobierz kopię", corrupt: "Odczyt przerwany – użyj kopii" }[status] || "Stan zapisu nieznany");
     });
     document.querySelectorAll("[data-retry-save]").forEach((element) => { element.hidden = status === "saved"; });
     document.querySelectorAll("[data-ack-quarantine]").forEach((element) => { element.hidden = status !== "corrupt" || !hasQuarantineNotice(); });
@@ -241,76 +240,23 @@
       invalidated = invalidateDecisionForPhase(phase.id) || invalidated;
     });
     if (invalidated) {
-      renderDecisions();
       renderPrintSnapshot();
     }
     return invalidated;
   }
 
-  function decisionValues(value = {}) {
-    return {
-      status: value.status || "none",
-      person: value.person || "",
-      date: value.date || "",
-      evidence: value.evidence || "",
-      notes: value.notes || ""
-    };
-  }
-
-  function decisionValuesFromBox(box) {
-    return decisionValues({
-      status: box.querySelector("[data-decision-status]")?.value,
-      person: box.querySelector("[data-decision-person]")?.value,
-      date: box.querySelector("[data-decision-date]")?.value,
-      evidence: box.querySelector("[data-decision-evidence]")?.value,
-      notes: box.querySelector("[data-decision-notes]")?.value
-    });
-  }
-
-  function storedDecision(phaseId) {
-    return decisionValues(state.plan.decisions[phaseId] || {});
-  }
-
-  function decisionValuesEqual(left, right) {
-    return ["status", "person", "date", "evidence", "notes"].every((key) => left[key] === right[key]);
-  }
-
-  function hasDecisionDrafts() {
-    return Object.keys(state.decisionDrafts).length > 0;
-  }
-
   function hasUnsavedChanges() {
-    return Boolean(state.dirty || hasDecisionDrafts());
+    return Boolean(state.dirty);
   }
 
   function refreshSaveStatus() {
     if (hasQuarantineNotice()) {
       setSaveStatus("corrupt", quarantineMessage());
-    } else if (hasDecisionDrafts()) {
-      setSaveStatus("unsaved", "Niezapisana decyzja - zapisz decyzję");
     } else if (state.dirty) {
-      setSaveStatus("unsaved", "Niezapisane zmiany - pobierz kopię");
+      setSaveStatus("unsaved", "Niezapisane zmiany – pobierz kopię");
     } else {
       setSaveStatus("saved", "Zapis lokalny gotowy");
     }
-  }
-
-  function captureDecisionDraft(box) {
-    const phaseId = box && box.dataset.decision;
-    if (!phaseId) return;
-    const values = decisionValuesFromBox(box);
-    const stored = storedDecision(phaseId);
-    const wasDraft = Boolean(state.decisionDrafts[phaseId]);
-    if (decisionValuesEqual(values, stored)) delete state.decisionDrafts[phaseId];
-    else state.decisionDrafts[phaseId] = values;
-    if (wasDraft !== Boolean(state.decisionDrafts[phaseId]) || !decisionValuesEqual(values, stored)) {
-      state.revision += 1;
-      refreshSaveStatus();
-    }
-  }
-
-  function clearDecisionDrafts() {
-    state.decisionDrafts = Object.create(null);
   }
 
   function touchPlan(options = {}) {
@@ -353,7 +299,6 @@
     persistPlan();
     renderProgress(announce);
     renderPlan();
-    renderDecisions();
     renderPrintSnapshot();
   }
 
@@ -484,23 +429,16 @@
       return `<h3 class="stage-title reveal"><span class="stage-num">ETAP ${phase.num}.${stageIndex + 1}</span>${esc(stage.title)}</h3><div class="bento">${cells}</div>`;
     }).join("");
     const checks = (CATALOG.phaseMap.get(phase.id) || { gateIds: [] }).gateIds.map((id) => taskHtml(id, CATALOG.tasks.get(id), "gate")).join("");
-    const decision = state.plan.decisions[phase.id] || { status: "none", person: "", date: "", evidence: "", notes: "", basis: "" };
-    const basis = CORE.decisionBasis(DATA, state.plan.done, phase.id, state.plan.na, state.plan.project);
-    const stale = CORE.decisionIsStale(decision, DATA, state.plan.done, state.plan.na, state.plan.project) || (decision.status !== "none" && decision.basis !== basis);
     return `<section class="section phase${alt}" id="faza-${phase.num}" data-phase="${esc(phase.id)}" data-done="0" data-total="0">
       <div class="wrap"><div class="phase-head reveal"><div class="phase-num" aria-hidden="true">${pad(phase.num)}</div><div><div class="eyebrow">Faza ${phase.num} · ${esc(phase.duration)}</div><h2 class="h-section">${esc(phase.title)}</h2><p class="phase-goal">${esc(phase.goal)}</p></div><div class="phase-stat"><div class="num" data-phase-num>0%</div><div class="lbl" data-phase-lbl>0 / 0 działań · warunki decyzji 0 / 0</div><div class="bar"><i data-phase-bar></i></div></div></div>
       <div class="bento"><div class="cell cell-6 outcomes reveal"><details class="output-disclosure"><summary>Na koniec fazy masz (${phase.outcomes.length} rezultatów)</summary><div class="outcome-chips">${outcomes}</div></details></div></div>
       ${stages}
       <div class="bento"><div class="cell cell-6 gate reveal" data-gate><div class="gate-grid">
-        <div class="gate-text"><div class="cell-tag">Warunki decyzji<i data-lucide="door-open" class="icon"></i></div><h3>${esc(phase.gate.title)}</h3><p>Warunki są osobnym potwierdzeniem, nie licznikiem działań. Możesz obejrzeć następną fazę bez udawania, że decyzja została podjęta.</p></div>
+        <div class="gate-text"><div class="cell-tag">Warunki decyzji<i data-lucide="door-open" class="icon"></i></div><h3>${esc(phase.gate.title)}</h3><p>Lista kontrolna przed kolejnym krokiem. Potwierdzenie warunków nie zwiększa licznika działań i nie wymaga osobnego formularza.</p></div>
         <ul class="task-list gate-checks">${checks}</ul>
         <div class="gate-status" data-gate-status>0 / 0 warunków potwierdzonych</div>
         <div class="gate-done">Warunki decyzji potwierdzone</div>
         <div class="gate-next"><a class="pill pill-solid" href="${nextHref}">${esc(nextLabel)}<i data-lucide="arrow-right" class="icon"></i></a></div>
-        <div class="gate-decision" data-decision="${esc(phase.id)}"><h4>Warunki decyzji</h4><p class="legal-note">To decyzja projektowa, nie certyfikat zgodności. Wybór kontynuacji, ponownego testu albo zatrzymania oraz zapis podstawy.</p>
-          <div class="gate-decision-grid"><label>Wynik<select data-decision-status><option value="none">Nie podjęto</option><option value="continue">Kontynuuj</option><option value="retest">Popraw i przetestuj ponownie</option><option value="stop">Zatrzymaj</option></select></label><label>Osoba<input data-decision-person maxlength="160" value="${esc(decision.person)}"></label><label>Data<input data-decision-date type="date" value="${esc(decision.date)}"></label><label>Podstawa / link<input data-decision-evidence maxlength="1000" value="${esc(decision.evidence)}"></label></div>
-          <label>Notatka<textarea data-decision-notes maxlength="2000">${esc(decision.notes)}</textarea></label><div class="decision-stale" data-decision-stale${stale ? "" : " hidden"}>Warunki lub działania zmieniły się od tej decyzji. Ponowne zapisanie decyzji jest wymagane.</div><div class="decision-stop" data-decision-stop${decision.status === "stop" ? "" : " hidden"}>Zatrzymanie jest prawidłowym wynikiem nauki. Opis powodu i następnego kroku jest wymagany.</div><button class="pill pill-ghost" type="button" data-save-decision>Zapisz decyzję</button>
-        </div>
       </div></div></div>
       </div></section>`;
   }
@@ -517,13 +455,13 @@
     $("#regTitle").innerHTML = `${esc(regulation.title)}: co już <span class="h-pink">obowiązuje</span>`;
     $("#regLead").textContent = regulation.lead;
     const now = regulation.now || {};
-    $("#legalNow").innerHTML = `<h3>${esc(now.title || "Co dotyczy Twojego zadania teraz?")}</h3><p>${esc(now.lead || "Ustalenie zakresu i roli oraz dobór obowiązku i zabezpieczenia.")}</p><div class="legal-now-grid">${(now.items || []).map((item) => `<article><h4>${esc(item.scope)}</h4><p><strong>Rola i działanie:</strong> ${esc(item.action)}<br><strong>Źródło:</strong> <a href="${safeUrl(item.source)}" target="_blank" rel="noopener">${esc(item.sourceLabel || item.source)}</a><br><strong>Przegląd:</strong> ${esc(item.reviewed || "nie podano")}</p></article>`).join("")}</div><p class="legal-note">${esc(now.note || "To wskazówka do screeningu, nie porada prawna. Data obowiązywania nie oznacza automatycznego, bieżącego potwierdzenia wszystkich wymogów.")}</p>`;
+    $("#legalNow").innerHTML = `<h3>${esc(now.title || "Co dotyczy Twojego zadania teraz?")}</h3><p>${esc(now.lead || "Gdy znasz zakres i swoją rolę, łatwiej dobrać obowiązki i zabezpieczenia.")}</p><div class="legal-now-grid">${(now.items || []).map((item) => `<article><h4>${esc(item.scope)}</h4><p><strong>Rola i działanie:</strong> ${esc(item.action)}<br><strong>Źródło:</strong> <a href="${safeUrl(item.source)}" target="_blank" rel="noopener">${esc(item.sourceLabel || item.source)}</a><br><strong>Przegląd:</strong> ${esc(item.reviewed || "nie podano")}</p></article>`).join("")}</div><p class="legal-note">${esc(now.note || "To wskazówka do wstępnej oceny, a nie porada prawna. Sama data obowiązywania nie potwierdza, że spełniasz wszystkie wymogi.")}</p>`;
     const today = new Date(); today.setHours(0, 0, 0, 0);
     const events = regulation.events.slice().sort((a, b) => a.date.localeCompare(b.date));
     $("#timeline").innerHTML = events.map((event) => {
       const date = new Date(`${event.date}T00:00:00`);
       const diff = Math.round((date - today) / 86400000);
-      const status = diff <= 0 ? { key: "past", label: "data minęła / aktualne brzmienie do sprawdzenia" } : diff <= 120 ? { key: "next", label: `za ${diff} dni` } : { key: "future", label: "nadchodzi" };
+      const status = diff <= 0 ? { key: "past", label: "data minęła, sprawdź aktualne brzmienie" } : diff <= 120 ? { key: "next", label: `za ${diff} dni` } : { key: "future", label: "nadchodzi" };
       return `<li class="tl-item" data-status="${status.key}" data-date="${event.date}"><div><div class="tl-date">${esc(event.date)}</div><span class="tl-status">${esc(status.label)}</span></div><div><h3>${esc(event.title)}</h3><p>${esc(event.desc)}</p></div></li>`;
     }).join("");
     $("#regSources").innerHTML = "Źródła (przegląd 2026-10-22): " + regulation.sources.map((source) => `<a href="${safeUrl(source.url)}" target="_blank" rel="noopener">${esc(source.label)}</a>`).join("");
@@ -561,7 +499,7 @@
     }
     const keys = Object.keys(state.legacyBackups);
     notice.hidden = false;
-    notice.innerHTML = `<strong>Wykryto dane poprzedniego, rozbudowanego planu.</strong> Oryginalny zapis pozostaje nietknięty i nie oznacza wykonania żadnego zadania w planie dla MŚP. Zachowanie kopii przed ręcznym przepisaniem wybranych informacji. <span class="legacy-keys">Źródła: ${esc(keys.join(", "))}</span> <button class="pill pill-ghost" type="button" id="btnLegacyDownload">Pobierz oryginalne kopie</button>`;
+    notice.innerHTML = `<strong>Wykryto dane poprzedniego, rozbudowanego planu.</strong> Oryginalny zapis pozostaje nietknięty i nie oznacza wykonania żadnego zadania w planie dla MŚP. Zanim ręcznie przepiszesz wybrane informacje, pobierz kopię. <span class="legacy-keys">Źródła: ${esc(keys.join(", "))}</span> <button class="pill pill-ghost" type="button" id="btnLegacyDownload">Pobierz oryginalne kopie</button>`;
     $("#btnLegacyDownload").addEventListener("click", downloadLegacyBackups);
   }
 
@@ -588,8 +526,8 @@
     const selectedItems = (conditional && conditional.items || []).filter((item) => active.has(item.context));
     const needsSpecialist = active.has("personalData") || active.has("externalOutput") || active.has("sensitiveDecision");
     const layerHtml = (layer, items, extra = "") => `<section data-context-guidance data-layer="${esc(layer.id)}"><h4>${esc(layer.title)}</h4>${extra ? `<p>${esc(extra)}</p>` : ""}<ul>${items.map((item) => `<li>${esc(typeof item === "string" ? item : item.text)}</li>`).join("")}</ul></section>`;
-    const conditionalHtml = selectedItems.length ? layerHtml(conditional, selectedItems, "Wybrane konteksty kierują do tych dodatkowych ustaleń.") : layerHtml(conditional, [], "Brak dodatkowej ścieżki. Zakres kontekstu ograniczony do sytuacji, których dotyczy zadanie.");
-    const specialistHtml = needsSpecialist ? layerHtml(specialist, specialist.items, "Zakres może wymagać oceny osoby z odpowiednimi kompetencjami.") : "";
+    const conditionalHtml = selectedItems.length ? layerHtml(conditional, selectedItems, "Wybrane konteksty kierują do tych dodatkowych ustaleń.") : layerHtml(conditional, [], "Nie zaznaczono kontekstu. Dodatkowe ustalenia pojawią się po zaznaczeniu sytuacji, której dotyczy zadanie.");
+    const specialistHtml = needsSpecialist ? layerHtml(specialist, specialist.items, "Ten zakres może wymagać oceny specjalisty.") : "";
     panel.dataset.activeContexts = Array.from(active).join(",");
     panel.innerHTML = `<p class="safety-lead">${esc(DATA.safety.lead)}</p><div class="safety-grid">${layerHtml(basics, basics.items)}${conditionalHtml}${specialistHtml}</div>`;
   }
@@ -631,29 +569,6 @@
     if (announce) liveEl.textContent = `Postęp: ${all.actionsDone} z ${all.actionsTotal} działań i ${all.gatesDone} z ${all.gatesTotal} warunków decyzji.`;
   }
 
-  function renderDecisions() {
-    document.querySelectorAll("[data-decision]").forEach((box) => {
-      const phaseId = box.dataset.decision;
-      const decision = state.plan.decisions[phaseId] || { status: "none", person: "", date: "", evidence: "", notes: "", basis: "" };
-      const values = state.decisionDrafts[phaseId] || decisionValues(decision);
-      const status = box.querySelector("[data-decision-status]");
-      if (status) status.value = values.status || "none";
-      const person = box.querySelector("[data-decision-person]");
-      if (person) person.value = values.person;
-      const date = box.querySelector("[data-decision-date]");
-      if (date) date.value = values.date;
-      const evidence = box.querySelector("[data-decision-evidence]");
-      if (evidence) evidence.value = values.evidence;
-      const notes = box.querySelector("[data-decision-notes]");
-      if (notes) notes.value = values.notes;
-      const stale = CORE.decisionIsStale(decision, DATA, state.plan.done, state.plan.na, state.plan.project) || (decision.status !== "none" && decision.basis !== CORE.decisionBasis(DATA, state.plan.done, phaseId, state.plan.na, state.plan.project));
-      const staleEl = box.querySelector("[data-decision-stale]");
-      if (staleEl) staleEl.hidden = !stale;
-      const stopEl = box.querySelector("[data-decision-stop]");
-      if (stopEl) stopEl.hidden = decision.status !== "stop";
-    });
-  }
-
   function printValue(value) {
     return esc(value == null || String(value) === "" ? "Nie podano" : value);
   }
@@ -680,13 +595,11 @@
         const group = task.group || (task.kind === "gate" ? "Warunki decyzji" : "Działania");
         const kind = task.kind === "gate" ? "Warunek decyzji" : task.optional ? "Opcjonalne działanie" : "Działanie";
         const hint = task.output || task.hint || (task.kind === "gate" ? "Wynik lub dokumentacja warunku decyzji." : "Wynik lub przykład zapisany przy zadaniu.");
-        return "<article class=\"print-task\" data-print-task=\"" + esc(id) + "\"><h4>" + esc(group) + "</h4><p class=\"print-task-title\"><strong>" + esc(kind) + "</strong> - " + esc(task.text) + "</p><p><strong>Status:</strong> " + esc(status) + (na ? "; powód N/A: " + printValue(state.plan.na[id]) : "") + "</p><p><strong>" + (task.kind === "gate" ? "Oczekiwana dokumentacja:" : "Wynik lub przykład:") + "</strong> " + printValue(hint) + "</p><div class=\"print-task-fields\">" + printField("Właściciel", meta.owner) + printField("Termin", meta.due) + printField("Notatka", meta.notes, true) + printField(task.kind === "gate" ? "Dokumentacja / link" : "Wynik lub przykład / link", meta.evidence, true) + "</div></article>";
+        return "<article class=\"print-task\" data-print-task=\"" + esc(id) + "\"><h4>" + esc(group) + "</h4><p class=\"print-task-title\"><strong>" + esc(kind) + "</strong> – " + esc(task.text) + "</p><p><strong>Status:</strong> " + esc(status) + (na ? "; powód N/A: " + printValue(state.plan.na[id]) : "") + "</p><p><strong>" + (task.kind === "gate" ? "Oczekiwana dokumentacja:" : "Wynik lub przykład:") + "</strong> " + printValue(hint) + "</p><div class=\"print-task-fields\">" + printField("Właściciel", meta.owner) + printField("Termin", meta.due) + printField("Notatka", meta.notes, true) + printField(task.kind === "gate" ? "Dokumentacja / link" : "Wynik lub przykład / link", meta.evidence, true) + "</div></article>";
       }).join("");
-      const decision = state.plan.decisions[phase.id] || { status: "none", person: "", date: "", evidence: "", notes: "", basis: "" };
-      const decisionStatus = decision.status === "none" ? "Nie podjęto" : decision.status;
-      return "<section class=\"print-phase\" data-print-phase=\"" + esc(phase.id) + "\"><h2>Faza " + esc(phase.num) + ": " + esc(phase.title) + (selectedPhase() === phase.id ? " - bieżący widok" : "") + "</h2><p class=\"print-phase-meta\">" + phaseCount.actionsDone + " / " + phaseCount.actionsTotal + " działań, " + phaseCount.gatesDone + " / " + phaseCount.gatesTotal + " warunków decyzji, " + phaseCount.na + " N/A</p><div class=\"print-task-list\">" + tasks + "</div><div class=\"print-decision\"><h3>Warunki decyzji</h3><p><strong>Status:</strong> " + printValue(decisionStatus) + "</p>" + printField("Osoba", decision.person) + printField("Data", decision.date) + printField("Dokumentacja / link", decision.evidence, true) + printField("Notatka", decision.notes, true) + printField("Podstawa decyzji", decision.basis) + "</div></section>";
+      return "<section class=\"print-phase\" data-print-phase=\"" + esc(phase.id) + "\"><h2>Faza " + esc(phase.num) + ": " + esc(phase.title) + (selectedPhase() === phase.id ? " – bieżący widok" : "") + "</h2><p class=\"print-phase-meta\">" + phaseCount.actionsDone + " / " + phaseCount.actionsTotal + " działań, " + phaseCount.gatesDone + " / " + phaseCount.gatesTotal + " warunków decyzji, " + phaseCount.na + " N/A</p><div class=\"print-task-list\">" + tasks + "</div></section>";
     }).join("");
-    snapshot.innerHTML = "<div class=\"print-cover\"><div class=\"eyebrow\">AI Plan dla MŚP · wydruk roboczy</div><h1>Kopia planu - wszystkie fazy</h1><p>Zakres wydruku: pełny lokalny plan jednego zadania, wszystkie cztery fazy i zapisane decyzje. Bieżący widok: " + esc(currentPhase.title) + ". Stan wygenerowano: " + esc(new Date().toLocaleString("pl-PL")) + ".</p></div><section class=\"print-project\"><h2>Dane zadania i stan planu</h2>" + printField("Zadanie", project.task) + printField("Osoba odpowiedzialna", project.owner) + printField("Pożądana poprawa", project.improvement, true) + printField("Kryterium sukcesu", project.successCriterion, true) + printField("Następny krok", project.nextStep, true) + printField("Kontekst", (project.context || []).map((key) => CONTEXT_LABELS[key] || key).join(", ")) + printField("Faza bieżąca", project.phaseOverride || "Automatyczna faza ostatniego zadania") + "<p><strong>Postęp działań:</strong> " + counts.actionsDone + " / " + counts.actionsTotal + "; <strong>warunki decyzji:</strong> " + counts.gatesDone + " / " + counts.gatesTotal + "; <strong>N/A:</strong> " + counts.na + "</p>" + printField("Notatka planu", project.notes, true) + printField("Wynik lub przykład planu", project.evidence, true) + printField("Kwarantanna", state.quarantined.join("; ")) + printField("Błędy kontraktu", state.validationErrors.join("; ")) + "</section>" + phases;
+    snapshot.innerHTML = "<div class=\"print-cover\"><div class=\"eyebrow\">AI Plan dla MŚP · wydruk roboczy</div><h1>Kopia planu – wszystkie fazy</h1><p>Zakres wydruku: pełny lokalny plan jednego zadania, wszystkie cztery fazy, działania i listy warunków. Bieżący widok: " + esc(currentPhase.title) + ". Wygenerowano: " + esc(new Date().toLocaleString("pl-PL")) + ".</p></div><section class=\"print-project\"><h2>Dane zadania i stan planu</h2>" + printField("Zadanie", project.task) + printField("Osoba odpowiedzialna", project.owner) + printField("Pożądana poprawa", project.improvement, true) + printField("Kryterium sukcesu", project.successCriterion, true) + printField("Następny krok", project.nextStep, true) + printField("Kontekst", (project.context || []).map((key) => CONTEXT_LABELS[key] || key).join(", ")) + printField("Faza bieżąca", project.phaseOverride || "Automatyczna faza ostatniego zadania") + "<p><strong>Postęp działań:</strong> " + counts.actionsDone + " / " + counts.actionsTotal + "; <strong>warunki decyzji:</strong> " + counts.gatesDone + " / " + counts.gatesTotal + "; <strong>N/A:</strong> " + counts.na + "</p>" + printField("Notatka planu", project.notes, true) + printField("Wynik lub przykład planu", project.evidence, true) + printField("Kwarantanna", state.quarantined.join("; ")) + printField("Błędy kontraktu", state.validationErrors.join("; ")) + "</section>" + phases;
     snapshot.dataset.scope = "all-phases";
     snapshot.dataset.currentPhase = currentPhase.id;
   }
@@ -697,7 +610,7 @@
     renderOngoing(); renderRegulation(); renderChallenges(); renderMetrics(); renderContentAdditions(); renderGuideSafety();
     const counts = countAll();
     $("#heroMeta").textContent = `${DATA.phases.length} fazy · ${counts.actionsAll} działań + ${counts.gatesTotal} warunków decyzji · aktualizacja ${DATA.meta.updated}`;
-    renderProgress(false); renderPlan(); renderDecisions(); renderPrintSnapshot(); icons();
+    renderProgress(false); renderPlan(); renderPrintSnapshot(); icons();
   }
 
   // ─── Render: local working view ───
@@ -724,7 +637,7 @@
     const phase = task ? phaseInfo(task.phaseId) : phaseInfo(fallbackPhase);
     const resume = $("#resumeCard");
     if (!task) {
-      resume.innerHTML = `<h3>Plan ma zapisany stan</h3><p>Brak ostatniego zadania. Wybór fazy i rozpoczęcie od pierwszego działania.</p>`;
+      resume.innerHTML = `<h3>Plan ma zapisany stan</h3><p>Nie ma jeszcze ostatniego zadania. Wybierz fazę i zacznij od pierwszego działania.</p>`;
       return;
     }
     resume.innerHTML = `<h3>Kontynuuj: ${esc(phase.title)}</h3><p>${esc(task.text)}</p><button class="pill pill-solid" type="button" data-resume-task="${esc(task.id)}">Otwórz zadanie</button>`;
@@ -829,10 +742,6 @@
   }
 
   // ─── Listeners ───
-  document.addEventListener("input", (event) => {
-    const decisionBox = event.target.closest("[data-decision]");
-    if (decisionBox && event.target.matches("input, textarea")) captureDecisionDraft(decisionBox);
-  });
   function onTaskChange(box) {
     const id = box.dataset.task;
     if (box.checked) { state.plan.done[id] = 1; delete state.plan.na[id]; } else delete state.plan.done[id];
@@ -840,7 +749,7 @@
     const task = CATALOG.tasks.get(id); if (task) state.plan.lastPhaseId = task.phaseId;
     const invalidated = invalidateDecisionForTask(id);
     touchPlan(); saveAndRender(true);
-    if (invalidated) toast("Zmieniono warunek. Poprzednia decyzja została unieważniona i wymaga ponownego zapisu.");
+    if (invalidated) toast("Zmieniono warunek, więc wcześniejsza decyzja nie jest już aktualna.");
   }
 
   function openTaskEditor(id, opener) {
@@ -873,36 +782,11 @@
     toast(saved ? (invalidated ? "Zapisano zmianę i unieważniono poprzednią decyzję" : "Zapisano szczegóły zadania") : "Szczegóły są tylko w pamięci. Pobierz kopię.");
   }
 
-  function saveDecision(box) {
-    const phaseId = box.dataset.decision;
-    const status = box.querySelector("[data-decision-status]").value;
-    const person = box.querySelector("[data-decision-person]").value.trim();
-    const date = box.querySelector("[data-decision-date]").value;
-    const evidence = box.querySelector("[data-decision-evidence]").value.trim();
-    const gate = countPhase(phaseId);
-    if (status === "continue" && gate.gatesDone < gate.gatesTotal) { toast("Najpierw potwierdź wszystkie warunki decyzji albo wybierz ponowny test lub zatrzymanie"); return; }
-    if (status !== "none" && (!person || !date || !evidence)) { toast("Decyzja wymaga osoby, daty i dowodu / linku"); return; }
-    state.plan.decisions[phaseId] = {
-      status,
-      person,
-      date,
-      evidence,
-      notes: box.querySelector("[data-decision-notes]").value,
-      basis: CORE.decisionBasis(DATA, state.plan.done, phaseId, state.plan.na, state.plan.project),
-      phaseId
-    };
-    delete state.decisionDrafts[phaseId];
-    touchPlan(); const saved = persistPlan();
-    renderDecisions(); renderPrintSnapshot();
-    const label = status === "stop" ? "Zapisano decyzję: zatrzymanie" : "Zapisano decyzję po warunkach decyzji";
-    toast(saved ? label : `${label} tylko w pamięci. Pobierz kopię.`);
-  }
-
   function resetPlan() {
     if (!state.plan) return;
     const before = JSON.parse(JSON.stringify(state.plan));
     before.undoSnapshot = null;
-    clearDecisionDrafts();
+
     state.plan = CORE.createDefaultPlan(DATA);
     state.selectedPhase = "";
     state.plan.undoSnapshot = before;
@@ -915,7 +799,7 @@
     if (!state.plan || !state.plan.undoSnapshot) return;
     const snapshot = JSON.parse(JSON.stringify(state.plan.undoSnapshot));
     snapshot.undoSnapshot = null;
-    clearDecisionDrafts();
+
     state.plan = snapshot;
     touchPlan(); const saved = persistPlan();
     renderAll(); setMode(state.mode); toast(saved ? "Przywrócono plan sprzed czyszczenia" : "Przywrócono plan tylko w pamięci. Pobierz kopię.");
@@ -951,7 +835,7 @@
         const checked = CORE.validatePlan(parsed, DATA);
         if (!checked.ok) { toast(`Kopia odrzucona: ${checked.errors.concat(checked.unknown.map((id) => `nieznane ID ${id}`)).slice(0, 2).join("; ")}`); return; }
         state.revision += 1;
-        clearDecisionDrafts();
+
         state.plan = checked.plan; state.dirty = false; state.quarantined = checked.plan.quarantine.slice(); state.validationErrors = [];
         const saved = persistPlan();
         renderAll(); setMode(state.mode);
@@ -975,7 +859,6 @@
       || Object.keys(state.plan.taskMeta || {}).length > 0
       || Object.keys(state.plan.na || {}).length > 0
       || Object.keys(state.plan.decisions || {}).length > 0
-      || hasDecisionDrafts()
       || Boolean(state.plan.lastTaskId)
       || Boolean(state.plan.lastPhaseId && state.plan.lastPhaseId !== DATA.phases[0].id)
       || Boolean(state.plan.undoSnapshot)
@@ -1000,8 +883,6 @@
     document.addEventListener("change", (event) => {
       const box = event.target.closest("input[data-task]");
       if (box && !box.disabled) onTaskChange(box);
-      const decisionBox = event.target.closest("[data-decision]");
-      if (decisionBox && event.target.matches("input, textarea, select")) captureDecisionDraft(decisionBox);
     });
     document.addEventListener("click", (event) => {
       const anchor = event.target.closest("a[href^='#']");
@@ -1030,7 +911,6 @@
       const na = event.target.closest("[data-task-na]"); if (na) { if (state.plan.na[na.dataset.taskNa]) { const invalidated = invalidateDecisionForTask(na.dataset.taskNa); delete state.plan.na[na.dataset.taskNa]; touchPlan(); const saved = persistPlan(); renderProgress(true); renderPlan(); renderPrintSnapshot(); toast(saved ? (invalidated ? "Usunięto N/A i unieważniono poprzednią decyzję" : "Usunięto oznaczenie N/A") : "Usunięto N/A tylko w pamięci. Pobierz kopię."); } else openTaskEditor(na.dataset.taskNa, na); return; }
       const phaseButton = event.target.closest("[data-plan-phase]"); if (phaseButton) { state.selectedPhase = phaseButton.dataset.planPhase; renderPlan(); return; }
       const resume = event.target.closest("[data-resume-task]"); if (resume) { const task = CATALOG.tasks.get(resume.dataset.resumeTask); if (task) { state.selectedPhase = task.phaseId; renderPlan(); const card = document.querySelector(`[data-task-card="${CSS.escape(task.id)}"]`); if (card) card.scrollIntoView({ behavior: REDUCED_MOTION ? "auto" : "smooth", block: "center" }); } return; }
-      const decision = event.target.closest("[data-save-decision]"); if (decision) { saveDecision(decision.closest("[data-decision]")); return; }
     });
     $("#projectForm").addEventListener("input", (event) => {
       const field = event.target;

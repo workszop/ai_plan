@@ -21,6 +21,14 @@ try {
   assert.deepEqual(initialProbe.errors, []);
   assert.equal(initialProbe.tasks, 20);
   assert.equal(initialProbe.gates, 12);
+  assert.equal(await page.locator('[data-decision], [data-save-decision], .print-decision').count(), 0);
+  assert.equal(await page.locator('#phases input[data-kind="gate"]').count(), 12);
+  const readableType = await page.evaluate(() => {
+    const size = (selector) => parseFloat(getComputedStyle(document.querySelector(selector)).fontSize);
+    return { task: size('.task'), body: size('.cell p'), input: size('#projectTask'), label: size('.project-form label'), meta: size('.step-meta') };
+  });
+  assert.ok(readableType.task >= 18 && readableType.body >= 18);
+  assert.ok(readableType.input >= 16 && readableType.label >= 16 && readableType.meta >= 14);
   assert.equal(await page.locator("#guideSafety").isVisible(), true);
   assert.equal(await page.locator("#guideSafety [data-layer='basics']").count(), 1);
   assert.equal(await page.locator("#guideSafety [data-layer='conditional']").count(), 1);
@@ -96,6 +104,10 @@ try {
   await page.reload({ waitUntil: "domcontentloaded" });
   await page.waitForFunction(() => document.documentElement.classList.contains("app-ready"), null, { timeout: 10000 });
   await page.click("#btnPlanMode");
+  const preservedDecision = await page.evaluate(() => JSON.parse(localStorage.getItem("aiPlan.plan.sme.v1")).decisions.choice);
+  assert.equal(preservedDecision.person, "Ala");
+  assert.equal(preservedDecision.date, "2026-10-22");
+  assert.equal(preservedDecision.evidence, "https://example.test/gate");
   await page.check("input[data-context='integration']");
   await page.waitForTimeout(750);
   const scopeChange = await page.evaluate(() => ({
@@ -105,30 +117,18 @@ try {
   assert.equal(scopeChange.status, "none");
   assert.ok(scopeChange.selected.includes("integration"));
   await page.click("#btnGuideMode");
-  await page.fill('#faza-1 [data-decision-person]', "Draft person");
-  let decisionPromptMessage = "";
-  page.once("dialog", async (dialog) => { decisionPromptMessage = dialog.message(); await dialog.accept(); });
-  await page.evaluate((payload) => {
-    window.__testImportPayload = payload;
-    window.FileReader = class {
-      readAsText() {
-        setTimeout(() => { this.result = window.__testImportPayload; this.onload({ target: { result: this.result } }); }, 80);
-      }
-    };
-  }, delayedImportPayload);
-  await page.setInputFiles("#importFile", { name: "decision-draft.json", mimeType: "application/json", buffer: Buffer.from("{}") });
-  assert.match(decisionPromptMessage, /niezapisane/i);
-  await page.fill('#faza-1 [data-decision-person]', "Intervening decision");
-  await page.waitForTimeout(120);
-  assert.equal(await page.locator('#faza-1 [data-decision-person]').inputValue(), "Intervening decision");
-  assert.match(await page.locator("#toastText").textContent(), /anulowane|zmienił/);
+  assert.equal(await page.locator('[data-decision], [data-save-decision]').count(), 0);
+  assert.equal(await page.locator('#printSnapshot .print-decision').count(), 0);
+  const actionCountBeforeGateChange = (await page.evaluate(() => window.ROADMAP_CHECK())).done;
   await page.locator('#faza-1 input[data-kind="gate"]').first().uncheck();
   const staleTransition = await page.evaluate(() => ({
     savedStatus: document.querySelector("#saveStatus").dataset.state,
     decisionStatus: JSON.parse(localStorage.getItem("aiPlan.plan.sme.v1")).decisions.choice.status,
     errors: window.ROADMAP_CHECK().errors
   }));
-  assert.equal(staleTransition.savedStatus, "unsaved");
+  assert.equal(staleTransition.savedStatus, "saved");
+  assert.equal((await page.evaluate(() => window.ROADMAP_CHECK())).done, actionCountBeforeGateChange);
+  assert.equal((await page.evaluate(() => window.ROADMAP_CHECK())).gatesDone, 2);
   assert.equal(staleTransition.decisionStatus, "none");
   assert.deepEqual(staleTransition.errors, []);
   await page.click("#btnPlanMode");
@@ -170,6 +170,7 @@ try {
   await page.click(".nav-links a[href='#przeglad']");
   assert.equal(await page.locator(".nav-burger").getAttribute("aria-expanded"), "false");
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth), false);
+  assert.deepEqual(errors, []);
   console.log(JSON.stringify({ ok: true, probe: await page.evaluate(() => window.ROADMAP_CHECK()), errors }));
 } finally {
   await context.close();

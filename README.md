@@ -4,7 +4,7 @@ Interaktywny, polski plan dla małej lub średniej firmy. Prowadzi przez cztery 
 
 - `/home/andrzey/git-claude/ai_plan/index.html` - strona w stylu Quantica Lab, bez kroku budowania, działa z `file://`
 - `/home/andrzey/git-claude/ai_plan/roadmap.js` - treść faz, warunków decyzji, kontekstów bezpieczeństwa i materiałów pomocniczych
-- `/home/andrzey/git-claude/ai_plan/app.js` - renderowanie, tryb przewodnika, Mój plan, zapis, backup, import, decyzje i druk
+- `/home/andrzey/git-claude/ai_plan/app.js` - renderowanie, tryb przewodnika, Mój plan, zapis, backup, import, listy kontrolne i druk
 - `/home/andrzey/git-claude/ai_plan/app-core.js` - kontrakt danych, walidacja, liczniki i stabilne ID; działa jako klasyczny skrypt oraz moduł CommonJS w testach
 - `/home/andrzey/git-claude/ai_plan/assets/` - logo i favicon
 
@@ -26,6 +26,10 @@ Nowy plan dla MŚP korzysta z osobnego klucza `aiPlan.plan.sme.v1` i schematu 4.
 
 Import starego backupu jest odrzucany z jasnym komunikatem, bez zmiany bieżącego planu. Import JSON ma limit 1 MB; nieznane ID, niepoprawne daty, niebezpieczne adresy i zbyt długie pola są odrzucane. Zapis działa lokalnie, bez konta i bez synchronizacji między kartami lub urządzeniami.
 
+Warunki decyzji pozostają listami kontrolnymi. Osobny formularz decyzji (wynik, osoba, data, podstawa i notatka) został usunięty z interfejsu oraz wydruku. Historyczne dane decyzji pozostają w kopiach JSON; dotychczasowa walidacja i unieważnianie ich statusu po zmianie zakresu nadal obowiązują. Dane zadania i edytor szczegółów działań pozostają dostępne.
+
+Typografia ekranowa korzysta z tokenów: tekst główny 18 px, formularze i przyciski 16 px, metadane co najmniej 14 px przy domyślnym rozmiarze przeglądarki. Rozmiary są zapisane w rem; zwarta sekcja hero pozostaje zachowana.
+
 ## Testy i diagnostyka
 
 ```bash
@@ -37,7 +41,7 @@ python3 -m http.server 8917 --directory /home/andrzey/git-claude/ai_plan
 node /home/andrzey/git-claude/ai_plan/tests/browser-smoke.mjs
 ```
 
-W sekcji **Diagnostyka planu** uruchom `window.ROADMAP_CHECK()`. Sonda sprawdza liczbę faz i działań, rozdział działań od warunków decyzji, sumy layoutu, kolejność osi czasu, brak em-dash, stan zapisu i brak błędów DOM. Skróty: `1`-`4` fazy, `0` góra, `P` przegląd, `R` regulacje, `?` pomoc, `Esc` zamknięcie dialogu. Tryb planu ma filtr pozostałych działań, przywracanie po czyszczeniu, bezpieczne drafty decyzji oraz drukowany snapshot całego planu.
+W sekcji **Diagnostyka planu** uruchom `window.ROADMAP_CHECK()`. Sonda sprawdza liczbę faz i działań, rozdział działań od warunków decyzji, sumy layoutu, kolejność osi czasu, brak em-dash, stan zapisu i brak błędów DOM. Skróty: `1`-`4` fazy, `0` góra, `P` przegląd, `R` regulacje, `?` pomoc, `Esc` zamknięcie dialogu. Tryb planu ma filtr pozostałych działań, przywracanie po czyszczeniu, ochronę bieżących zmian podczas importu oraz drukowany snapshot planu.
 
 ## Zakres i ograniczenia
 
