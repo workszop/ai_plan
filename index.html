@@ -41,6 +41,7 @@
   --bg-2:             #F5F6F8;
   --border-1:         #E6E8EC;
   --border-2:         #D1D5DB;
+  --border-input:     #868C96;  /* checkboxes and fields: >= 3:1 on white */
   --font-display:     "Manrope", system-ui, -apple-system, sans-serif;
   --font-sans:        "Manrope", system-ui, -apple-system, sans-serif;
   --font-print:       Arial, "Liberation Sans", sans-serif;
@@ -69,9 +70,31 @@
   --violet-a12: rgba(112, 48, 160, 0.12);
   --ink-a60: rgba(10, 31, 44, 0.60);
   --white-a16: rgba(255, 255, 255, 0.16);
-  --success: #157347;
-  --warning: #9a5b00;
-  --danger: #a3134c;
+  /* Palette: tetrad from the Quantica pink, verified with color-skill check
+     (contrast, colour-blind simulation; olive -> deep amber, indigo -> brand violet). */
+  --color-1: #D20757;  /* phase 1 · brand pink */
+  --color-2: #00807A;  /* phase 2 · teal */
+  --color-3: #8A5200;  /* phase 3 · deep amber */
+  --color-4: #7030A0;  /* phase 4 · brand violet */
+  --color-5: #CF4B1F;  /* danger only · kept away from the pink accent */
+  --tint-1: #FFE6F1;
+  --tint-2: #E2F3F2;
+  --tint-3: #FBEFDD;
+  --tint-4: #F4EEFA;
+  /* Desaturated siblings for text and marks on ink (checked on --ink). */
+  --on-ink-1: #E8789E;
+  --on-ink-2: #7FDDD5;
+  --on-ink-3: #E3A857;
+  --on-ink-4: #A989DA;
+  --ink-card: #102B3D;
+  --ink-line: #24404F;
+  --ink-line-strong: #7E93A0;
+  --ink-fg: #F4F6F8;
+  --ink-fg-muted: #B8C4CC;
+  --success: var(--color-2);
+  --warning: var(--color-3);
+  --danger: var(--color-5);
+  --rail-w: 0px;
 }
 
 /* ─── Base ─── */
@@ -88,7 +111,7 @@ a { color: var(--quantica-pink); }
 .eyebrow { font-family: var(--font-mono); font-weight: 500; font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--quantica-pink); }
 
 /* ─── Nav ─── */
-.nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 40; background: rgba(255, 255, 255, 0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-1); }
+.nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 40; background: var(--bg-1); border-bottom: 1px solid var(--border-1); }
 .nav-inner { max-width: var(--content-w); margin: 0 auto; padding: 0 28px; height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .nav-logo img { height: 30px; width: auto; display: block; }
 .nav-links { display: flex; align-items: center; gap: 26px; }
@@ -198,7 +221,7 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
 .task-list li::before { display: none; }
 .task { overflow-wrap: anywhere; display: flex; gap: 12px; align-items: flex-start; padding: 7px 0; font-size: var(--text-base); line-height: 1.65; color: var(--fg-1); cursor: pointer; border-top: 1px solid var(--border-1); }
 .task:first-child { border-top: 0; }
-.task input { appearance: none; -webkit-appearance: none; flex: none; width: 18px; height: 18px; margin-top: 2px; border: 1.5px solid var(--border-2); border-radius: 5px; background: var(--bg-1); cursor: pointer; position: relative; transition: background 150ms, border-color 150ms; }
+.task input { appearance: none; -webkit-appearance: none; flex: none; width: 18px; height: 18px; margin-top: 2px; border: 1.5px solid var(--border-input); border-radius: 5px; background: var(--bg-1); cursor: pointer; position: relative; transition: background 150ms, border-color 150ms; }
 .task input:checked { background: var(--quantica-pink); border-color: var(--quantica-pink); }
 .task input:checked::after { content: ""; position: absolute; left: 5px; top: 1.5px; width: 5px; height: 9px; border: solid var(--white); border-width: 0 2px 2px 0; transform: rotate(45deg); }
 .task input:focus-visible { outline: 2px solid var(--quantica-pink); outline-offset: 2px; }
@@ -217,7 +240,7 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
 .gate-checks { grid-column: 2; grid-row: 1 / span 4; }
 .gate-status { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.04em; margin-top: 12px; color: var(--fg-3); }
 .gate[data-done="true"] .gate-status { color: var(--success); }
-.project-form input, .project-form select, .project-form textarea, .task-editor input, .task-editor textarea { width: 100%; font: inherit; border: 1px solid var(--border-2); border-radius: var(--radius-sm); background: var(--bg-1); color: var(--fg-1); padding: 9px 10px; }
+.project-form input, .project-form select, .project-form textarea, .task-editor input, .task-editor textarea { width: 100%; font: inherit; border: 1px solid var(--border-input); border-radius: var(--radius-sm); background: var(--bg-1); color: var(--fg-1); padding: 9px 10px; }
 .task-editor textarea, .project-form textarea { min-height: 72px; resize: vertical; }
 @media (max-width: 768px) {
   .phase-head { grid-template-columns: 1fr; gap: 14px; }
@@ -314,7 +337,6 @@ body[data-mode="plan"] #przeglad { height: 116px; padding: 0; }
 body[data-mode="plan"] #przeglad > .wrap { position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 30; max-width: none; padding: 10px 28px; display: flex; align-items: center; gap: 22px; background: var(--bg-1); border-bottom: 1px solid var(--border-1); box-shadow: var(--shadow-card); }
 body[data-mode="plan"] #przeglad .tools { margin: 0; flex: 1 1 auto; }
 body[data-mode="plan"] #przeglad .mode-switch { margin: 0; flex: 0 0 auto; }
-body[data-mode="plan"] #bezpieczenstwo { display: none !important; }
 body[data-mode="plan"] #plan { scroll-margin-top: calc(var(--nav-h) + 116px); }
 body[data-mode="plan"] .workbench { margin-top: 0; border-top: 0; padding-top: 22px; }
 .workbench-head { display: flex; gap: 16px; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; }
@@ -394,7 +416,6 @@ body[data-mode="plan"] .workbench { margin-top: 0; border-top: 0; padding-top: 2
 .context-guidance { margin-top: 20px; border: 1.5px solid var(--violet-primary); border-radius: var(--radius-md); padding: 18px 20px; background: var(--mist); }
 .context-guidance:empty { display: none; }
 .context-guidance .safety-lead { margin: 0; font-size: var(--text-base); line-height: 1.6; }
-.guide-safety { margin-top: 24px; }
 .safety-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
 .safety-grid section { padding: 12px 14px; border: 1px solid var(--border-1); border-radius: var(--radius-sm); background: var(--bg-1); }
 .safety-grid h4 { font-size: var(--text-sm); margin-bottom: 6px; }
@@ -435,6 +456,87 @@ body[data-mode="plan"] .workbench { margin-top: 0; border-top: 0; padding-top: 2
   body[data-mode="plan"] .phase-nav { top: var(--nav-h); }
 }
 
+/* ─── Contents rail + full-width nav (guide mode, wide screens) ─── */
+.rail { display: none; }
+.rail-title { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 16px; }
+.rail ol { list-style: none; display: grid; gap: 2px; }
+.rail a { display: flex; gap: 12px; align-items: baseline; padding: 8px 10px; border-radius: var(--radius-sm); border: 1px solid transparent; text-decoration: none; color: var(--fg-1); font-size: var(--text-sm); font-weight: 500; line-height: 1.35; }
+.rail-n { flex: none; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--fg-3); }
+.rail a[data-rail-phase] .rail-n { color: var(--ph); }
+.rail a:hover { border-color: var(--border-2); }
+.rail a.is-active { border-color: var(--quantica-pink); background: var(--magenta-tint); color: var(--quantica-pink); }
+.rail a.is-active .rail-n { color: inherit; }
+.rail a[data-rail-phase].is-active { border-color: var(--ph); background: var(--ph-tint); color: var(--ph); }
+@media (min-width: 1100px) {
+  body:not([data-mode="plan"]) { --rail-w: 250px; padding-left: var(--rail-w); }
+  body:not([data-mode="plan"]) .rail { display: block; position: fixed; z-index: 30; top: var(--nav-h); bottom: 0; left: 0; width: var(--rail-w); padding: 34px 22px; overflow-y: auto; background: var(--bg-1); border-right: 1px solid var(--border-1); }
+  /* Nav spans the whole app: logo on the rail's edge, links on the content's right edge. */
+  body:not([data-mode="plan"]) .nav-inner { max-width: none; padding-left: 22px; padding-right: max(28px, calc((100% - var(--rail-w) - var(--content-w)) / 2 + 28px)); }
+}
+
+/* ─── Section numbers (shared with the rail) ─── */
+.section-head[data-num]::before { content: attr(data-num); display: block; font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.1em; color: var(--fg-3); border-bottom: 1px solid var(--border-2); padding-bottom: 10px; margin-bottom: 16px; }
+
+/* ─── Dark ink bands: components recolour through token remapping ─── */
+body:not([data-mode="plan"]) .band-ink, .cell.gate {
+  --fg-1: var(--ink-fg);
+  --fg-2: var(--ink-fg);
+  --fg-3: var(--ink-fg-muted);
+  --bg-1: var(--ink-card);
+  --bg-2: var(--ink);
+  --border-1: var(--ink-line);
+  --border-2: var(--ink-line-strong);
+  --border-input: var(--ink-line-strong);
+  --quantica-pink: var(--on-ink-1);
+  --rose-pink: var(--on-ink-1);
+  --violet-primary: var(--on-ink-4);
+  --mist: var(--ink-2);
+  --violet-a12: rgba(169, 137, 218, 0.16);
+  --pink-a45: rgba(232, 120, 158, 0.45);
+  --pink-a07: rgba(232, 120, 158, 0.07);
+  --pink-a04: rgba(232, 120, 158, 0.04);
+  --pink-a03: rgba(232, 120, 158, 0.03);
+  --success: var(--on-ink-2);
+  --warning: var(--on-ink-3);
+  --danger: var(--on-ink-1);
+  --shadow-card: none;
+  --shadow-pink-soft: none;
+  background: var(--ink);
+  color: var(--fg-2);
+}
+body:not([data-mode="plan"]) .band-ink + .band-ink { border-top: 1px solid var(--ink-line); }
+body:not([data-mode="plan"]) .band-ink .pill-solid,
+body:not([data-mode="plan"]) .band-ink .mode-switch .is-active { background: var(--color-1); border-color: var(--color-1); color: var(--white); }
+.band-ink .step { --quantica-pink: var(--ph-on-ink); }
+
+/* ─── Phase colours ─── */
+.phase {
+  --quantica-pink: var(--ph);
+  --rose-pink: var(--ph);
+  --pink-a45: color-mix(in srgb, var(--ph) 45%, transparent);
+  --pink-a07: color-mix(in srgb, var(--ph) 7%, transparent);
+  --pink-a04: color-mix(in srgb, var(--ph) 4%, transparent);
+  --pink-a03: color-mix(in srgb, var(--ph) 3%, transparent);
+}
+.phase .phase-num { color: transparent; -webkit-text-stroke: 2px var(--ph); font-size: clamp(72px, 10vw, 140px); }
+.cell.gate, .cell.gate:hover { --quantica-pink: var(--ph-on-ink); background: var(--ink); border-color: var(--ink); }
+.gate .pill-solid { background: var(--ph); color: var(--white); }
+.gate .pill-solid:hover { background: var(--deep-berry); }
+.gate .task input:checked::after { border-color: var(--ink); }
+
+/* ─── Stage spine ─── */
+.stages { position: relative; display: grid; gap: 30px; margin-top: 44px; }
+.stages::before { content: ""; position: absolute; left: 21px; top: 10px; bottom: 10px; width: 2px; background: var(--border-2); }
+.stage { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 20px; }
+.stage-node { position: relative; z-index: 1; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--ph); color: var(--white); font-family: var(--font-mono); font-size: var(--text-xs); }
+.stage .stage-title { margin-top: 6px; flex-direction: column; align-items: flex-start; gap: 4px; }
+.stages + .bento { margin-top: 34px; }
+@media (max-width: 768px) {
+  .stages::before { left: 17px; }
+  .stage { grid-template-columns: 36px minmax(0, 1fr); gap: 12px; }
+  .stage-node { width: 36px; height: 36px; }
+}
+
 /* ─── Motion + print ─── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -443,6 +545,7 @@ body[data-mode="plan"] .workbench { margin-top: 0; border-top: 0; padding-top: 2
 }
 @media print {
   @page { margin: 14mm; }
+  body { padding-left: 0 !important; }
   body > *:not(#printSnapshot) { display: none !important; }
   #printSnapshot { display: block !important; padding: 0; color: var(--fg-1); }
   .print-snapshot { display: block !important; }
@@ -472,6 +575,8 @@ body[data-mode="plan"] .workbench { margin-top: 0; border-top: 0; padding-top: 2
   </div>
   <div class="nav-progress" id="navProgress" aria-hidden="true"></div>
 </nav>
+
+<aside class="rail" id="rail" aria-label="Spis treści"><div class="rail-title">Na tej stronie</div><ol id="railList"></ol></aside>
 
 <header class="hero" id="top">
   <canvas data-dots aria-hidden="true"></canvas>
@@ -513,7 +618,7 @@ body[data-mode="plan"] .workbench { margin-top: 0; border-top: 0; padding-top: 2
   </div>
 </section>
 
-<section class="section section-alt" id="przeglad">
+<section class="section section-alt band-ink" id="przeglad">
   <div class="wrap">
     <div class="reveal section-head">
       <div class="eyebrow">Przegląd</div>
@@ -541,17 +646,6 @@ body[data-mode="plan"] .workbench { margin-top: 0; border-top: 0; padding-top: 2
       <button class="pill pill-ghost" id="btnPlanMode" type="button" aria-pressed="false">Mój plan</button>
       <span class="meta">Tryb planu zapisuje się lokalnie w tej przeglądarce.</span>
     </div>
-  </div>
-</section>
-
-<section class="section" id="bezpieczenstwo">
-  <div class="wrap">
-    <div class="reveal section-head">
-      <div class="eyebrow">Bezpieczny zakres</div>
-      <h2 class="h-section">Trzy warstwy <span class="h-pink">bezpieczeństwa</span></h2>
-      <p>Podstawy są takie same dla każdego zadania. Zaznaczony kontekst dokłada dodatkowe ustalenia i konsultacje. Strona nie ocenia przy tym sytuacji prawnie.</p>
-    </div>
-    <div class="context-guidance guide-safety" id="guideSafety" data-active-contexts=""></div>
   </div>
 </section>
 
@@ -612,7 +706,7 @@ body[data-mode="plan"] .workbench { margin-top: 0; border-top: 0; padding-top: 2
 
 <div id="phases"></div>
 
-<section class="section section-alt" id="wsparcie">
+<section class="section section-alt band-ink" id="wsparcie">
   <div class="wrap">
     <div class="reveal section-head">
       <div class="eyebrow">Po fazie 4</div>
@@ -623,7 +717,7 @@ body[data-mode="plan"] .workbench { margin-top: 0; border-top: 0; padding-top: 2
   </div>
 </section>
 
-<section class="section" id="regulacje">
+<section class="section band-ink" id="regulacje">
   <div class="wrap">
     <div class="reveal section-head">
       <div class="eyebrow">AI Act i ustawa krajowa</div>
@@ -687,7 +781,7 @@ body[data-mode="plan"] .workbench { margin-top: 0; border-top: 0; padding-top: 2
       <div class="contact-q" aria-hidden="true"><img src="assets/quantica-q-mark-white.png" alt=""></div>
       <div class="contact-label">Kontakt</div>
       <h2>Chcesz przejść tę mapę z kimś, kto już ją przechodził?</h2>
-      <p>Quantica Lab prowadzi warsztaty z wyboru zadania, testu na przykładach i wprowadzenia rutyny do pracy. Zaczynamy od zadania, nie od narzędzia.</p>
+      <p>Na warsztacie Twój zespół wybiera jedno zadanie, sprawdza AI na własnych przykładach i ustala, jak wprowadzić je do codziennej pracy.</p>
       <div class="contact-pills">
         <a class="pill pill-solid" href="mailto:kontakt@quanticalab.ai"><i data-lucide="mail" class="icon"></i>Napisz do nas</a>
         <a class="pill pill-outline" href="https://quanticalab.ai" target="_blank" rel="noopener"><i data-lucide="external-link" class="icon"></i>quanticalab.ai</a>

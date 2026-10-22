@@ -11,6 +11,9 @@
   const FONT_WAIT_MS = 1500;
   const BRAND_FONTS = ["400 1em Manrope", "700 1em Manrope", "800 1em Manrope", "400 1em \"Geist Mono\""];
   const MAX_IMPORT_BYTES = 1024 * 1024;
+  const PHASE_COLOURS = 4;
+  const RAIL_BEFORE = [{ id: "jak", label: "Jak korzystać" }, { id: "przeglad", label: "Przegląd" }];
+  const RAIL_AFTER = [{ id: "wsparcie", label: "Rytm przeglądów" }, { id: "regulacje", label: "Regulacje" }, { id: "wyzwania", label: "Przeszkody" }, { id: "mierniki", label: "Mierniki" }, { id: "przyklad", label: "Przykład i słownik" }];
   const CONTEXT_LABELS = {
     personalData: "Dane osobowe lub poufne",
     externalOutput: "Wynik dla klienta lub na zewnątrz",
@@ -47,6 +50,7 @@
   const phasesEl = $("#phases");
   const stepperEl = $("#stepper");
   const navProgress = $("#navProgress");
+  const railListEl = $("#railList");
   const progressMeta = $("#progressMeta");
   const liveEl = $("#live");
   const toastEl = $("#toast");
@@ -64,6 +68,16 @@
   }
 
   function pad(value) { return String(value).padStart(2, "0"); }
+
+  // Phase colour tokens (palette.css roles in index.html); cycles when there are more phases than colours.
+  function phaseStyle(num) {
+    const slot = ((Number(num) - 1) % PHASE_COLOURS) + 1;
+    return `--ph: var(--color-${slot}); --ph-tint: var(--tint-${slot}); --ph-on-ink: var(--on-ink-${slot})`;
+  }
+
+  function railSections() {
+    return RAIL_BEFORE.concat(DATA.phases.map((phase) => ({ id: `faza-${phase.num}`, label: phase.title, phase: phase.num })), RAIL_AFTER);
+  }
 
   function taskIdFor(phase, stageIndex, itemIndex, actionIndex) {
     const item = phase.stages[stageIndex].items[itemIndex];
@@ -394,7 +408,7 @@
   function renderStepper() {
     const steps = DATA.phases.map((phase) => {
       const count = countPhase(phase.id);
-      return `<a class="step" href="#faza-${phase.num}" data-step="${esc(phase.id)}">
+      return `<a class="step" href="#faza-${phase.num}" data-step="${esc(phase.id)}" style="${phaseStyle(phase.num)}">
         <div class="step-num"><span>Faza ${phase.num}</span><i data-lucide="${esc(phase.icon)}" class="icon"></i></div>
         <h3>${esc(phase.title)}</h3>
         <div class="step-meta"><span data-step-count>${count.actionsDone}/${count.actionsTotal} działań · ${count.gatesDone}/${count.gatesTotal} warunków decyzji</span></div>
@@ -426,13 +440,13 @@
           <h3>${esc(item.title)}</h3><ul class="task-list">${cellsTasks}</ul>
         </div>`;
       }).join("");
-      return `<h3 class="stage-title reveal"><span class="stage-num">ETAP ${phase.num}.${stageIndex + 1}</span>${esc(stage.title)}</h3><div class="bento">${cells}</div>`;
+      return `<div class="stage reveal" data-stage="${phase.num}.${stageIndex + 1}"><div class="stage-node" aria-hidden="true">${phase.num}.${stageIndex + 1}</div><div class="stage-body"><h3 class="stage-title"><span class="stage-num">ETAP ${phase.num}.${stageIndex + 1}</span>${esc(stage.title)}</h3><div class="bento">${cells}</div></div></div>`;
     }).join("");
     const checks = (CATALOG.phaseMap.get(phase.id) || { gateIds: [] }).gateIds.map((id) => taskHtml(id, CATALOG.tasks.get(id), "gate")).join("");
-    return `<section class="section phase${alt}" id="faza-${phase.num}" data-phase="${esc(phase.id)}" data-done="0" data-total="0">
+    return `<section class="section phase${alt}" id="faza-${phase.num}" data-phase="${esc(phase.id)}" data-done="0" data-total="0" style="${phaseStyle(phase.num)}">
       <div class="wrap"><div class="phase-head reveal"><div class="phase-num" aria-hidden="true">${pad(phase.num)}</div><div><div class="eyebrow">Faza ${phase.num} · ${esc(phase.duration)}</div><h2 class="h-section">${esc(phase.title)}</h2><p class="phase-goal">${esc(phase.goal)}</p></div><div class="phase-stat"><div class="num" data-phase-num>0%</div><div class="lbl" data-phase-lbl>0 / 0 działań · warunki decyzji 0 / 0</div><div class="bar"><i data-phase-bar></i></div></div></div>
       <div class="bento"><div class="cell cell-6 outcomes reveal"><details class="output-disclosure"><summary>Na koniec fazy masz (${phase.outcomes.length} rezultatów)</summary><div class="outcome-chips">${outcomes}</div></details></div></div>
-      ${stages}
+      <div class="stages">${stages}</div>
       <div class="bento"><div class="cell cell-6 gate reveal" data-gate><div class="gate-grid">
         <div class="gate-text"><div class="cell-tag">Warunki decyzji<i data-lucide="door-open" class="icon"></i></div><h3>${esc(phase.gate.title)}</h3><p>Lista kontrolna przed kolejnym krokiem. Potwierdzenie warunków nie zwiększa licznika działań i nie wymaga osobnego formularza.</p></div>
         <ul class="task-list gate-checks">${checks}</ul>
@@ -503,19 +517,6 @@
     $("#btnLegacyDownload").addEventListener("click", downloadLegacyBackups);
   }
 
-  function renderGuideSafety() {
-    const panel = $("#guideSafety");
-    if (!panel || !DATA.safety) return;
-    const layers = DATA.safety.layers || [];
-    const layerHtml = (layer, items) => `<section data-context-guidance data-layer="${esc(layer.id)}"><h4>${esc(layer.title)}</h4><ul>${items.map((item) => `<li>${esc(typeof item === "string" ? item : item.text)}</li>`).join("")}</ul></section>`;
-    const basics = layers.find((layer) => layer.id === "basics");
-    const conditional = layers.find((layer) => layer.id === "conditional");
-    const specialist = layers.find((layer) => layer.id === "specialist");
-    if (!basics || !conditional || !specialist) return;
-    panel.dataset.activeContexts = "all";
-    panel.innerHTML = `<p class="safety-lead">${esc(DATA.safety.lead)}</p><div class="safety-grid">${layerHtml(basics, basics.items)}${layerHtml(conditional, conditional.items)}${layerHtml(specialist, specialist.items)}</div>`;
-  }
-
   function renderContextGuidance() {
     const panel = $("#contextGuidance");
     if (!panel || !DATA.safety) return;
@@ -530,6 +531,15 @@
     const specialistHtml = needsSpecialist ? layerHtml(specialist, specialist.items, "Ten zakres może wymagać oceny specjalisty.") : "";
     panel.dataset.activeContexts = Array.from(active).join(",");
     panel.innerHTML = `<p class="safety-lead">${esc(DATA.safety.lead)}</p><div class="safety-grid">${layerHtml(basics, basics.items)}${conditionalHtml}${specialistHtml}</div>`;
+  }
+
+  function renderRail() {
+    const sections = railSections();
+    railListEl.innerHTML = sections.map((section, index) => `<li><a href="#${esc(section.id)}" data-rail="${esc(section.id)}"${section.phase ? ` data-rail-phase="${section.phase}" style="${phaseStyle(section.phase)}"` : ""}><span class="rail-n">${pad(index + 1)}</span><span>${esc(section.label)}</span></a></li>`).join("");
+    sections.forEach((section, index) => {
+      const head = document.querySelector(`#${section.id} .section-head`);
+      if (head) head.dataset.num = pad(index + 1);
+    });
   }
 
   function renderProgress(announce) {
@@ -607,7 +617,7 @@
   function renderAll() {
     renderStepper();
     phasesEl.innerHTML = DATA.phases.map(renderPhase).join("");
-    renderOngoing(); renderRegulation(); renderChallenges(); renderMetrics(); renderContentAdditions(); renderGuideSafety();
+    renderOngoing(); renderRegulation(); renderChallenges(); renderMetrics(); renderContentAdditions();
     const counts = countAll();
     $("#heroMeta").textContent = `${DATA.phases.length} fazy · ${counts.actionsAll} działań + ${counts.gatesTotal} warunków decyzji · aktualizacja ${DATA.meta.updated}`;
     renderProgress(false); renderPlan(); renderPrintSnapshot(); icons();
@@ -739,6 +749,17 @@
     if (!("IntersectionObserver" in window)) return;
     const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (!entry.isIntersecting) return; const id = `#${entry.target.id}`; links.forEach((link) => link.classList.toggle("active", link.getAttribute("href") === id || (id.startsWith("#faza-") && link.getAttribute("href") === "#faza-1"))); }), { rootMargin: "-40% 0px -55% 0px" });
     targets.forEach((target) => observer.observe(target)); document.querySelectorAll(".phase").forEach((target) => observer.observe(target));
+    const railLinks = Array.from(railListEl.querySelectorAll("a[data-rail]"));
+    const railObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      document.body.dataset.activeSection = entry.target.id;
+      railLinks.forEach((link) => {
+        const active = link.dataset.rail === entry.target.id;
+        link.classList.toggle("is-active", active);
+        if (active) link.setAttribute("aria-current", "true"); else link.removeAttribute("aria-current");
+      });
+    }), { rootMargin: "-40% 0px -55% 0px" });
+    railLinks.forEach((link) => { const target = document.getElementById(link.dataset.rail); if (target) railObserver.observe(target); });
   }
 
   // ─── Listeners ───
@@ -991,14 +1012,17 @@
     const remainingGates = gateIds(selectedPhase()).filter((id) => !taskDone(id)).length;
     if (document.body.dataset.mode !== state.mode) errors.push("mode contract mismatch");
     if (Number(document.body.dataset.gatesTotal) !== counts.gatesTotal) errors.push("gate denominator mismatch");
-    return { phases: DATA.phases.length, tasks: CATALOG.actionIds.length, gates: CATALOG.gateIds.length, done: counts.actionsDone, progress: counts.actionsTotal ? Math.round(counts.actionsDone / counts.actionsTotal * 100) : 0, gatesDone: counts.gatesDone, storageState: state.storageState, quarantined: state.quarantined.length, validationErrors: state.validationErrors.length, mode: state.mode, currentPhase: current ? selectedPhase() : "", remainingActions, remainingGates, errors };
+    const railLinks = Array.from(document.querySelectorAll("#railList a[data-rail]"));
+    if (railLinks.length !== railSections().length) errors.push(`rail links ${railLinks.length} != sections ${railSections().length}`);
+    railLinks.forEach((link) => { if (!document.getElementById(link.dataset.rail)) errors.push(`rail target #${link.dataset.rail} missing`); });
+    return { phases: DATA.phases.length, tasks: CATALOG.actionIds.length, gates: CATALOG.gateIds.length, done: counts.actionsDone, progress: counts.actionsTotal ? Math.round(counts.actionsDone / counts.actionsTotal * 100) : 0, gatesDone: counts.gatesDone, storageState: state.storageState, quarantined: state.quarantined.length, validationErrors: state.validationErrors.length, mode: state.mode, currentPhase: current ? selectedPhase() : "", remainingActions, remainingGates, railLinks: railLinks.length, activeSection: document.body.dataset.activeSection || "", errors };
   };
 
   // ─── Init ───
   if (!DATA || !CORE || !CATALOG) { document.body.innerHTML = `<p style='padding:40px;font-family:monospace'>${esc(catalogError || "Brak pliku roadmap.js lub app-core.js")}</p>`; document.documentElement.classList.add("app-ready"); return; }
   loadInitialPlan();
   try { state.mode = localStorage.getItem(MODE_KEY) === "plan" ? "plan" : "guide"; } catch (error) { state.mode = "guide"; }
-  renderAll(); bindListeners(); setMode(state.mode, { focus: state.mode === "plan" });
+  renderAll(); renderRail(); bindListeners(); setMode(state.mode, { focus: state.mode === "plan" });
   document.querySelectorAll("canvas[data-dots]").forEach(initDots); initReveal(); initMobileNav(); initActiveNav();
   Promise.race([Promise.all(BRAND_FONTS.map((font) => document.fonts.load(font).catch(() => null))), new Promise((resolve) => setTimeout(resolve, FONT_WAIT_MS))]).then(() => document.documentElement.classList.add("app-ready"));
 })();

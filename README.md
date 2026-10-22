@@ -30,6 +30,8 @@ Warunki decyzji pozostają listami kontrolnymi. Osobny formularz decyzji (wynik,
 
 Typografia ekranowa korzysta z tokenów: tekst główny 18 px, formularze i przyciski 16 px, metadane co najmniej 14 px przy domyślnym rozmiarze przeglądarki. Rozmiary są zapisane w rem; zwarta sekcja hero pozostaje zachowana.
 
+Układ „Ciemny rytm”: na ekranach od 1100 px w trybie przewodnika po lewej stronie jest spis treści z numerami sekcji, który podświetla bieżące miejsce. Górne menu ma szerokość całej aplikacji: logo zaczyna się przy krawędzi spisu, a przycisk „Mój plan” kończy się z prawą krawędzią treści. Przegląd, rytm przeglądów, regulacje i karty warunków decyzji leżą na ciemnym tle (`--ink`). Kolory komponentów zmieniają się tam przez podmianę tokenów, bez osobnych reguł dla każdego elementu. Każda faza ma własny kolor (`--ph`) z palety: róż Quantica, turkus, głęboki bursztyn i fiolet marki. Paletę sprawdza `color-skill check` (kontrast i symulacja daltonizmu). Pola formularzy i checkboxy mają obramowanie `--border-input` z kontrastem co najmniej 3:1. W trybie „Mój plan” i na wąskich ekranach spisu nie ma.
+
 ## Testy i diagnostyka
 
 ```bash
@@ -41,7 +43,7 @@ python3 -m http.server 8917 --directory /home/andrzey/git-claude/ai_plan
 node /home/andrzey/git-claude/ai_plan/tests/browser-smoke.mjs
 ```
 
-W sekcji **Diagnostyka planu** uruchom `window.ROADMAP_CHECK()`. Sonda sprawdza liczbę faz i działań, rozdział działań od warunków decyzji, sumy layoutu, kolejność osi czasu, brak em-dash, stan zapisu i brak błędów DOM. Skróty: `1`-`4` fazy, `0` góra, `P` przegląd, `R` regulacje, `?` pomoc, `Esc` zamknięcie dialogu. Tryb planu ma filtr pozostałych działań, przywracanie po czyszczeniu, ochronę bieżących zmian podczas importu oraz drukowany snapshot planu.
+W sekcji **Diagnostyka planu** uruchom `window.ROADMAP_CHECK()`. Sonda sprawdza liczbę faz i działań, rozdział działań od warunków decyzji, sumy layoutu, kolejność osi czasu, brak em-dash, stan zapisu, linki spisu treści i brak błędów DOM. Skróty: `1`-`4` fazy, `0` góra, `P` przegląd, `R` regulacje, `?` pomoc, `Esc` zamknięcie dialogu. Tryb planu ma filtr pozostałych działań, przywracanie po czyszczeniu, ochronę bieżących zmian podczas importu oraz drukowany snapshot planu.
 
 ## Zakres i ograniczenia
 

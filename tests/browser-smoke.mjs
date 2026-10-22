@@ -23,16 +23,29 @@ try {
   assert.equal(initialProbe.gates, 12);
   assert.equal(await page.locator('[data-decision], [data-save-decision], .print-decision').count(), 0);
   assert.equal(await page.locator('#phases input[data-kind="gate"]').count(), 12);
+  assert.equal(initialProbe.railLinks, 11);
+  const railLayout = await page.evaluate(() => {
+    const box = (selector) => document.querySelector(selector).getBoundingClientRect();
+    return {
+      visible: getComputedStyle(document.querySelector("#rail")).display !== "none",
+      logoLeft: Math.round(box(".nav-logo").left), railLeft: Math.round(box(".rail-title").left),
+      ctaRight: Math.round(box(".nav-cta").right), contentRight: Math.round(box("#przeglad .section-head").right),
+      stageNodes: document.querySelectorAll("#phases .stage-node").length,
+      phase2Node: getComputedStyle(document.querySelector("#faza-2 .stage-node")).backgroundColor
+    };
+  });
+  assert.equal(railLayout.visible, true);
+  assert.equal(railLayout.logoLeft, railLayout.railLeft);
+  assert.ok(Math.abs(railLayout.ctaRight - railLayout.contentRight) <= 1);
+  assert.equal(railLayout.stageNodes, 8);
+  assert.equal(railLayout.phase2Node, "rgb(0, 128, 122)");
   const readableType = await page.evaluate(() => {
     const size = (selector) => parseFloat(getComputedStyle(document.querySelector(selector)).fontSize);
     return { task: size('.task'), body: size('.cell p'), input: size('#projectTask'), label: size('.project-form label'), meta: size('.step-meta') };
   });
   assert.ok(readableType.task >= 18 && readableType.body >= 18);
   assert.ok(readableType.input >= 16 && readableType.label >= 16 && readableType.meta >= 14);
-  assert.equal(await page.locator("#guideSafety").isVisible(), true);
-  assert.equal(await page.locator("#guideSafety [data-layer='basics']").count(), 1);
-  assert.equal(await page.locator("#guideSafety [data-layer='conditional']").count(), 1);
-  assert.match(await page.locator("#guideSafety [data-layer='conditional']").textContent(), /Połączenie z innym systemem/);
+  assert.equal(await page.locator("#bezpieczenstwo, #guideSafety").count(), 0);
 
   const heroHeight = await page.locator(".hero").evaluate((element) => element.getBoundingClientRect().height);
   assert.ok(heroHeight < 540, `Hero should leave room for the overview, got ${heroHeight}px`);
@@ -40,6 +53,9 @@ try {
   await page.click("#btnPlanMode");
   assert.equal(await page.locator("#plan").isVisible(), true);
   assert.equal(await page.locator("body").getAttribute("data-mode"), "plan");
+  assert.equal(await page.locator("#rail").isVisible(), false);
+  // The reduced-motion `* { transition-duration }` rule briefly transitions the padding; wait for it to settle.
+  await page.waitForFunction(() => getComputedStyle(document.body).paddingLeft === "0px", null, { timeout: 2000 });
   assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector(".hero")).display), "none");
   assert.match(await page.locator("#planMeta").textContent(), /działań pozostało.*warunków decyzji/);
   assert.equal(await page.locator("#printSnapshot").getAttribute("data-scope"), "all-phases");
