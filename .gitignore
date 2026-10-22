@@ -7,3 +7,5 @@ review*.md
 *.draft.*
 scratch/
 check*.png
+ux-audit/
+sme-implementation-report.md

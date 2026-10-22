@@ -1,456 +1,352 @@
-// Mapa drogowa wdrożenia AI - dane strony. Edytuj ten plik; index.html renderuje go bez kroku budowania.
-// Zasady: bez długich myślników (używaj "-"), bez HTML w tekstach, każda akcja to jedno zdanie w trybie rozkazującym.
+// Praktyczny plan AI dla jednego zadania. Edytuj ten plik; index.html renderuje go bez kroku budowania.
+// Teksty działań zaczynają się od rzeczowników odczasownikowych. Bez HTML i bez em-dash.
 window.ROADMAP = {
   meta: {
-    updated: "2026-10-21",
-    version: "2.0",
+    updated: "2026-10-22",
+    version: "4.0-sme",
     source: "https://github.com/workszop/ai_plan"
   },
 
   phases: [
     {
-      id: "fundament",
+      id: "choice",
       num: 1,
-      title: "Fundament",
-      duration: "ok. 2 tygodnie",
-      icon: "layers",
-      goal: "Zanim kupisz jakiekolwiek narzędzie, ustal po co, dla kogo i na jakich danych. Ta faza odpowiada na pytanie: czy w ogóle jesteśmy gotowi na pilotaż?",
+      title: "Wybór zadania",
+      duration: "pierwsze ustalenia",
+      icon: "target",
+      goal: "Zawężenie pracy do jednego powtarzalnego zadania, osoby odpowiedzialnej i warunków bezpiecznego sprawdzenia.",
       outcomes: [
-        "Sponsor i budżet pilotażu",
-        "1-2 ambasadorów AI z przydzielonym czasem",
-        "2-3 wybrane przypadki użycia z celami i KPI",
-        "Inwentaryzacja danych i ocena ryzyka (RODO, AI Act)",
-        "Krótka lista narzędzi i plan wdrożenia"
+        "Opis jednego zadania i obecnego przebiegu",
+        "Wyznaczenie osoby wykonującej zadanie oraz osoby podejmującej decyzję; jedna osoba może pełnić obie role",
+        "Stan wyjściowy, oczekiwana poprawa i kryterium sukcesu",
+        "Ustalony czas, budżet i zakres pierwszego testu",
+        "Podstawowe granice danych, dostępu i przeglądu człowieka"
       ],
       stages: [
         {
-          title: "Decyzje strategiczne",
+          title: "Opis zadania i celu",
           items: [
             {
-              title: "Sponsor i kadra kierownicza",
+              title: "Zadanie i odpowiedzialność",
               actions: [
-                "Wyznacz sponsora z zarządu i zapisz jego odpowiedzialność za wynik pilotażu.",
-                "Ustal budżet pilotażu: licencje, czas ludzi, ewentualne wsparcie zewnętrzne.",
-                "Przyjmij wstępną politykę AI: bezpieczeństwo, prywatność, etyka, przejrzystość, zakres zastosowań niedozwolonych.",
-                "Przygotuj komunikat do organizacji: po co to robimy, kogo dotyczy, czego nie zmieniamy."
-              ]
-            },
-            {
-              title: "Ambasadorzy AI",
-              actions: [
-                "Wybierz 1-2 ambasadorów: osoby sprawne technicznie, z wpływem w zespole i otwarte na zmianę.",
-                "Przydziel im oficjalnie 5-10 godzin tygodniowo i zapisz to w ich celach.",
-                "Załóż kanał komunikacji i stały cotygodniowy termin spotkań."
-              ]
-            },
-            {
-              title: "Przypadki użycia",
-              actions: [
-                "Zbierz pomysły z działów i oceń je w macierzy: wartość biznesowa, ryzyko, dostępność danych, łatwość pomiaru.",
-                "Sklasyfikuj każdy pomysł według AI Act: zakazany, wysokiego ryzyka, z obowiązkiem przejrzystości lub minimalnego ryzyka.",
-                "Wybierz 2-3 przypadki o wysokiej wartości i niskim ryzyku; przypadki wysokiego ryzyka odłóż poza pilotaż.",
-                "Opisz obecny proces krok po kroku, z wąskimi gardłami i czasem na każdy etap."
-              ]
-            },
-            {
-              title: "Cele i mierniki",
-              actions: [
-                "Zapisz dla każdego przypadku cel SMART: konkretny, mierzalny, osiągalny, istotny, określony w czasie.",
-                "Wybierz 2-4 KPI: zaoszczędzony czas, koszt, jakość, odsetek osób korzystających.",
-                "Zmierz stan wyjściowy, zanim cokolwiek zmienisz.",
-                "Ustal, kto i jak często raportuje postęp."
+                { id: "sme.choice.action.001", text: "Wybór jednego powtarzalnego zadania oraz opisanie obecnego przebiegu i używanych narzędzi.", hint: "Karta jednego zadania z krótkim opisem przebiegu i obecnych narzędzi." },
+                { id: "sme.choice.action.002", text: "Wyznaczenie osoby wykonującej zadanie i osoby podejmującej decyzję; jedna osoba może pełnić obie role.", hint: "Imiona lub role obu osób oraz zakres ich odpowiedzialności." },
+                { id: "sme.choice.action.003", text: "Ustalenie stanu wyjściowego, oczekiwanej poprawy i kryterium jakości.", hint: "Stan wyjściowy, pożądana zmiana i jedno zdanie opisujące akceptowalny wynik." }
               ]
             }
           ]
         },
         {
-          title: "Dane, zgodność i narzędzia",
+          title: "Granice pierwszego testu",
           items: [
             {
-              title: "Inwentaryzacja danych",
+              title: "Czas, budżet i bezpieczeństwo",
               actions: [
-                "Zmapuj źródła danych: system, właściciel, lokalizacja, okres retencji.",
-                "Oznacz dane osobowe i wrażliwe; ustal, co trzeba zanonimizować lub pseudonimizować.",
-                "Oceń jakość danych: kompletność, aktualność, dostępność, uprawnienia.",
-                "Zaplanuj dostęp według ról, z zasadą minimalnych uprawnień."
-              ]
-            },
-            {
-              title: "Zgodność i ryzyka",
-              actions: [
-                "Przeprowadź DPIA i ocenę ryzyka bezpieczeństwa dla wybranych przypadków użycia.",
-                "Spisz zasady przetwarzania i przekazywania danych, w tym do chmury i poza EOG.",
-                "Zdefiniuj zakres niedozwolony w pilotażu, np. brak decyzji o ludziach bez udziału człowieka.",
-                "Wyznacz właścicieli: danych, procesu, bezpieczeństwa i zgodności."
-              ]
-            },
-            {
-              title: "Wybór narzędzi",
-              actions: [
-                "Oceń narzędzia pod kątem bezpieczeństwa, funkcji, integracji, ceny i wymagań szkoleniowych.",
-                "Sprawdź u dostawcy: gdzie przetwarza dane, czy uczy na nich modele, czy podpisze umowę powierzenia danych.",
-                "Zamów demonstrację na własnych scenariuszach, nie na przykładach dostawcy.",
-                "Wybierz 2-3 narzędzia do pilotażu i uruchom zakup z udziałem IT i prawników."
-              ]
-            },
-            {
-              title: "Plan wdrożenia",
-              actions: [
-                "Dla każdego przypadku użycia przygotuj plan: mapa procesu, harmonogram, ludzie, koszty.",
-                "Zaplanuj szkolenia dla zespołu pilotażowego.",
-                "Załóż rejestr ryzyk z działaniami ograniczającymi i właścicielami.",
-                "Ustal, jak ogłosisz start pilotażu w całej organizacji."
+                { id: "sme.choice.action.004", text: "Określenie dostępnego czasu, budżetu oraz zakresu pierwszego testu.", hint: "Krótki limit czasu i kosztu oraz jasne wskazanie, czego test nie obejmuje." },
+                { id: "sme.choice.action.005", text: "Ustalenie granic bezpieczeństwa danych, dostępu i przeglądu człowieka.", hint: "Lista danych dozwolonych i niedozwolonych, sposób dostępu oraz moment kontroli przez człowieka." }
               ]
             }
           ]
         }
       ],
       gate: {
-        title: "Bramka: czy startujemy z pilotażem?",
+        title: "Czy warto iść dalej?",
         checks: [
-          "Dane dla wybranych przypadków są dostępne i zgodne z przepisami.",
-          "Cele, KPI i pomiar stanu wyjściowego są zapisane.",
-          "Właściciele zadań są wyznaczeni, a zidentyfikowane ryzyka zaakceptowane.",
-          "Budżet i ramy kosztowe są zatwierdzone przez sponsora."
+          { id: "sme.choice.gate.001", text: "Opis zadania, stan wyjściowy i kryterium sukcesu są zapisane.", hint: "Wynik lub przykład: karta zadania ze stanem wyjściowym i kryterium." },
+          { id: "sme.choice.gate.002", text: "Wyznaczenie osoby wykonującej i osoby podejmującej decyzję jest potwierdzone.", hint: "Wynik lub przykład: dwie role z zakresem odpowiedzialności." },
+          { id: "sme.choice.gate.003", text: "Ustalenie granic danych, czasu i budżetu jest realne.", hint: "Wynik lub przykład: krótki zakres testu z limitem i zabezpieczeniem." }
         ]
       }
     },
-
     {
-      id: "pilotaz",
+      id: "test",
       num: 2,
-      title: "Pilotaż",
-      duration: "ok. 4 tygodnie",
-      icon: "rocket",
-      goal: "Mały zespół, wybrane narzędzia, realna praca pod nadzorem. Pilotaż ma dostarczyć liczby, nie wrażenia: ile czasu oszczędzamy, jaka jest jakość, ile to kosztuje.",
+      title: "Test w praktyce",
+      duration: "krótka próba na przykładach",
+      icon: "flask-conical",
+      goal: "Sprawdzenie jednego narzędzia na reprezentatywnych przykładach i porównanie wyniku z dotychczasowym sposobem pracy.",
       outcomes: [
-        "Skonfigurowane i zabezpieczone środowisko",
-        "Przeszkolony zespół pilotażowy z biblioteką promptów",
-        "Zmierzone wyniki na realnych zadaniach",
-        "Decyzja GO / NO-GO oparta na danych"
+        "Jedno narzędzie z opisanymi ustawieniami",
+        "Dozwolone dane i dostęp do testu",
+        "Reprezentatywne przykłady oraz sposób oceny",
+        "Porównanie czasu, poprawek, jakości i kosztu",
+        "Zapisany wynik: kontynuacja, korekta albo zatrzymanie"
       ],
       stages: [
         {
-          title: "Przygotowanie i szkolenie",
+          title: "Narzędzie i dane",
           items: [
             {
-              title: "Środowisko",
+              title: "Konfiguracja próby",
               actions: [
-                "Podpisz umowy z dostawcami, w tym umowę powierzenia danych.",
-                "Załóż konta z odpowiednimi uprawnieniami i włącz logowanie użycia.",
-                "Skonfiguruj ustawienia bezpieczeństwa i przetestuj integracje.",
-                "Przygotuj i oczyść dane testowe zgodnie z zasadami z fazy 1."
-              ]
-            },
-            {
-              title: "Szkolenie zespołu",
-              actions: [
-                "Przeprowadź szkolenie z obsługi narzędzi, pisania promptów, kontroli jakości i rozwiązywania problemów.",
-                "Zbuduj bibliotekę promptów dla każdego przypadku użycia, z przykładami dobrych i złych wyników.",
-                "Przygotuj krótkie instrukcje ze zrzutami ekranu.",
-                "Udostępnij środowisko do ćwiczeń bez danych produkcyjnych."
-              ]
-            },
-            {
-              title: "Start pilotażu",
-              actions: [
-                "Zrób spotkanie otwierające: cele, role, oczekiwania, zasady bezpieczeństwa.",
-                "Rozdaj konkretne zadania z terminami.",
-                "W pierwszym tygodniu spotykaj się codziennie na 15 minut.",
-                "Uruchom prosty kanał zgłaszania problemów i pomysłów."
-              ]
-            },
-            {
-              title: "Repozytoria i wersjonowanie",
-              actions: [
-                "Prowadź rejestr narzędzi i modeli: wersja, właściciel, data, zasady użycia.",
-                "Wersjonuj prompty: historia zmian, warianty A/B, przegląd przed publikacją.",
-                "Wersjonuj zbiory danych testowych i zapisuj ich pochodzenie.",
-                "Zamroź zestaw przykładów do oceny jakości, taki sam dla każdej wersji.",
-                "Jeśli budujesz własne rozwiązanie, dodaj automatyczne testy przed wdrożeniem zmian."
+                { id: "sme.test.action.001", text: "Wybór jednego narzędzia dopasowanego do zadania i potwierdzenie jego ustawień.", hint: "Nazwa narzędzia, wersja lub plan, właściciel ustawień i ograniczenia użycia." },
+                { id: "sme.test.action.002", text: "Określenie dozwolonych danych, dostępu i ustawień testu.", hint: "Zakres danych, role z dostępem i ustawienia prywatności lub retencji." }
               ]
             }
           ]
         },
         {
-          title: "Realizacja i ocena",
+          title: "Próba i porównanie",
           items: [
             {
-              title: "Praca pod nadzorem",
+              title: "Wyniki testu",
               actions: [
-                "Zacznij od materiałów niekrytycznych.",
-                "Dokumentuj każdy krok: czas, użyte prompty, ocena jakości.",
-                "Codziennie przeglądaj wyniki z ekspertem merytorycznym.",
-                "Poprawiaj prompty i proces na podstawie pierwszych wyników."
-              ]
-            },
-            {
-              title: "Realna praca",
-              actions: [
-                "Przejdź ostrożnie do rzeczywistych zadań, nadal pod nadzorem.",
-                "Wprowadź obowiązkowy przegląd wyników z jasnymi kryteriami akceptacji.",
-                "Mierz oszczędność czasu i jakość w ustalonych KPI.",
-                "Zapisuj nowe przypadki użycia, które odkryje zespół."
-              ]
-            },
-            {
-              title: "Ocena jakości i testy",
-              actions: [
-                "Oceń jakość na zamrożonym zestawie przykładów: trafność, zgodność z faktami, czas odpowiedzi.",
-                "Porównaj każdą nową wersję promptów, modelu lub danych z poprzednią.",
-                "Testuj warianty A/B z jednoznacznym kryterium wygranej.",
-                "Ustal progi GO / NO-GO: techniczne, biznesowe i kosztowe.",
-                "Zarchiwizuj wyniki razem z wersją narzędzi, promptów i danych."
-              ]
-            },
-            {
-              title: "Przegląd pilotażu",
-              actions: [
-                "Zrób spotkanie podsumowujące z zespołem i sponsorem.",
-                "Zbierz liczby: zaoszczędzony czas, błędy, satysfakcja użytkowników, koszt na zadanie.",
-                "Spisz wnioski i potrzebne zmiany.",
-                "Podejmij decyzję o rozszerzeniu na podstawie danych, nie entuzjazmu."
+                { id: "sme.test.action.003", text: "Przygotowanie reprezentatywnych przykładów oraz sposobu oceny wyniku.", hint: "Zestaw przykładów z kryterium oceny i miejscem na uwagi osoby sprawdzającej." },
+                { id: "sme.test.action.004", text: "Porównanie czasu wykonania, liczby poprawek, jakości i kosztu ze stanem wyjściowym.", hint: "Tabela przed i po, z czasem sprawdzania i poprawiania wyniku." },
+                { id: "sme.test.action.005", text: "Ustalenie decyzji: kontynuacja, korekta i ponowny test albo zatrzymanie.", hint: "Krótka decyzja oparta na kryterium sukcesu i odnotowanym wyniku." }
               ]
             }
           ]
         }
       ],
       gate: {
-        title: "Bramka: czy rozszerzamy wdrożenie?",
+        title: "Czy warto iść dalej?",
         checks: [
-          "KPI osiągnęły ustalone progi GO na realnych zadaniach.",
-          "Nie było incydentu bezpieczeństwa ani wycieku danych.",
-          "Znany jest koszt na przypadek użycia i mieści się w budżecie.",
-          "Zespół pilotażowy chce dalej pracować z narzędziem."
+          { id: "sme.test.gate.001", text: "Potwierdzenie jednego narzędzia, dozwolonych danych i ustawień jest zapisane.", hint: "Wynik lub przykład: karta konfiguracji próby." },
+          { id: "sme.test.gate.002", text: "Porównanie jakości, czasu, poprawek i kosztu ze stanem wyjściowym jest wykonane.", hint: "Wynik lub przykład: tabela wyników wraz z czasem sprawdzania." },
+          { id: "sme.test.gate.003", text: "Zapis wyniku testu i rekomendacji jest gotowy.", hint: "Wynik lub przykład: rekomendacja osoby odpowiedzialnej z podstawą." }
         ]
       }
     },
-
     {
-      id: "wdrozenie",
+      id: "work",
       num: 3,
-      title: "Wdrożenie",
-      duration: "ok. 4 tygodnie",
-      icon: "git-branch",
-      goal: "To, co działało u kilku osób, ma działać u kilkudziesięciu. Kluczem są dokumentacja, szkolenia dopasowane do ról i wsparcie na miejscu.",
+      title: "Wprowadzenie do pracy",
+      duration: "rutyna jednego zespołu",
+      icon: "users-round",
+      goal: "Przekształcenie udanej próby w krótką, zrozumiałą rutynę z osobą przeglądającą i ręcznym sposobem awaryjnym.",
       outcomes: [
-        "Procedury, instrukcje i lista kontrolna jakości",
-        "Materiały szkoleniowe dla każdej roli",
-        "Harmonogram wdrożenia dział po dziale",
-        "Wskaźniki adopcji raportowane kierownictwu"
+        "Krótka instrukcja z jednym przykładem",
+        "Osoby wykonujące zadanie znają przebieg",
+        "Wyznaczona osoba przeglądająca wynik",
+        "Ustalone dostępy, wydatki i odpowiedzialność",
+        "Ręczny sposób wykonania zadania na wypadek problemu"
       ],
       stages: [
         {
-          title: "Procesy i dokumentacja",
+          title: "Instrukcja i ludzie",
           items: [
             {
-              title: "Dokumentacja",
+              title: "Rutyna pracy",
               actions: [
-                "Zaktualizuj procedury operacyjne o wyniki pilotażu.",
-                "Zbierz w jednym miejscu: zasady użycia narzędzi, instrukcje, bibliotekę promptów.",
-                "Opracuj listę kontrolną jakości i wytyczne etyczne.",
-                "Sformalizuj proces przeglądu treści wygenerowanych przez AI."
-              ]
-            },
-            {
-              title: "Materiały szkoleniowe",
-              actions: [
-                "Przygotuj materiały w kilku formatach: krótkie wideo, przykłady, ćwiczenia.",
-                "Zbuduj moduły dla konkretnych ról, nie jedno szkolenie dla wszystkich.",
-                "Przygotuj komunikaty dla klientów o użyciu AI tam, gdzie wymaga tego art. 50 AI Act lub dobra praktyka.",
-                "Napisz przewodnik rozwiązywania problemów i FAQ."
+                { id: "sme.work.action.001", text: "Opracowanie krótkiej instrukcji z jednym przykładem poprawnego użycia.", hint: "Jedna strona lub ekran z kolejnością czynności, przykładem i ostrzeżeniem o kontroli." },
+                { id: "sme.work.action.002", text: "Przedstawienie przebiegu osobom wykonującym zadanie i zebranie pytań.", hint: "Lista osób, data prezentacji i zapis pytań lub niejasności." },
+                { id: "sme.work.action.003", text: "Wyznaczenie osoby przeglądającej wynik oraz sposobu akceptacji.", hint: "Rola osoby sprawdzającej i jednoznaczne kryterium akceptacji." }
               ]
             }
           ]
         },
         {
-          title: "Wdrożenie etapami",
+          title: "Dostęp i ciągłość",
           items: [
             {
-              title: "Przygotowanie",
+              title: "Warunki wykonywania",
               actions: [
-                "Ułóż harmonogram wdrożenia dział po dziale, zaczynając od najbardziej chętnych.",
-                "Wybierz i przeszkol dodatkowych ambasadorów dla każdej nowej grupy.",
-                "Dopasuj materiały szkoleniowe do specyfiki działu.",
-                "Uruchom stałe godziny konsultacji AI."
-              ]
-            },
-            {
-              title: "Realizacja i monitoring",
-              actions: [
-                "Wdrażaj kolejne działy z pełnym szkoleniem, nie tylko z dostępem do narzędzia.",
-                "Sparuj nowych użytkowników z doświadczonymi.",
-                "Śledź wskaźniki adopcji i reaguj tam, gdzie jest opór.",
-                "Co dwa tygodnie pokazuj kierownictwu wyniki w KPI."
+                { id: "sme.work.action.004", text: "Ustalenie zasad dostępu, wydatków i odpowiedzialności za konto.", hint: "Właściciel konta, poziom dostępu, limit wydatków i sposób zgłoszenia problemu." },
+                { id: "sme.work.action.005", text: "Przygotowanie ręcznego sposobu wykonania zadania na wypadek problemu.", hint: "Krótki ręczny sposób awaryjny: procedura, miejsce danych i osoba, która podejmuje decyzję." }
               ]
             }
           ]
         }
       ],
       gate: {
-        title: "Bramka: czy przechodzimy do integracji?",
+        title: "Czy warto iść dalej?",
         checks: [
-          "Co najmniej połowa docelowych użytkowników korzysta z narzędzi co tydzień.",
-          "Dokumentacja i szkolenia są aktualne i dostępne dla każdej roli.",
-          "Proces przeglądu treści AI działa i jest przestrzegany.",
-          "KPI z pilotażu utrzymują się przy większej skali."
+          { id: "sme.work.gate.001", text: "Przygotowanie krótkiej instrukcji, przykładu i kryterium akceptacji jest zakończone.", hint: "Wynik lub przykład: instrukcja i przykładowy wynik." },
+          { id: "sme.work.gate.002", text: "Przedstawienie rutyny osobom wykonującym zadanie oraz wyznaczenie osoby przeglądającej jest potwierdzone.", hint: "Wynik lub przykład: lista osób, osoba przeglądająca i data." },
+          { id: "sme.work.gate.003", text: "Ustalenie dostępu, wydatków i ręcznego sposobu wykonania jest zapisane.", hint: "Wynik lub przykład: karta dostępu i instrukcja awaryjna." }
         ]
       }
     },
-
     {
-      id: "integracja",
+      id: "keep",
       num: 4,
-      title: "Integracja",
-      duration: "miesiące 3-6",
-      icon: "network",
-      goal: "AI przestaje być projektem, a staje się częścią organizacji: ma właściciela, budżet, zasady, program szkoleń i miejsce w ofercie dla klientów.",
+      title: "Utrzymanie i rozwój",
+      duration: "rytm przeglądu",
+      icon: "refresh-cw",
+      goal: "Sprawdzenie, czy rutyna nadal pomaga, oraz uporządkowanie jej bez obowiązku tworzenia większej struktury.",
       outcomes: [
-        "Zoptymalizowane procesy i aktualna dokumentacja",
-        "Program szkoleń dla nowych pracowników",
-        "Komitet ds. AI, rejestr systemów i przegląd zgodności",
-        "Mapa drogowa na kolejne 12 miesięcy"
+        "Przegląd użyteczności, kosztu, błędów i czasu",
+        "Zaktualizowana instrukcja i kryterium jakości",
+        "Uporządkowane dostępy, dane i ustawienia",
+        "Ustalony właściciel rutyny i rytm przeglądu",
+        "Decyzja o utrzymaniu, zmianie albo zatrzymaniu rutyny"
       ],
       stages: [
         {
-          title: "Optymalizacja i wiedza",
+          title: "Przegląd i aktualizacja",
           items: [
             {
-              title: "Optymalizacja procesów",
+              title: "Użyteczność rutyny",
               actions: [
-                "Przeanalizuj dane użycia, żeby znaleźć wąskie gardła i nieefektywności.",
-                "Uprość przepływy pracy i wpisz dobre praktyki do dokumentacji.",
-                "Wzmocnij kontrolę jakości tam, gdzie wyniki są najsłabsze."
-              ]
-            },
-            {
-              title: "Szkolenia formalne",
-              actions: [
-                "Włącz szkolenie z AI do wdrożenia nowych pracowników.",
-                "Dodaj kompetencje AI do planów rozwoju zawodowego.",
-                "Uruchom program dla zaawansowanych użytkowników z potwierdzeniem umiejętności."
-              ]
-            },
-            {
-              title: "Zarządzanie wiedzą",
-              actions: [
-                "Prowadź jedno miejsce na zasoby AI: prompty, instrukcje, przykłady.",
-                "Organizuj regularne sesje dzielenia się wiedzą.",
-                "Twórz wspólnoty praktyki wokół konkretnych przypadków użycia."
+                { id: "sme.keep.action.001", text: "Przegląd użyteczności, kosztu, błędów i czasu po uruchomieniu rutyny.", hint: "Krótka karta przeglądu z danymi z ustalonego okresu i odnotowanymi problemami." },
+                { id: "sme.keep.action.002", text: "Aktualizacja instrukcji, przykładu i kryterium jakości na podstawie wyników.", hint: "Wersja instrukcji, opis zmiany i wynik ponownego sprawdzenia." },
+                { id: "sme.keep.action.003", text: "Uporządkowanie dostępów, danych i ustawień po zakończeniu testu.", hint: "Lista odebranych dostępów, zamkniętych danych testowych i aktualnych ustawień." }
               ]
             }
           ]
         },
         {
-          title: "Klienci i rynek",
+          title: "Odpowiedzialność i decyzja",
           items: [
             {
-              title: "Komunikacja zewnętrzna",
+              title: "Rytm utrzymania",
               actions: [
-                "Przygotuj materiały dla klientów pokazujące, jak AI poprawia ich obsługę.",
-                "Przyjmij przejrzyste zasady informowania o użyciu AI w komunikacji zewnętrznej.",
-                "Zorganizuj sesje edukacyjne dla klientów o AI w Twojej branży."
-              ]
-            },
-            {
-              title: "Możliwości biznesowe",
-              actions: [
-                "Wskaż, gdzie AI daje przewagę konkurencyjną i jak o tym mówić.",
-                "Rozważ nowe modele cenowe wynikające z większej efektywności.",
-                "Mierz korzyści dla klientów: czas realizacji, koszt, jakość.",
-                "Zbieraj pomysły na nowe usługi możliwe dzięki AI."
-              ]
-            }
-          ]
-        },
-        {
-          title: "Zarządzanie i plan",
-          items: [
-            {
-              title: "Struktura zarządzania",
-              actions: [
-                "Powołaj stały komitet ds. AI z udziałem biznesu, IT, bezpieczeństwa i prawników.",
-                "Prowadź rejestr systemów AI: cel, klasyfikacja ryzyka wg AI Act, właściciel, dostawca.",
-                "Sformalizuj polityki oceny narzędzi, bezpieczeństwa danych, etyki, jakości i szkoleń.",
-                "Przygotuj się na ewentualną kontrolę KRiBSI: dokumentacja, oznaczanie treści, obowiązki informacyjne."
-              ]
-            },
-            {
-              title: "Planowanie długoterminowe",
-              actions: [
-                "Zaplanuj budżet na narzędzia i szkolenia na kolejny rok.",
-                "Przygotuj mapę drogową innowacji AI na 12 miesięcy.",
-                "Wprowadź regularny cykl przeglądu inicjatyw AI.",
-                "Rozważ program motywacyjny za adopcję i pomysły."
+                { id: "sme.keep.action.004", text: "Ustalenie właściciela rutyny, rytmu przeglądu i odpowiedzialności za zmianę.", hint: "Imię lub rola właściciela, termin przeglądu i sposób zgłoszenia zmiany." },
+                { id: "sme.keep.action.005", text: "Podjęcie decyzji o utrzymaniu, zmianie albo zatrzymaniu rutyny na podstawie przeglądu.", hint: "Zapis decyzji, podstawa z przeglądu i następny krok." }
               ]
             }
           ]
         }
       ],
       gate: {
-        title: "Stan docelowy: AI działa jak każdy inny proces",
+        title: "Czy warto iść dalej?",
         checks: [
-          "Każdy system AI ma właściciela, klasyfikację ryzyka i wpis w rejestrze.",
-          "Nowy pracownik przechodzi szkolenie z AI w pierwszym miesiącu.",
-          "Komitet ds. AI spotyka się regularnie i decyduje o nowych inicjatywach.",
-          "Budżet i mapa drogowa na kolejny rok są zatwierdzone."
+          { id: "sme.keep.gate.001", text: "Przegląd użyteczności, kosztu, błędów i czasu jest wykonany.", hint: "Wynik lub przykład: karta okresowego przeglądu." },
+          { id: "sme.keep.gate.002", text: "Aktualizacja instrukcji oraz uporządkowanie dostępów i danych są zapisane.", hint: "Wynik lub przykład: nowa instrukcja i lista zamkniętych dostępów." },
+          { id: "sme.keep.gate.003", text: "Decyzja o utrzymaniu, zmianie albo zatrzymaniu rutyny wynika z danych.", hint: "Wynik lub przykład: decyzja z uzasadnieniem i następnym krokiem." }
         ]
       }
     }
   ],
 
   ongoing: {
-    title: "Bieżące wsparcie",
-    lead: "Po fazie 4 wdrożenie nie kończy się, tylko zmienia rytm. Cztery stałe cykle utrzymują tempo i jakość.",
+    title: "Utrzymanie rutyny",
+    lead: "Po użytecznym wdrożeniu wystarczy proporcjonalny rytm z decyzją o utrzymaniu, zmianie albo zatrzymaniu.",
     cadences: [
-      { period: "Co dwa tygodnie", icon: "calendar", actions: ["Spotkanie ambasadorów AI", "Dyżur wsparcia", "Wymiana promptów i krótkie sesje szkoleniowe"] },
-      { period: "Co miesiąc", icon: "bar-chart-3", actions: ["Przegląd metryk użycia", "Aktualizacja dokumentacji", "Wyróżnienie najlepszych zastosowań", "Spotkanie grup użytkowników"] },
-      { period: "Co kwartał", icon: "refresh-cw", actions: ["Ocena zwrotu z inwestycji", "Przegląd nowych narzędzi i modeli", "Odświeżenie materiałów szkoleniowych", "Historie sukcesu z zespołów"] },
-      { period: "Co rok", icon: "flag", actions: ["Pełny przegląd i porównanie z rynkiem", "Aktualizacja polityk i rejestru systemów AI", "Przegląd zgodności z AI Act i ustawą krajową", "Planowanie strategii i budżetu"] }
+      { period: "Po wykonaniu", icon: "check-circle-2", actions: ["Przegląd wyniku przed przekazaniem", "Odnotowanie poprawy lub błędu"] },
+      { period: "Co miesiąc", icon: "calendar", actions: ["Przegląd czasu, kosztu i jakości", "Aktualizacja instrukcji, gdy zmieniły się warunki"] },
+      { period: "Przy zmianie", icon: "refresh-cw", actions: ["Ponowne sprawdzenie przykładów", "Potwierdzenie dostępu i ręcznego sposobu awaryjnego"] },
+      { period: "Gdy potrzebne", icon: "arrow-up-right", actions: ["Przegląd potrzeby zmiany zakresu rutyny", "Potwierdzenie warunków bezpieczeństwa przed zmianą"] }
+    ]
+  },
+
+  safety: {
+    lead: "Wybór kontekstu kieruje uwagę do dodatkowych pytań. To pomoc nawigacyjna, nie automatyczna klasyfikacja prawna ani zwolnienie zależne od wielkości firmy.",
+    layers: [
+      {
+        id: "basics",
+        title: "Podstawy",
+        items: [
+          "Minimalny zakres danych i dostępów",
+          "Przegląd człowieka przed przekazaniem wyniku",
+          "Ręczny sposób wykonania zadania na wypadek problemu"
+        ]
+      },
+      {
+        id: "conditional",
+        title: "Gdy dotyczy",
+        items: [
+          { context: "personalData", text: "Dane osobowe lub poufne: zakres, retencja, anonimizacja i podstawa przekazania." },
+          { context: "externalOutput", text: "Wynik dla klienta lub na zewnątrz: przegląd treści, rola dostawcy i ewentualne poinformowanie odbiorcy." },
+          { context: "multipleTeams", text: "Rozszerzenie na kolejny zespół: właściciel rutyny, dostęp według ról i wspólne kryterium jakości." },
+          { context: "integration", text: "Połączenie z innym systemem: zakres danych, właściciel integracji, test odtworzenia i ręczny sposób awaryjny." },
+          { context: "sensitiveDecision", text: "Wpływ na ludzi, pieniądze lub dostęp do usług: zatrzymanie automatycznej decyzji i konsultacja specjalisty przed użyciem." }
+        ]
+      },
+      {
+        id: "specialist",
+        title: "Potrzebna konsultacja specjalisty",
+        items: [
+          "Zastosowanie dotyczące rekrutacji, oceny pracowników, kredytu, edukacji lub dostępu do usług",
+          "Wysokie ryzyko dla praw i wolności albo potrzeba oceny skutków dla ochrony danych",
+          "Niejasna rola dostawcy, przekazanie danych poza EOG albo obowiązek przejrzystości"
+        ]
+      }
     ]
   },
 
   regulation: {
     title: "Kalendarz regulacyjny",
-    lead: "Daty, które wyznaczają granice pilotażu i wdrożenia. Status liczony jest względem dzisiejszej daty; przed decyzjami sprawdź aktualne źródła.",
+    lead: "Zakres zadania, rola i aktualny status obowiązku są punktem wyjścia. Oś czasu jest pomocniczą historią; status daty nie zastępuje sprawdzenia aktualnego brzmienia przepisu.",
+    now: {
+      title: "Co dotyczy Twojego zadania teraz?",
+      lead: "Ustalenie zakresu, roli i danych oddziela obowiązek od dobrej praktyki. Zapis wyniku i daty przeglądu przed użyciem.",
+      items: [
+        { scope: "Dane osobowe / DPIA", action: "Screening prawdopodobieństwa wysokiego ryzyka i wykonanie DPIA, gdy jest wymagana.", sourceLabel: "Komisja Europejska: data-protection obligations", source: "https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/obligations_en", reviewed: "2026-10-22" },
+        { scope: "Umiejętności AI", action: "Zapewnienie adekwatnych umiejętności osobom używającym systemu. Art. 4 nie gwarantuje jednego poziomu dla każdej osoby - wsparcie zależy od roli.", sourceLabel: "AI Act Service Desk: art. 4", source: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-4", reviewed: "2026-10-22" },
+        { scope: "Przejrzystość", action: "Sprawdzenie roli dostawcy i wdrażającego oraz zasad oznaczania zależnych od rodzaju treści i wyjątku.", sourceLabel: "AI Act Service Desk: art. 50", source: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50", reviewed: "2026-10-22" },
+        { scope: "Zastosowanie wrażliwe", action: "Sprawdzenie art. 6 i załącznika III oraz skierowanie przypadku do oceny prawnej przed użyciem.", sourceLabel: "AI Act Service Desk: art. 6", source: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-6", reviewed: "2026-10-22" },
+        { scope: "Polska ustawa", action: "Sprawdzenie zakresu polskiej ustawy i przepisów przejściowych. Data wejścia w życie nie jest obietnicą kontroli w konkretnym dniu.", sourceLabel: "ELI: Dz.U. 2026 poz. 1003", source: "https://eli.gov.pl/eli/DU/2026/1003/ogl", reviewed: "2026-10-22" }
+      ],
+      note: "To praktyczna wskazówka do screeningu, nie porada prawna ani certyfikat zgodności. Oś czasu nie aktualizuje się prawnie automatycznie; przed decyzją: otwarcie źródła i konsultacja wątpliwości z wykwalifikowaną osobą."
+    },
     events: [
       { date: "2025-02-02", title: "Zakazane praktyki AI", desc: "Art. 5 AI Act: zakaz m.in. manipulacji, scoringu społecznego i części systemów rozpoznawania emocji. Art. 4: obowiązek zapewnienia umiejętności AI w organizacji." },
       { date: "2025-08-02", title: "Modele ogólnego przeznaczenia", desc: "Obowiązki dostawców modeli GPAI i start struktur nadzoru w państwach członkowskich." },
       { date: "2026-07-27", title: "AI Omnibus wchodzi w życie", desc: "Rozporządzenie (UE) 2026/1744 przesuwa terminy dla systemów wysokiego ryzyka, upraszcza obowiązek umiejętności AI i rozszerza ułatwienia dla MŚP na małe spółki o średniej kapitalizacji." },
-      { date: "2026-08-02", title: "Przejrzystość (art. 50)", desc: "Informowanie, że rozmówcą jest AI, oraz oznaczanie treści generowanych, w tym deepfake'ów." },
-      { date: "2026-08-11", title: "Polska ustawa o systemach AI", desc: "Ustawa z 3 lipca 2026 r. (Dz.U. 2026 poz. 1003) wchodzi w życie i powołuje Komisję Rozwoju i Bezpieczeństwa Sztucznej Inteligencji (KRiBSI)." },
-      { date: "2026-10-28", title: "Kontrole i kary KRiBSI", desc: "Komisja zaczyna prowadzić kontrole i nakładać kary za naruszenia AI Act w Polsce." },
+      { date: "2026-08-02", title: "Przejrzystość (art. 50)", desc: "Obowiązki zależą od roli dostawcy lub wdrażającego, rodzaju treści i wyjątków. Aktualne brzmienie przed oznaczeniem materiału wymaga sprawdzenia." },
+      { date: "2026-08-11", title: "Polska ustawa o systemach AI", desc: "Ustawa z 3 lipca 2026 r. (Dz.U. 2026 poz. 1003) wchodzi w życie. Przepisy przejściowe i zakres kompetencji wymagają sprawdzenia w tekście ustawy." },
+      { date: "2026-10-28", title: "Wybrane przepisy krajowe", desc: "Według przepisu przejściowego część regulacji dotyczących organu i nadzoru zaczyna być stosowana 28 października. Nie oznacza to gwarantowanej kontroli w tym dniu." },
       { date: "2026-12-02", title: "Nowe zakazy", desc: "Zakaz systemów generujących intymne treści bez zgody oraz materiały przedstawiające wykorzystywanie dzieci." },
       { date: "2027-12-02", title: "Systemy wysokiego ryzyka (załącznik III)", desc: "Pełne obowiązki dla samodzielnych systemów wysokiego ryzyka: m.in. rekrutacja, ocena zdolności kredytowej, edukacja, infrastruktura krytyczna." },
       { date: "2028-08-02", title: "AI w produktach regulowanych (załącznik I)", desc: "Obowiązki dla AI wbudowanej w maszyny, zabawki, wyroby medyczne i inne produkty objęte prawem harmonizacyjnym UE." }
     ],
     sources: [
       { label: "Komisja Europejska: AI Omnibus enters into force", url: "https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force" },
-      { label: "EUR-Lex: Rozporządzenie (UE) 2026/1744", url: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng" }
+      { label: "EUR-Lex: Rozporządzenie (UE) 2026/1744", url: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng" },
+      { label: "ELI: Dz.U. 2026 poz. 1003", url: "https://eli.gov.pl/eli/DU/2026/1003/ogl" }
     ]
   },
 
   challenges: {
-    title: "Typowe wyzwania",
-    lead: "Prawie każde wdrożenie trafia na te same przeszkody. Lepiej mieć gotową odpowiedź, zanim się pojawią.",
+    title: "Typowe przeszkody",
+    lead: "Jedno zadanie wystarczy, żeby zobaczyć typowe problemy. Poniższe odpowiedzi pomagają je ograniczyć bez tworzenia planu dla całej firmy.",
     items: [
-      { title: "Nierówna adopcja", icon: "users", problem: "Część zespołu używa narzędzi codziennie, część wcale.", fix: "Sparuj opornych z ambasadorami, pokazuj konkretne przykłady z ich pracy, celebruj szybkie wygrane i zapewnij wsparcie na miejscu." },
-      { title: "Obawy o jakość", icon: "shield-check", problem: "Treści z AI zawierają błędy, które trafiają dalej.", fix: "Przegląd dopasowany do roli, wzorce dobrej jakości, lista kontrolna, dokumentowanie błędów i automatyczne testy tam, gdzie to możliwe." },
-      { title: "Bezpieczeństwo danych", icon: "lock", problem: "Dane klientów lub tajemnice firmy trafiają do zewnętrznych modeli.", fix: "Sprawdzaj dostawców, spisz jasne zasady, włącz zabezpieczenia techniczne, rób audyty i mów otwarcie, co wolno, a czego nie." },
-      { title: "Etyka i przejrzystość", icon: "scale", problem: "Nie wiadomo, kiedy informować, że treść lub decyzję wspierała AI.", fix: "Ustal zasady atrybucji i szablony informacji dla klientów zgodne z art. 50 AI Act oraz ścieżkę zgłaszania wątpliwości." },
-      { title: "Integracja z systemami", icon: "plug", problem: "Narzędzie działa osobno, a dane trzeba przenosić ręcznie.", fix: "Zmapuj integracje wcześnie, zaangażuj IT, zbuduj potrzebne połączenia, testuj i miej plan awaryjny." },
-      { title: "Shadow AI i koszty", icon: "wallet", problem: "Pracownicy używają prywatnych kont, a rachunki za licencje i tokeny rosną bez kontroli.", fix: "Daj bezpieczną, oficjalną alternatywę, licz koszt na przypadek użycia, ustaw limity i przeglądaj wydatki co miesiąc." }
+      { title: "Nierówna użyteczność", icon: "users", problem: "Rutyna pomaga jednej osobie, ale nie pasuje do pozostałych przypadków.", fix: "Porównanie przykładów, zebranie pytań i dopasowanie instrukcji do rzeczywistego przebiegu zadania." },
+      { title: "Błędy wyniku", icon: "shield-check", problem: "Wynik wymaga wielu poprawek albo zawiera trudne do zauważenia błędy.", fix: "Kryterium akceptacji, przegląd człowieka, zapis błędów i ponowny test na reprezentatywnych przykładach." },
+      { title: "Bezpieczeństwo danych", icon: "lock", problem: "Dane klientów lub poufne informacje mogą trafić do niewłaściwego narzędzia.", fix: "Minimalny zakres danych, sprawdzenie ustawień, ograniczenie dostępu i konsultacja specjalisty przy niejasności." },
+      { title: "Wynik dla klienta", icon: "message-circle", problem: "Treść wsparta przez AI może trafić na zewnątrz bez odpowiedniej kontroli.", fix: "Przegląd treści, ustalenie roli człowieka i sprawdzenie zasad przejrzystości przed przekazaniem." },
+      { title: "Połączenie z systemem", icon: "plug", problem: "Ręczne przenoszenie danych zabiera czas albo tworzy nowe ryzyko.", fix: "Najpierw potwierdzenie potrzeby, mały zakres danych, test odtworzenia i ręczny sposób awaryjny." },
+      { title: "Koszt i dostęp", icon: "wallet", problem: "Koszt rośnie, a nie wiadomo, kto odpowiada za konto lub limity.", fix: "Właściciel konta, limit wydatków, przegląd kosztu i uporządkowanie dostępu po teście." }
     ]
   },
 
   metrics: {
     title: "Pomiar sukcesu",
-    lead: "Cztery grupy wskaźników. Wybierz po jednym lub dwa z każdej grupy już w fazie 1 i mierz je bez zmian do końca.",
+    lead: "Miary potrzebne do jednego zadania obejmują stan wyjściowy, kryterium jakości, czas sprawdzania i koszt przed decyzją o dalszym użyciu.",
     groups: [
-      { title: "Efektywność", icon: "timer", items: ["Czas na proces przed i po", "Zaoszczędzone godziny pracy", "Przepustowość zespołu"] },
-      { title: "Jakość", icon: "badge-check", items: ["Odsetek błędów", "Satysfakcja klientów", "Liczba poprawek po przeglądzie"] },
-      { title: "Wpływ na biznes", icon: "trending-up", items: ["Oszczędności kosztów", "Wzrost przychodów", "Utrzymanie klientów", "Koszt na przypadek użycia"] },
-      { title: "Innowacje i adopcja", icon: "lightbulb", items: ["Nowe przypadki użycia", "Odsetek aktywnych użytkowników", "Zastosowania między działami"] }
+      { title: "Czas", icon: "timer", items: ["Czas całego zadania", "Czas sprawdzania i poprawek", "Liczba zadań w ustalonym okresie"] },
+      { title: "Jakość", icon: "badge-check", items: ["Liczba błędów", "Liczba poprawek", "Akceptacja według ustalonego kryterium"] },
+      { title: "Koszt", icon: "wallet", items: ["Koszt narzędzia", "Koszt pracy przy sprawdzaniu", "Koszt jednego zadania"] },
+      { title: "Użyteczność", icon: "sparkles", items: ["Czy rutyna skraca pracę", "Czy instrukcja jest zrozumiała", "Czy ręczny sposób awaryjny pozostaje dostępny"] }
+    ]
+  },
+
+  workedExample: {
+    title: "Przykład: odpowiedzi na pytania klientów",
+    lead: "Jedna osoba testuje narzędzie na niekrytycznych zgłoszeniach. Pomiar obejmuje czas odpowiedzi, czas poprawek, jakość według ustalonego kryterium i koszt zadania. Progi są zapisane przed testem, bez obietnicy oszczędności.",
+    phases: [
+      { title: "1. Wybór zadania", output: "Karta zadania, stan wyjściowy, osoba decyzyjna i granice danych.", threshold: "Kryterium sukcesu oraz zakres testu są zapisane." },
+      { title: "2. Test w praktyce", output: "Jedno narzędzie, reprezentatywne przykłady i tabela porównawcza.", threshold: "Czas poprawek i koszt są porównane ze stanem wyjściowym." },
+      { title: "3. Wprowadzenie do pracy", output: "Krótka instrukcja, osoba przeglądająca i ręczny sposób awaryjny.", threshold: "Rutyna jest zrozumiała dla osób wykonujących zadanie." },
+      { title: "4. Utrzymanie i rozwój", output: "Karta przeglądu, aktualna instrukcja i uporządkowane dostępy.", threshold: "Utrzymanie, zmiana albo zatrzymanie rutyny wynika z danych." }
+    ]
+  },
+
+  glossary: [
+    { term: "Stan wyjściowy (baseline)", definition: "Punkt odniesienia dla wyniku testu: czas, jakość, poprawki i koszt." },
+    { term: "Kryterium sukcesu", definition: "Ustalony przed testem opis wyniku, który uzasadnia dalsze użycie zadania." },
+    { term: "Przegląd człowieka", definition: "Kontrola wyniku przez osobę, zanim trafi do klienta, systemu albo kolejnego etapu pracy." },
+    { term: "Ręczny sposób awaryjny (fallback)", definition: "Opis zwykłego sposobu wykonania zadania, gdy narzędzie jest niedostępne lub wynik jest niepewny." },
+    { term: "Dane wrażliwe", definition: "Dane wymagające dodatkowego ograniczenia zakresu, dostępu lub konsultacji specjalisty." },
+    { term: "Wynik testu", definition: "Zapis obserwacji, przykładu i decyzji: kontynuacja, korekta z ponownym testem albo zatrzymanie." }
+  ],
+
+  pathOptions: {
+    title: "Minimum i rozszerzenie",
+    minimum: [
+      "Jedno zadanie, jedna osoba wykonująca i jedna osoba podejmująca decyzję.",
+      "Stan wyjściowy, kryterium sukcesu oraz porównanie czasu, poprawek i kosztu.",
+      "Jedno narzędzie, minimalny zakres danych i przegląd człowieka.",
+      "Instrukcja, ręczny sposób awaryjny i decyzja o utrzymaniu, zmianie albo zatrzymaniu."
+    ],
+    extended: [
+      "Dodatkowy przegląd specjalisty przy danych osobowych, poufnych lub decyzjach wrażliwych.",
+      "Wspólna instrukcja i dostęp według ról, gdy z rutyny korzysta kilka zespołów.",
+      "Okresowy przegląd kryterium jakości, kosztu i ręcznego sposobu awaryjnego."
     ]
   }
 };
+
+window.ROADMAP.taskHints = Object.fromEntries(window.ROADMAP.phases.flatMap((phase) => phase.stages.flatMap((stage) => stage.items.flatMap((item) => item.actions.map((action) => [action.id, action.hint || "Wynik lub przykład zapisany przy zadaniu."])))).concat(window.ROADMAP.phases.flatMap((phase) => phase.gate.checks.map((check) => [check.id, check.hint || "Wynik lub dokumentacja warunku decyzji."]))));

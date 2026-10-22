@@ -9,13 +9,14 @@
 <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png?v=1">
 <meta name="theme-color" content="#d20757">
 <title>Mapa drogowa wdrożenia AI</title>
-<meta name="description" content="Cztery fazy wdrożenia AI w organizacji: fundament, pilotaż, wdrożenie, integracja. Bramki decyzyjne, lista kontrolna z zapisem postępu i kalendarz AI Act.">
+<meta name="description" content="Praktyczny plan AI dla jednego zadania: wybór, test, wprowadzenie do pracy oraz utrzymanie. Lista działań, warunki decyzji i lokalny zapis postępu.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Geist+Mono:wght@400;500&display=swap">
 <style>
   @keyframes boot-reveal { to { visibility: visible; } }
   html:not(.app-ready) body { visibility: hidden; animation: boot-reveal 0s 4s forwards; }
+  html.app-ready body, html.app-ready body > * { visibility: visible; }
   @media print { html:not(.app-ready) body { visibility: visible; animation: none; } }
 </style>
 <noscript><style>html:not(.app-ready) body { visibility: visible; animation: none; }</style></noscript>
@@ -42,6 +43,7 @@
   --border-2:         #D1D5DB;
   --font-display:     "Manrope", system-ui, -apple-system, sans-serif;
   --font-sans:        "Manrope", system-ui, -apple-system, sans-serif;
+  --font-print:       Arial, "Liberation Sans", sans-serif;
   --font-mono:        "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --radius-sm:        6px;
   --radius-md:        10px;
@@ -50,10 +52,20 @@
   --shadow-card:      0 10px 30px -12px rgba(10, 20, 40, 0.12);
   --nav-h: 64px;
   --content-w: 1120px;
+  --hero-title-size: clamp(36px, 5vw, 68px);
+  --hero-tagline-size: clamp(16px, 1.6vw, 19px);
+  --hero-space-top: 32px;
+  --hero-space-bottom: 64px;
   --pink-a45: rgba(210, 7, 87, 0.45);
   --pink-a07: rgba(210, 7, 87, 0.07);
   --pink-a04: rgba(210, 7, 87, 0.04);
   --pink-a03: rgba(210, 7, 87, 0.03);
+  --violet-a12: rgba(112, 48, 160, 0.12);
+  --ink-a60: rgba(10, 31, 44, 0.60);
+  --white-a16: rgba(255, 255, 255, 0.16);
+  --success: #157347;
+  --warning: #9a5b00;
+  --danger: #a3134c;
 }
 
 /* ─── Base ─── */
@@ -89,17 +101,17 @@ a { color: var(--quantica-pink); }
 }
 
 /* ─── Hero ─── */
-.hero { position: relative; min-height: 88svh; display: flex; align-items: center; color: var(--white); padding: calc(var(--nav-h) + 48px) 0 84px; background: var(--ink); overflow: hidden; }
+.hero { position: relative; display: flex; align-items: center; color: var(--white); padding: calc(var(--nav-h) + var(--hero-space-top)) 0 var(--hero-space-bottom); background: var(--ink); overflow: hidden; }
 canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .hero-q { position: absolute; right: -6%; top: 50%; transform: translateY(-50%); width: min(46vw, 640px); opacity: 0.16; pointer-events: none; }
 .hero-q img { width: 100%; display: block; }
 .hero-inner { position: relative; z-index: 2; width: 100%; }
-.hero-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(48px, 8.5vw, 120px); line-height: 0.98; letter-spacing: -0.03em; color: var(--white); }
+.hero-title { font-family: var(--font-display); font-weight: 700; font-size: var(--hero-title-size); line-height: 1.04; letter-spacing: -0.03em; color: var(--white); }
 .hero-title em { font-style: normal; color: var(--rose-pink); }
-.hero-tagline { font-size: clamp(17px, 2vw, 22px); line-height: 1.6; color: rgba(255, 255, 255, 0.92); margin-top: 24px; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+.hero-tagline { font-size: var(--hero-tagline-size); line-height: 1.6; color: rgba(255, 255, 255, 0.92); margin-top: 16px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 24px; }
 .hero-footer { position: absolute; bottom: 22px; left: 0; right: 0; z-index: 2; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.85); }
-@media (max-width: 768px) { .hero { min-height: auto; padding: calc(var(--nav-h) + 56px) 0 110px; } .hero-q { width: 70vw; right: -18%; opacity: 0.12; } .hero-footer { flex-direction: column; gap: 6px; } }
+@media (max-width: 768px) { .hero { --hero-space-top: 24px; --hero-space-bottom: 110px; } .hero-q { width: 70vw; right: -18%; opacity: 0.12; } .hero-footer { flex-direction: column; gap: 6px; } }
 
 /* ─── Pills ─── */
 .pill { font-family: var(--font-sans); font-weight: 700; font-size: 14px; text-decoration: none; padding: 13px 28px; border-radius: 999px; display: inline-flex; align-items: center; gap: 9px; cursor: pointer; border: 0; transition: transform 200ms, background 200ms, color 200ms; }
@@ -185,6 +197,7 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
 .task input:checked::after { content: ""; position: absolute; left: 5px; top: 1.5px; width: 5px; height: 9px; border: solid var(--white); border-width: 0 2px 2px 0; transform: rotate(45deg); }
 .task input:focus-visible { outline: 2px solid var(--quantica-pink); outline-offset: 2px; }
 .task input:checked + span { color: var(--fg-3); text-decoration: line-through; text-decoration-color: var(--border-2); }
+.task-optional { display: inline-block; margin-left: 8px; font-family: var(--font-mono); font-size: 10px; color: var(--violet-primary); text-decoration: none; }
 .gate { border: 1.5px solid var(--quantica-pink); background: var(--pink-a04); box-shadow: var(--shadow-pink-soft); }
 .gate:hover { border-color: var(--quantica-pink); background: var(--pink-a07); }
 .gate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
@@ -195,15 +208,30 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
 .gate-next { margin-top: 18px; }
 .gate-done { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; color: var(--quantica-pink); margin-top: 12px; display: none; }
 .gate[data-done="true"] .gate-done { display: block; }
+.gate-checks { grid-column: 2; grid-row: 1 / span 4; }
+.gate-status { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; margin-top: 12px; color: var(--fg-3); }
+.gate[data-done="true"] .gate-status { color: var(--success); }
+.gate-decision { border-top: 1px solid var(--border-1); margin-top: 18px; padding-top: 16px; }
+.gate-decision h4 { font-size: 14px; margin-bottom: 8px; }
+.gate-decision-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.gate-decision label { display: grid; gap: 4px; font-size: 12px; color: var(--fg-3); }
+.gate-decision input, .gate-decision select, .gate-decision textarea, .project-form input, .project-form select, .project-form textarea, .task-editor input, .task-editor textarea { width: 100%; font: inherit; border: 1px solid var(--border-2); border-radius: var(--radius-sm); background: var(--bg-1); color: var(--fg-1); padding: 9px 10px; }
+.gate-decision textarea, .task-editor textarea, .project-form textarea { min-height: 72px; resize: vertical; }
+.gate-decision .pill { margin-top: 10px; }
+.decision-stale { color: var(--warning); font-size: 12px; margin-top: 8px; }
+.decision-stop { color: var(--danger); font-size: 12px; margin-top: 8px; }
 @media (max-width: 768px) {
   .phase-head { grid-template-columns: 1fr; gap: 14px; }
   .phase-stat { text-align: left; }
   .gate-grid { grid-template-columns: 1fr; }
-  .gate .task-list, .gate-text { grid-column: auto; }
+  .gate .task-list, .gate-text, .gate-checks { grid-column: auto; grid-row: auto; }
 }
 
 /* ─── Regulation timeline ─── */
-.timeline { list-style: none; margin-top: 30px; position: relative; padding-left: 34px; }
+.timeline-disclosure { margin-top: 24px; border: 1px solid var(--border-1); border-radius: var(--radius-md); background: var(--bg-1); }
+.timeline-disclosure summary { cursor: pointer; padding: 13px 16px; color: var(--quantica-pink); font-weight: 700; }
+.timeline-disclosure[open] summary { border-bottom: 1px solid var(--border-1); }
+.timeline { list-style: none; margin-top: 24px; position: relative; padding: 0 16px 0 50px; }
 .timeline::before { content: ""; position: absolute; left: 9px; top: 6px; bottom: 6px; width: 2px; background: var(--border-2); }
 .tl-item { position: relative; padding: 0 0 26px; display: grid; grid-template-columns: 150px 1fr; gap: 18px; }
 .tl-item::before { content: ""; position: absolute; left: -31px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--bg-1); border: 2px solid var(--border-2); }
@@ -221,7 +249,7 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
 /* ─── Violet note ─── */
 .note-violet { background: var(--mist); border: 1.5px solid var(--violet-primary); border-radius: var(--radius-md); padding: 22px 26px; margin: 26px 0 0; max-width: 860px; display: flex; gap: 18px; align-items: flex-start; }
 .note-violet p { margin: 0; font-size: 15.5px; line-height: 1.7; color: var(--fg-1); font-weight: 500; max-width: none; }
-.note-violet .note-icon { flex: none; width: 46px; height: 46px; border-radius: var(--radius-md); background: rgba(112, 48, 160, 0.12); display: flex; align-items: center; justify-content: center; }
+.note-violet .note-icon { flex: none; width: 46px; height: 46px; border-radius: var(--radius-md); background: var(--violet-a12); display: flex; align-items: center; justify-content: center; }
 .note-violet .note-icon .icon { width: 23px; height: 23px; color: var(--violet-primary); }
 
 /* ─── Contact panel ─── */
@@ -233,7 +261,7 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
 .contact .pill-solid { background: var(--white); color: var(--quantica-pink); }
 .contact .pill-solid:hover { background: var(--magenta-tint); }
 .contact-label { font-family: var(--font-mono); font-weight: 500; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rose-pink); margin-bottom: 14px; position: relative; z-index: 1; }
-.contact-info { display: flex; flex-wrap: wrap; gap: 34px; align-items: flex-start; border-top: 1px solid rgba(255, 255, 255, 0.16); padding-top: 22px; position: relative; z-index: 1; }
+.contact-info { display: flex; flex-wrap: wrap; gap: 34px; align-items: flex-start; border-top: 1px solid var(--white-a16); padding-top: 22px; position: relative; z-index: 1; }
 .contact-meta { font-size: 13px; line-height: 1.7; color: var(--white); }
 .contact-meta a { color: var(--white); }
 .contact-logo img { height: 40px; width: auto; display: block; }
@@ -245,16 +273,169 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
 .footer a { color: var(--fg-3); }
 
 /* ─── Help overlay + toast ─── */
-.help { position: fixed; inset: 0; z-index: 60; background: rgba(10, 31, 44, 0.6); display: none; align-items: center; justify-content: center; padding: 20px; }
+.help { position: fixed; inset: 0; z-index: 60; background: var(--ink-a60); display: none; align-items: center; justify-content: center; padding: 20px; }
 .help[open] { display: flex; }
 .help-card { background: var(--bg-1); border-radius: 18px; padding: 30px 32px; max-width: 440px; width: 100%; box-shadow: var(--shadow-card); }
 .help-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 20px; margin-bottom: 14px; }
 .help-card dl { display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 14px; }
 .help-card dt { font-family: var(--font-mono); font-size: 12px; color: var(--quantica-pink); }
-.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); z-index: 50; background: var(--ink); color: var(--white); font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.03em; padding: 12px 20px; border-radius: 999px; opacity: 0; pointer-events: none; transition: opacity 250ms, transform 250ms; }
+.toast { position: fixed; left: 50%; bottom: 24px; width: calc(100% - 32px); max-width: 640px; box-sizing: border-box; transform: translate(-50%, 20px); z-index: 70; display: flex; align-items: flex-start; gap: 12px; background: var(--ink); color: var(--white); font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.03em; padding: 12px 20px; border-radius: var(--radius-md); opacity: 0; pointer-events: none; transition: opacity 250ms, transform 250ms; }
+.toast > span { min-width: 0; flex: 1 1 auto; overflow-wrap: anywhere; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast button { border: 1px solid var(--white); border-radius: 999px; background: transparent; color: var(--white); padding: 4px 10px; font: inherit; cursor: pointer; pointer-events: auto; }
 .tools { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; align-items: center; }
 .tools .meta { font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); letter-spacing: 0.03em; }
+.secondary-tools { position: relative; }
+.secondary-tools summary { list-style: none; }
+.secondary-tools summary::-webkit-details-marker { display: none; }
+.secondary-tools[open] summary { color: var(--quantica-pink); }
+.secondary-tools .tools-menu { position: absolute; z-index: 5; top: calc(100% + 8px); left: 0; min-width: 210px; padding: 12px; display: grid; gap: 8px; background: var(--bg-1); border: 1px solid var(--border-1); border-radius: var(--radius-md); box-shadow: var(--shadow-card); }
+.save-status { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); min-height: 32px; }
+.save-status[data-state="saved"] { color: var(--success); }
+.save-status[data-state="unsaved"], .save-status[data-state="error"] { color: var(--warning); }
+.save-status[data-state="corrupt"] { color: var(--danger); }
+.save-status button { border: 0; background: none; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; padding: 0; }
+.mode-switch { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.mode-switch .is-active { background: var(--quantica-pink); color: var(--white); border-color: var(--quantica-pink); }
+.workbench { border-top: 1px solid var(--border-1); margin-top: 32px; padding-top: 28px; }
+.workbench[hidden] { display: none; }
+body[data-mode="plan"] .hero,
+body[data-mode="plan"] #jak,
+body[data-mode="plan"] #przeglad .section-head,
+body[data-mode="plan"] #przeglad .stepper,
+body[data-mode="plan"] #phases,
+body[data-mode="plan"] #wsparcie,
+body[data-mode="plan"] #regulacje,
+body[data-mode="plan"] #wyzwania,
+body[data-mode="plan"] #mierniki,
+body[data-mode="plan"] #przyklad,
+body[data-mode="plan"] #kontakt,
+body[data-mode="plan"] .footer { display: none !important; }
+body[data-mode="plan"] #przeglad { height: 116px; padding: 0; }
+body[data-mode="plan"] #przeglad > .wrap { position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 30; max-width: none; padding: 10px 28px; display: flex; align-items: center; gap: 22px; background: var(--bg-1); border-bottom: 1px solid var(--border-1); box-shadow: var(--shadow-card); }
+body[data-mode="plan"] #przeglad .tools { margin: 0; flex: 1 1 auto; }
+body[data-mode="plan"] #przeglad .mode-switch { margin: 0; flex: 0 0 auto; }
+body[data-mode="plan"] #bezpieczenstwo { display: none !important; }
+body[data-mode="plan"] #plan { scroll-margin-top: calc(var(--nav-h) + 116px); }
+body[data-mode="plan"] .workbench { margin-top: 0; border-top: 0; padding-top: 22px; }
+.workbench-head { display: flex; gap: 16px; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; }
+.workbench-head p { max-width: 700px; margin: 0; }
+.path-disclosure, .project-disclosure { margin-top: 18px; border: 1px solid var(--border-1); border-radius: var(--radius-md); background: var(--bg-1); }
+.path-disclosure summary, .project-disclosure summary { cursor: pointer; padding: 13px 16px; color: var(--quantica-pink); font-weight: 700; }
+.path-disclosure[open] summary, .project-disclosure[open] summary { border-bottom: 1px solid var(--border-1); }
+.path-disclosure .path-options { margin: 0; padding: 0 16px 16px; }
+.path-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.path-options article { border: 1px solid var(--border-1); border-radius: var(--radius-md); padding: 14px 16px; background: var(--bg-1); }
+.path-options h3 { font-size: 15px; margin-bottom: 6px; }
+.path-options ul { margin: 0; padding-left: 18px; font-size: 13px; }
+.project-form { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.project-form label { display: grid; gap: 5px; font-size: 12px; color: var(--fg-3); }
+.project-form label.wide { grid-column: span 2; }
+.project-form label.full { grid-column: 1 / -1; }
+.project-form fieldset { min-width: 0; margin: 4px 0 0; padding: 14px 16px 16px; border: 1px solid var(--border-1); border-radius: var(--radius-md); }
+.context-picker legend { padding: 0 5px; color: var(--fg-1); font-size: 13px; font-weight: 700; }
+.context-picker p { margin: 0 0 12px; font-size: 12px; color: var(--fg-3); }
+.context-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; }
+.context-options label { display: flex; align-items: flex-start; gap: 8px; color: var(--fg-1); font-size: 13px; }
+.context-options input { width: auto; margin-top: 2px; accent-color: var(--quantica-pink); }
+.project-form > .project-disclosure { grid-column: 1 / -1; margin-top: 4px; }
+.project-details-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 0 16px 16px; }
+.plan-grid { display: grid; grid-template-columns: 220px 1fr; gap: 24px; margin-top: 26px; }
+.phase-nav { position: sticky; top: calc(var(--nav-h) + 16px); align-self: start; display: grid; gap: 8px; }
+.phase-nav h3 { font-size: 13px; margin-bottom: 4px; }
+.phase-nav button { text-align: left; border: 1px solid var(--border-1); background: var(--bg-1); border-radius: var(--radius-sm); padding: 10px 12px; cursor: pointer; color: var(--fg-1); font: inherit; }
+.phase-nav button:hover, .phase-nav button.is-active { border-color: var(--quantica-pink); color: var(--quantica-pink); }
+.phase-nav small { display: block; font-family: var(--font-mono); color: var(--fg-3); font-size: 10px; margin-top: 2px; }
+.resume-card, .plan-task-card, .diagnostics { border: 1px solid var(--border-1); border-radius: var(--radius-md); background: var(--bg-1); padding: 16px; box-shadow: var(--shadow-card); }
+.resume-card { background: var(--pink-a04); border-color: var(--pink-a45); }
+.resume-card h3, .plan-task-card h3 { font-size: 17px; margin-bottom: 6px; }
+.resume-card p { margin: 0 0 12px; font-size: 14px; }
+.plan-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 16px 0; }
+.plan-toolbar .meta { margin-right: auto; font-family: var(--font-mono); font-size: 12px; color: var(--fg-3); }
+.plan-tasks { display: grid; gap: 12px; }
+.plan-task-card[data-done="true"] { border-color: var(--pink-a45); background: var(--pink-a03); }
+.plan-task-card[data-kind="gate"] { border: 1.5px solid var(--quantica-pink); }
+.plan-task-card p { font-size: 14px; margin: 0 0 10px; }
+.plan-task-card .task-line { display: flex; gap: 10px; align-items: flex-start; }
+.plan-task-card .task-line input { flex: none; margin-top: 4px; }
+.task-card-kind { font-family: var(--font-mono); color: var(--quantica-pink); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
+.task-card-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.task-card-meta { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); margin-top: 8px; }
+.resume-card:focus { outline: 2px solid var(--quantica-pink); outline-offset: 4px; }
+.output-disclosure { margin-top: 18px; }
+.output-disclosure summary { cursor: pointer; color: var(--quantica-pink); font-weight: 700; }
+.legal-now { margin-top: 24px; border: 1.5px solid var(--violet-primary); border-radius: var(--radius-md); padding: 22px 26px; background: var(--mist); }
+.legal-now h3 { font-size: 20px; margin-bottom: 8px; }
+.legal-now-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+.legal-now article { border: 1px solid var(--border-1); border-radius: var(--radius-sm); padding: 14px; background: var(--bg-1); }
+.legal-now article h4 { font-size: 14px; margin-bottom: 5px; }
+.legal-now article p { font-size: 13px; line-height: 1.6; margin: 0; }
+.legal-note { color: var(--fg-3); font-size: 12px; margin-top: 14px; }
+.glossary { columns: 2 260px; column-gap: 30px; margin-top: 16px; }
+.glossary div { break-inside: avoid; margin-bottom: 12px; }
+.glossary dt { font-family: var(--font-mono); color: var(--quantica-pink); font-size: 12px; }
+.glossary dd { font-size: 13px; margin: 2px 0 0; }
+.worked-example { margin-top: 24px; border: 1px solid var(--border-1); border-radius: var(--radius-md); padding: 20px; background: var(--bg-2); }
+.subsection-head { margin-top: 42px; }
+.worked-example-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.worked-example article { background: var(--bg-1); border-radius: var(--radius-sm); padding: 14px; border: 1.5px solid var(--quantica-pink); }
+.worked-example article h4 { font-size: 14px; margin-bottom: 6px; }
+.worked-example article p { font-size: 13px; margin: 0; line-height: 1.6; }
+.modal-card { max-height: min(90vh, 680px); overflow: auto; }
+.modal-card .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+.task-editor { display: grid; gap: 10px; }
+.task-editor label { display: grid; gap: 5px; font-size: 12px; color: var(--fg-3); }
+.diagnostics { margin-top: 18px; box-shadow: none; }
+.diagnostics pre { white-space: pre-wrap; word-break: break-word; font: 12px/1.5 var(--font-mono); color: var(--fg-3); margin-top: 10px; }
+.legacy-notice { margin-top: 20px; padding: 14px 16px; border: 1.5px solid var(--warning); border-radius: var(--radius-md); background: var(--bg-2); color: var(--fg-1); font-size: 13px; line-height: 1.6; }
+.legacy-notice[hidden] { display: none; }
+.legacy-notice strong { color: var(--warning); }
+.legacy-notice .legacy-keys { display: block; margin-top: 5px; font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); }
+.legacy-notice .pill { margin-top: 10px; }
+.context-guidance { margin-top: 20px; border: 1.5px solid var(--violet-primary); border-radius: var(--radius-md); padding: 18px 20px; background: var(--mist); }
+.context-guidance:empty { display: none; }
+.context-guidance .safety-lead { margin: 0; font-size: 13px; line-height: 1.6; }
+.guide-safety { margin-top: 24px; }
+.safety-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.safety-grid section { padding: 12px 14px; border: 1px solid var(--border-1); border-radius: var(--radius-sm); background: var(--bg-1); }
+.safety-grid h4 { font-size: 14px; margin-bottom: 6px; }
+.safety-grid p, .safety-grid li { font-size: 12px; line-height: 1.55; }
+.safety-grid p { margin: 0 0 5px; color: var(--fg-3); }
+.safety-grid ul { margin: 0; padding-left: 17px; }
+.print-snapshot { display: none; }
+.print-snapshot h1, .print-snapshot h2, .print-snapshot h3, .print-snapshot h4 { color: var(--fg-1); font-family: var(--font-display); }
+.print-snapshot h1 { font-size: 30px; line-height: 1.1; margin: 8px 0 12px; }
+.print-snapshot h2 { font-size: 21px; margin: 24px 0 8px; border-bottom: 1px solid var(--border-2); padding-bottom: 5px; }
+.print-snapshot h3 { font-size: 16px; margin: 16px 0 6px; }
+.print-snapshot h4 { font-size: 14px; margin-bottom: 4px; color: var(--quantica-pink); }
+.print-snapshot p { font-size: 12px; line-height: 1.5; margin: 3px 0; max-width: none; }
+.print-snapshot pre { white-space: pre-wrap; overflow-wrap: anywhere; font: 12px/1.5 var(--font-sans); margin: 2px 0 8px; }
+.print-cover, .print-project { break-inside: avoid; }
+.print-phase { break-inside: auto; }
+.print-task-list { display: grid; gap: 5px; }
+.print-task { border: 1px solid var(--border-1); border-radius: var(--radius-sm); padding: 6px 8px; break-inside: avoid; }
+.print-task p, .print-task pre { font-size: 11px; line-height: 1.35; }
+.print-task-title { margin-bottom: 4px !important; }
+.print-task-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
+.print-task-fields p:nth-of-type(3), .print-task-fields p:nth-of-type(4), .print-task-fields pre { grid-column: 1 / -1; }
+.print-field-block { grid-column: 1 / -1; }
+.print-field-block p { margin-bottom: 0; }
+.print-decision { border: 1px solid var(--border-2); border-radius: var(--radius-sm); padding: 7px 9px; margin-top: 8px; break-inside: avoid; }
+@media (max-width: 768px) {
+  .project-form, .project-details-grid, .legal-now-grid, .worked-example-grid, .path-options, .safety-grid, .context-options { grid-template-columns: 1fr; }
+  .project-form label.wide, .project-form label.full { grid-column: auto; }
+  .plan-grid { grid-template-columns: 1fr; }
+  .phase-nav { position: sticky; top: var(--nav-h); z-index: 10; display: flex; overflow-x: auto; padding: 8px 0; background: var(--bg-1); border-bottom: 1px solid var(--border-1); }
+  .phase-nav h3 { display: none; }
+  .phase-nav button { min-width: 150px; }
+  .secondary-tools .tools-menu { left: auto; right: 0; }
+  body[data-mode="plan"] #przeglad { height: auto !important; min-height: 0; padding: 0; }
+  body[data-mode="plan"] #przeglad > .wrap { position: static !important; padding: 8px 20px; display: block; box-shadow: none; }
+  body[data-mode="plan"] #przeglad .tools { gap: 8px; }
+  body[data-mode="plan"] #przeglad .mode-switch { margin-top: 8px; }
+  body[data-mode="plan"] #plan { scroll-margin-top: var(--nav-h); }
+  body[data-mode="plan"] .phase-nav { top: var(--nav-h); }
+}
 
 /* ─── Motion + print ─── */
 @media (prefers-reduced-motion: reduce) {
@@ -263,12 +444,15 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 @media print {
-  .nav, canvas[data-dots], .hero-q, .tools, .help, .toast, .contact-pills, .hero-actions { display: none !important; }
-  .hero { min-height: auto; padding: 40px 0; background: var(--ink) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .reveal { opacity: 1; transform: none; }
-  .section { padding: 36px 0; }
-  .cell, .step { break-inside: avoid; box-shadow: none; }
-  .task input:checked + span { text-decoration: none; }
+  @page { margin: 14mm; }
+  body > *:not(#printSnapshot) { display: none !important; }
+  #printSnapshot { display: block !important; padding: 0; color: var(--fg-1); }
+  .print-snapshot { display: block !important; }
+  .print-snapshot, .print-snapshot * { font-family: var(--font-print) !important; }
+  .print-snapshot pre { font: 12px/1.5 var(--font-print); }
+  /* Keep print cards in ordinary block flow while avoiding renderer-specific grid fragmentation. */
+  .print-task-list, .print-task-fields { display: block; }
+  .print-task { margin-bottom: 5px; }
 }
 </style>
 </head>
@@ -277,15 +461,15 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
 <nav class="nav" aria-label="Nawigacja">
   <div class="nav-inner">
     <a class="nav-logo" href="#top"><img src="assets/quantica-logo-color.png" alt="Quantica Lab" width="72" height="30"></a>
-    <button class="nav-burger" aria-label="Menu" aria-expanded="false"><i data-lucide="menu" class="icon"></i></button>
-    <div class="nav-links">
+    <button class="nav-burger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><i data-lucide="menu" class="icon"></i></button>
+    <div class="nav-links" id="navLinks">
       <a href="#przeglad">Przegląd</a>
       <a href="#faza-1">Fazy</a>
       <a href="#wsparcie">Wsparcie</a>
       <a href="#regulacje">Regulacje</a>
       <a href="#wyzwania">Wyzwania</a>
       <a href="#mierniki">Mierniki</a>
-      <a class="nav-cta" href="#faza-1">Zacznij od fazy 1</a>
+      <a class="nav-cta" href="#plan">Mój plan</a>
     </div>
   </div>
   <div class="nav-progress" id="navProgress" aria-hidden="true"></div>
@@ -295,11 +479,11 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
   <canvas data-dots aria-hidden="true"></canvas>
   <div class="hero-q" aria-hidden="true"><img src="assets/quantica-q-mark-white.png" alt=""></div>
   <div class="wrap hero-inner">
-    <h1 class="hero-title">Mapa drogowa wdrożenia <em>AI</em></h1>
-    <p class="hero-tagline">Cztery fazy, od pierwszej decyzji zarządu do AI działającej jak każdy inny proces w firmie. Każda faza ma cel, konkretne działania do odhaczenia i bramkę decyzyjną, która mówi, czy iść dalej.</p>
+    <h1 class="hero-title">AI w firmie<em>.</em></h1>
+    <p class="hero-tagline">Jedno zadanie na początek. Wybór powtarzalnej pracy, sprawdzenie jej na przykładach i zachowanie tylko tego, co rzeczywiście pomaga.</p>
     <div class="hero-actions">
-      <a class="pill pill-solid" href="#faza-1"><i data-lucide="play" class="icon"></i>Zacznij od fazy 1</a>
-      <a class="pill pill-outline" href="#przeglad"><i data-lucide="arrow-down" class="icon"></i>Zobacz przegląd</a>
+      <a class="pill pill-solid" href="#plan"><i data-lucide="target" class="icon"></i>Wybór pierwszego zadania</a>
+      <a class="pill pill-outline" href="#plan" data-start-plan="idea"><i data-lucide="lightbulb" class="icon"></i>Mam już pomysł</a>
     </div>
   </div>
   <div class="hero-footer wrap"><div>quanticalab.ai</div><div id="heroMeta">4 fazy</div></div>
@@ -314,18 +498,18 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
     <div class="bento">
       <div class="cell cell-2 reveal">
         <div class="cell-tag">Kolejność<i data-lucide="list-ordered" class="icon"></i></div>
-        <h3>Fazy i bramki</h3>
-        <p>Idź po kolei. Każda faza kończy się bramką decyzyjną: cztery warunki, które muszą być spełnione, zanim zaczniesz następną. Jeśli któregoś brakuje, wracasz, nie przeskakujesz.</p>
+        <h3>Fazy i warunki decyzji</h3>
+        <p>Praca etapami, ze swobodnym dostępem do całego przewodnika. Każda faza kończy się kilkoma warunkami i osobną decyzją: kontynuacja, ponowny test albo zatrzymanie.</p>
       </div>
       <div class="cell cell-2 reveal">
         <div class="cell-tag">Postęp<i data-lucide="check-square" class="icon"></i></div>
         <h3>Lista kontrolna</h3>
-        <p>Każde działanie ma pole do odhaczenia. Postęp zapisuje się w tej przeglądarce, więc możesz wracać do mapy przez cały projekt. Pasek pod nawigacją pokazuje, ile już za Tobą.</p>
+        <p>Każde działanie ma pole do odhaczenia. Postęp zapisuje się w tej przeglądarce, więc możesz wracać do jednego zadania bez zakładania konta. Pasek pod nawigacją pokazuje, ile już za Tobą.</p>
       </div>
       <div class="cell cell-2 reveal">
         <div class="cell-tag">Zgodność<i data-lucide="scale" class="icon"></i></div>
         <h3>AI Act w tle</h3>
-        <p>Klasyfikację ryzyka, przejrzystość i rejestr systemów wplatamy w działania, a nie odkładamy na koniec. Kalendarz regulacyjny niżej pokazuje, które terminy już obowiązują.</p>
+        <p>Podstawowe granice danych i przegląd człowieka są częścią rdzenia. Dodatkowe pytania pojawiają się tylko wtedy, gdy zaznaczysz odpowiedni kontekst.</p>
       </div>
     </div>
   </div>
@@ -335,16 +519,96 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
   <div class="wrap">
     <div class="reveal section-head">
       <div class="eyebrow">Przegląd</div>
-      <h2 class="h-section">Cztery fazy i jeden <span class="h-pink">stały rytm</span></h2>
-      <p>Orientacyjnie około sześciu miesięcy od decyzji do stanu docelowego. Czas zależy od wielkości organizacji i liczby przypadków użycia; ważniejsza od kalendarza jest kolejność i bramki.</p>
+      <h2 class="h-section">Cztery fazy i jeden <span class="h-pink">konkretny cel</span></h2>
+      <p>Plan prowadzi przez jedno zadanie: wybór, test, wprowadzenie do pracy oraz utrzymanie. Czas zależy od zadania i wyników, nie od uniwersalnego kalendarza.</p>
     </div>
     <div class="stepper reveal" id="stepper"></div>
     <div class="tools reveal">
-      <span class="meta" id="progressMeta">0 / 0 działań</span>
-      <button class="pill pill-ghost" id="btnReset" type="button"><i data-lucide="rotate-ccw" class="icon"></i>Wyczyść postęp</button>
-      <button class="pill pill-ghost" id="btnHelp" type="button"><i data-lucide="keyboard" class="icon"></i>Skróty klawiszowe</button>
-      <button class="pill pill-ghost" id="btnPrint" type="button"><i data-lucide="printer" class="icon"></i>Drukuj / PDF</button>
+      <span class="meta" id="progressMeta">0 / 0 działań · 0 / 0 warunków decyzji</span>
+      <span class="save-status" id="saveStatus" data-state="saved" role="status"><i data-lucide="hard-drive" class="icon"></i><span data-save-label>Zapis lokalny gotowy</span><button type="button" data-retry-save hidden>Spróbuj ponownie</button><button type="button" data-ack-quarantine hidden>Potwierdź kwarantannę</button></span>
+      <details class="secondary-tools">
+        <summary class="pill pill-ghost">Narzędzia planu</summary>
+        <div class="tools-menu">
+          <button class="pill pill-ghost" id="btnReset" type="button"><i data-lucide="rotate-ccw" class="icon"></i>Wyczyść plan</button>
+          <button class="pill pill-ghost" id="btnExport" type="button"><i data-lucide="download" class="icon"></i>Pobierz kopię</button>
+          <button class="pill pill-ghost" id="btnImport" type="button"><i data-lucide="upload" class="icon"></i>Wczytaj kopię</button>
+          <input id="importFile" type="file" accept="application/json,.json" hidden>
+          <button class="pill pill-ghost" id="btnHelp" type="button"><i data-lucide="keyboard" class="icon"></i>Skróty klawiszowe</button>
+          <button class="pill pill-ghost" id="btnPrint" type="button"><i data-lucide="printer" class="icon"></i>Drukuj / PDF</button>
+        </div>
+      </details>
     </div>
+    <div class="mode-switch reveal" aria-label="Tryb strony">
+      <button class="pill pill-ghost is-active" id="btnGuideMode" type="button" aria-pressed="true">Przewodnik</button>
+      <button class="pill pill-ghost" id="btnPlanMode" type="button" aria-pressed="false">Mój plan</button>
+      <span class="meta">Tryb planu zapisuje się lokalnie w tej przeglądarce.</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="bezpieczenstwo">
+  <div class="wrap">
+    <div class="reveal section-head">
+      <div class="eyebrow">Bezpieczny zakres</div>
+      <h2 class="h-section">Trzy warstwy <span class="h-pink">bezpieczeństwa</span></h2>
+      <p>Podstawy pozostają wspólne. Kontekst zadania kieruje do dodatkowych ustaleń i konsultacji, bez automatycznej klasyfikacji prawnej.</p>
+    </div>
+    <div class="context-guidance guide-safety" id="guideSafety" data-active-contexts=""></div>
+  </div>
+</section>
+
+<div class="wrap legacy-notice-shell">
+  <div class="legacy-notice" id="legacyNotice" role="status" hidden></div>
+</div>
+
+<section class="section section-alt workbench" id="plan" data-workbench hidden>
+  <div class="wrap">
+    <div class="workbench-head">
+      <div>
+        <div class="eyebrow">Praca lokalna</div>
+        <h2 class="h-section">Mój <span class="h-pink">plan</span></h2>
+        <p>Jedno zadanie, osoba odpowiedzialna, pożądana poprawa, kryterium sukcesu i następny krok. Powrót do ostatniego działania oraz dodanie wyniku lub przykładu. To samo urządzenie przechowuje plan; kopia JSON jest bezpiecznym sposobem przeniesienia go.</p>
+      </div>
+      <div class="save-status" id="planSaveStatus" data-state="saved"><i data-lucide="hard-drive" class="icon"></i><span data-save-label>Zapis lokalny gotowy</span><button type="button" data-retry-save hidden>Spróbuj ponownie</button><button type="button" data-ack-quarantine hidden>Potwierdź kwarantannę</button></div>
+    </div>
+    <form class="project-form" id="projectForm">
+      <label class="full">Jedno zadanie<input id="projectTask" name="task" maxlength="180" autocomplete="off" placeholder="np. Odpowiedzi na pytania klientów"></label>
+      <label>Osoba odpowiedzialna<input id="projectOwner" name="owner" maxlength="160" autocomplete="off" placeholder="Imię i rola"></label>
+      <label class="wide">Pożądana poprawa<textarea id="projectImprovement" name="improvement" maxlength="1200" placeholder="Co ma być łatwiejsze, szybsze albo bardziej powtarzalne?"></textarea></label>
+      <label class="wide">Kryterium sukcesu<textarea id="projectSuccess" name="successCriterion" maxlength="1600" placeholder="Po czym poznasz, że warto zostać przy tej rutynie?"></textarea></label>
+      <label class="wide">Następny krok<textarea id="projectNextStep" name="nextStep" maxlength="1200" placeholder="Jaki mały krok wykonasz jako następny?"></textarea></label>
+      <label>Faza bieżąca<select id="phaseOverride" name="phaseOverride"></select></label>
+      <fieldset class="context-picker full"><legend>Kontekst zadania</legend><p>Zakres kontekstu tej rutyny kieruje do dodatkowych ustaleń, bez automatycznej klasyfikacji sytuacji.</p><div class="context-options"><label><input type="checkbox" data-context="personalData"> Dane osobowe lub poufne</label><label><input type="checkbox" data-context="externalOutput"> Wynik dla klienta lub na zewnątrz</label><label><input type="checkbox" data-context="multipleTeams"> Kilka zespołów korzysta z rutyny</label><label><input type="checkbox" data-context="integration"> Połączenie z innym systemem</label><label><input type="checkbox" data-context="sensitiveDecision"> Wpływ na ludzi, pieniądze lub dostęp do usług</label></div></fieldset>
+      <details class="project-disclosure">
+        <summary>Notatka i wynik planu</summary>
+        <div class="project-details-grid">
+          <label class="wide">Notatka planu<textarea id="projectNotes" name="notes" maxlength="12000" placeholder="Co jest teraz najważniejsze?"></textarea></label>
+          <label>Wynik lub przykład / link<input id="projectEvidence" name="evidence" maxlength="1000" type="url" placeholder="https://..."></label>
+        </div>
+      </details>
+    </form>
+    <div class="context-guidance" id="contextGuidance" data-active-contexts=""></div>
+    <details class="path-disclosure">
+      <summary>Opcjonalnie: minimum i ścieżka rozszerzona</summary>
+      <div class="path-options" id="pathOptions"></div>
+    </details>
+    <div class="plan-grid">
+      <nav class="phase-nav" id="planPhaseNav" aria-label="Faza w planie"><h3>Faza</h3></nav>
+      <div>
+        <div class="resume-card" id="resumeCard" tabindex="-1"></div>
+        <div class="plan-toolbar">
+          <span class="meta" id="planMeta">0 działań pozostało</span>
+          <button class="pill pill-ghost" id="btnRemaining" type="button" aria-pressed="false">Tylko pozostałe</button>
+          <button class="pill pill-ghost" id="btnPlanAll" type="button">Pokaż wszystkie</button>
+        </div>
+        <div class="plan-tasks" id="planTasks"></div>
+      </div>
+    </div>
+    <details class="diagnostics">
+      <summary>Diagnostyka planu</summary>
+      <pre id="diagnosticsText">Uruchom sondę, aby sprawdzić kontrakt DOM.</pre>
+      <button class="pill pill-ghost" id="btnDiagnostics" type="button">Uruchom ROADMAP_CHECK</button>
+    </details>
   </div>
 </section>
 
@@ -368,11 +632,15 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
       <h2 class="h-section" id="regTitle"></h2>
       <p id="regLead"></p>
     </div>
-    <ol class="timeline reveal" id="timeline"></ol>
+    <div class="legal-now reveal" id="legalNow"></div>
+    <details class="timeline-disclosure reveal">
+      <summary>Terminy i historia przepisów</summary>
+      <ol class="timeline" id="timeline"></ol>
+    </details>
     <div class="sources reveal" id="regSources"></div>
     <div class="note-violet reveal">
       <div class="note-icon"><i data-lucide="info" class="icon"></i></div>
-      <p>Większość pilotaży w firmach dotyczy systemów minimalnego ryzyka lub z obowiązkiem przejrzystości. Jeśli przypadek użycia dotyczy rekrutacji, oceny pracowników, kredytów lub dostępu do usług, traktuj go jako wysokiego ryzyka i planuj zgodność od pierwszego dnia.</p>
+      <p>Wiele zadań dotyczy systemów minimalnego ryzyka lub obowiązku przejrzystości, ale kwalifikacja zależy od przeznaczenia i roli. Przy rekrutacji, ocenie pracowników, kredytach lub dostępie do usług potrzebne są screening według art. 6 i załącznika III oraz konsultacja prawna przed użyciem.</p>
     </div>
   </div>
 </section>
@@ -399,13 +667,29 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
   </div>
 </section>
 
+<section class="section section-alt" id="przyklad">
+  <div class="wrap">
+    <div class="reveal section-head">
+      <div class="eyebrow">Od decyzji do dowodu</div>
+      <h2 class="h-section">Jeden przykład przez <span class="h-pink">cztery fazy</span></h2>
+      <p>Przykład jest fikcyjny i proporcjonalny: jedna osoba odpowiada na powtarzalne pytania klientów. W każdej fazie powstaje krótki zapis, a kryterium sukcesu jest ustalone przed testem.</p>
+    </div>
+    <div class="worked-example reveal" id="workedExample"></div>
+    <div class="reveal section-head subsection-head">
+      <div class="eyebrow">Słownik</div>
+      <h2 class="h-section">Skróty bez <span class="h-pink">żargonu</span></h2>
+    </div>
+    <dl class="glossary reveal" id="glossary"></dl>
+  </div>
+</section>
+
 <section class="section section-alt" id="kontakt">
   <div class="wrap reveal">
     <div class="contact">
       <div class="contact-q" aria-hidden="true"><img src="assets/quantica-q-mark-white.png" alt=""></div>
       <div class="contact-label">Kontakt</div>
       <h2>Chcesz przejść tę mapę z kimś, kto już ją przechodził?</h2>
-      <p>Quantica Lab prowadzi warsztaty z wyboru przypadków użycia, pilotaże i szkolenia zespołów. Zaczynamy od fazy 1, nie od narzędzia.</p>
+      <p>Quantica Lab prowadzi warsztaty z wyboru zadania, testu na przykładach i wprowadzenia rutyny do pracy. Zaczynamy od zadania, nie od narzędzia.</p>
       <div class="contact-pills">
         <a class="pill pill-solid" href="mailto:kontakt@quanticalab.ai"><i data-lucide="mail" class="icon"></i>Napisz do nas</a>
         <a class="pill pill-outline" href="https://quanticalab.ai" target="_blank" rel="noopener"><i data-lucide="external-link" class="icon"></i>quanticalab.ai</a>
@@ -422,6 +706,8 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
   <div class="wrap"><div>quanticalab.ai</div><div id="footMeta"><a href="https://github.com/workszop/ai_plan">github.com/workszop/ai_plan</a></div></div>
 </footer>
 
+<section class="print-snapshot" id="printSnapshot" aria-label="Wydruk kopii planu"></section>
+
 <div class="help" id="help" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
   <div class="help-card">
     <h3 id="helpTitle">Skróty klawiszowe</h3>
@@ -436,361 +722,33 @@ canvas[data-dots] { position: absolute; inset: 0; width: 100%; height: 100%; poi
     <div class="tools"><button class="pill pill-ghost" id="btnHelpClose" type="button">Zamknij</button></div>
   </div>
 </div>
-<div class="toast" id="toast" role="status"></div>
+<div class="help" id="resetDialog" role="dialog" aria-modal="true" aria-labelledby="resetTitle" aria-describedby="resetDescription" hidden>
+  <div class="help-card modal-card" tabindex="-1">
+    <h3 id="resetTitle">Wyczyścić ten plan?</h3>
+    <p id="resetDescription">Usunięte zostaną zaznaczenia i dane projektu w tej przeglądarce. Przed czyszczeniem zachowamy kopię, którą można cofnąć.</p>
+    <div class="modal-actions"><button class="pill pill-ghost" id="btnResetCancel" type="button">Anuluj</button><button class="pill pill-solid" id="btnResetConfirm" type="button">Wyczyść plan</button></div>
+  </div>
+</div>
+<div class="help" id="taskDialog" role="dialog" aria-modal="true" aria-labelledby="taskDialogTitle" hidden>
+  <div class="help-card modal-card">
+    <h3 id="taskDialogTitle">Szczegóły zadania</h3>
+    <p id="taskDialogText"></p>
+    <form class="task-editor" id="taskEditor">
+      <label>Właściciel<input id="taskOwner" maxlength="160" autocomplete="off"></label>
+      <label>Termin<input id="taskDue" type="date"></label>
+      <label>Notatka<textarea id="taskNotes" maxlength="3000"></textarea></label>
+      <label id="taskEvidenceLabel">Wynik lub przykład / link<input id="taskEvidence" maxlength="1000" type="url" placeholder="https://..."></label>
+      <label id="taskNaRow">Nie dotyczy - powód<input id="taskNaReason" maxlength="500" placeholder="Wymagaj powodu, np. nie dotyczy tego procesu"></label>
+      <div class="modal-actions"><button class="pill pill-ghost" id="btnTaskCancel" type="button">Anuluj</button><button class="pill pill-solid" id="btnTaskSave" type="submit">Zapisz szczegóły</button></div>
+    </form>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"><span id="toastText"></span><button id="btnUndo" type="button" hidden>Cofnij</button></div>
 <div class="sr-only" id="live" aria-live="polite"></div>
 
 <script src="roadmap.js"></script>
+<script src="app-core.js"></script>
 <script src="https://unpkg.com/lucide@1.27.0/dist/umd/lucide.min.js"></script>
-<script>
-(function () {
-  "use strict";
-
-  // ─── Constants ───
-  const STORAGE_KEY = "aiPlan.progress.v2";
-  const REDUCED_MOTION = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const FONT_WAIT_MS = 1500;
-  const BRAND_FONTS = ["400 1em Manrope", "700 1em Manrope", "800 1em Manrope", "400 1em \"Geist Mono\""];
-  const DATA = window.ROADMAP;
-
-  // ─── State ───
-  const state = { done: loadProgress(), total: 0 };
-
-  // ─── DOM refs ───
-  const $ = (sel) => document.querySelector(sel);
-  const phasesEl = $("#phases");
-  const stepperEl = $("#stepper");
-  const navProgress = $("#navProgress");
-  const progressMeta = $("#progressMeta");
-  const liveEl = $("#live");
-  const toastEl = $("#toast");
-  const helpEl = $("#help");
-
-  // ─── Helpers ───
-  function loadProgress() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (e) { return {}; }
-  }
-  function saveProgress() {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state.done)); } catch (e) { /* private mode */ }
-  }
-  function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c])); }
-  function pad(n) { return String(n).padStart(2, "0"); }
-  // Bento rows must sum to 6: n divisible by 3 -> all span 2; even -> span 3; 5/7 -> span 2s then two span 3s; 1 -> span 6.
-  function spans(n) {
-    if (n === 1) return [6];
-    if (n % 3 === 0) return Array(n).fill(2);
-    if (n % 2 === 0) return Array(n).fill(3);
-    return Array(n - 2).fill(2).concat([3, 3]);
-  }
-  function taskHtml(id, text) {
-    const checked = state.done[id] ? " checked" : "";
-    return `<li><label class="task"><input type="checkbox" data-task="${id}"${checked}><span>${esc(text)}</span></label></li>`;
-  }
-  function phaseIds(phase) {
-    const ids = [];
-    phase.stages.forEach((s, si) => s.items.forEach((it, ii) => it.actions.forEach((a, ai) => ids.push(`${phase.id}/${si}/${ii}/${ai}`))));
-    phase.gate.checks.forEach((c, ci) => ids.push(`${phase.id}/gate/${ci}`));
-    return ids;
-  }
-  function countDone(ids) { return ids.filter((id) => state.done[id]).length; }
-  function daysBetween(a, b) { return Math.round((b - a) / 86400000); }
-  function regStatus(dateStr, today) {
-    const d = new Date(dateStr + "T00:00:00");
-    const diff = daysBetween(today, d);
-    if (diff <= 0) return { key: "past", label: "obowiązuje" };
-    if (diff <= 120) return { key: "next", label: `za ${diff} dni` };
-    return { key: "future", label: "nadchodzi" };
-  }
-  function toast(msg) {
-    toastEl.textContent = msg;
-    toastEl.classList.add("show");
-    clearTimeout(toast.t);
-    toast.t = setTimeout(() => toastEl.classList.remove("show"), 2200);
-  }
-  function icons() { if (window.lucide) window.lucide.createIcons(); }
-
-  // ─── Render ───
-  function renderStepper() {
-    const steps = DATA.phases.map((p) => `
-      <a class="step" href="#faza-${p.num}" data-step="${p.id}">
-        <div class="step-num"><span>Faza ${p.num}</span><i data-lucide="${p.icon}" class="icon"></i></div>
-        <h3>${esc(p.title)}</h3>
-        <div class="step-meta">${esc(p.duration)} · <span data-step-count>0/0</span></div>
-        <div class="step-bar"><i data-step-bar></i></div>
-      </a>`).join("");
-    const ongoing = `
-      <a class="step step-ongoing" href="#wsparcie">
-        <div class="step-num"><span>Dalej</span><i data-lucide="infinity" class="icon"></i></div>
-        <h3>${esc(DATA.ongoing.title)}</h3>
-        <div class="step-meta">stały rytm</div>
-      </a>`;
-    stepperEl.innerHTML = steps + ongoing;
-  }
-
-  function renderPhase(p, idx) {
-    const alt = idx % 2 === 0 ? "" : " section-alt";
-    const next = DATA.phases[idx + 1];
-    const nextHref = next ? `#faza-${next.num}` : "#wsparcie";
-    const nextLabel = next ? `Dalej: faza ${next.num}, ${next.title}` : "Dalej: bieżące wsparcie";
-    const outcomes = p.outcomes.map((o) => `<span class="chip"><i data-lucide="check" class="icon"></i>${esc(o)}</span>`).join("");
-    const stages = p.stages.map((s, si) => {
-      const sp = spans(s.items.length);
-      const cells = s.items.map((it, ii) => `
-        <div class="cell cell-${sp[ii]} reveal" data-item>
-          <div class="cell-tag">${p.num}.${si + 1}.${ii + 1}<i data-lucide="${p.icon}" class="icon"></i></div>
-          <h3>${esc(it.title)}</h3>
-          <ul class="task-list">${it.actions.map((a, ai) => taskHtml(`${p.id}/${si}/${ii}/${ai}`, a)).join("")}</ul>
-        </div>`).join("");
-      return `<h3 class="stage-title reveal"><span class="stage-num">ETAP ${p.num}.${si + 1}</span>${esc(s.title)}</h3><div class="bento">${cells}</div>`;
-    }).join("");
-    const gate = `
-      <div class="bento">
-        <div class="cell cell-6 gate reveal" data-gate>
-          <div class="gate-grid">
-            <div class="gate-text">
-              <div class="cell-tag">Bramka decyzyjna<i data-lucide="door-open" class="icon"></i></div>
-              <h3>${esc(p.gate.title)}</h3>
-              <p>Odhacz wszystkie warunki. Jeśli któregoś brakuje, zostań w tej fazie i domknij go, zanim pójdziesz dalej.</p>
-              <div class="gate-done">Wszystkie warunki spełnione</div>
-              <div class="gate-next"><a class="pill pill-solid" href="${nextHref}">${esc(nextLabel)}<i data-lucide="arrow-right" class="icon"></i></a></div>
-            </div>
-            <ul class="task-list">${p.gate.checks.map((c, ci) => taskHtml(`${p.id}/gate/${ci}`, c)).join("")}</ul>
-          </div>
-        </div>
-      </div>`;
-    return `
-      <section class="section phase${alt}" id="faza-${p.num}" data-phase="${p.id}" data-done="0" data-total="0">
-        <div class="wrap">
-          <div class="phase-head reveal">
-            <div class="phase-num" aria-hidden="true">${pad(p.num)}</div>
-            <div>
-              <div class="eyebrow">Faza ${p.num} · ${esc(p.duration)}</div>
-              <h2 class="h-section">${esc(p.title)}</h2>
-              <p class="phase-goal">${esc(p.goal)}</p>
-            </div>
-            <div class="phase-stat"><div class="num" data-phase-num>0%</div><div class="lbl" data-phase-lbl>0 / 0 działań</div><div class="bar"><i data-phase-bar></i></div></div>
-          </div>
-          <div class="bento">
-            <div class="cell cell-6 outcomes reveal">
-              <div class="cell-tag">Na koniec fazy masz</div>
-              <div class="outcome-chips">${outcomes}</div>
-            </div>
-          </div>
-          ${stages}
-          ${gate}
-        </div>
-      </section>`;
-  }
-
-  function renderOngoing() {
-    $("#ongoingTitle").innerHTML = `${esc(DATA.ongoing.title)} w <span class="h-pink">czterech rytmach</span>`;
-    $("#ongoingLead").textContent = DATA.ongoing.lead;
-    const sp = spans(DATA.ongoing.cadences.length);
-    $("#ongoingGrid").innerHTML = DATA.ongoing.cadences.map((c, i) => `
-      <div class="cell cell-${sp[i]} reveal">
-        <div class="cell-tag">${esc(c.period)}<i data-lucide="${c.icon}" class="icon"></i></div>
-        <ul>${c.actions.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>
-      </div>`).join("");
-  }
-
-  function renderRegulation() {
-    const r = DATA.regulation;
-    $("#regTitle").innerHTML = `${esc(r.title)}: co już <span class="h-pink">obowiązuje</span>`;
-    $("#regLead").textContent = r.lead;
-    const today = new Date(); today.setHours(0, 0, 0, 0);
-    const events = r.events.slice().sort((a, b) => a.date.localeCompare(b.date));
-    $("#timeline").innerHTML = events.map((e) => {
-      const st = regStatus(e.date, today);
-      return `<li class="tl-item" data-status="${st.key}" data-date="${e.date}">
-        <div><div class="tl-date">${e.date}</div><span class="tl-status">${st.label}</span></div>
-        <div><h3>${esc(e.title)}</h3><p>${esc(e.desc)}</p></div>
-      </li>`;
-    }).join("");
-    $("#regSources").innerHTML = "Źródła: " + r.sources.map((s) => `<a href="${s.url}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join("");
-  }
-
-  function renderChallenges() {
-    const c = DATA.challenges;
-    $("#chTitle").innerHTML = `${esc(c.title)} i <span class="h-pink">gotowe odpowiedzi</span>`;
-    $("#chLead").textContent = c.lead;
-    const sp = spans(c.items.length);
-    $("#chGrid").innerHTML = c.items.map((it, i) => `
-      <div class="cell cell-${sp[i]} reveal">
-        <div class="cell-tag">Wyzwanie<i data-lucide="${it.icon}" class="icon"></i></div>
-        <h3>${esc(it.title)}</h3>
-        <p>${esc(it.problem)}</p>
-        <div class="cell-note"><strong>Rozwiązanie:</strong> ${esc(it.fix)}</div>
-      </div>`).join("");
-  }
-
-  function renderMetrics() {
-    const m = DATA.metrics;
-    $("#mTitle").innerHTML = `${esc(m.title)} w <span class="h-pink">czterech grupach</span>`;
-    $("#mLead").textContent = m.lead;
-    const sp = spans(m.groups.length);
-    $("#mGrid").innerHTML = m.groups.map((g, i) => `
-      <div class="cell cell-${sp[i]} reveal">
-        <div class="cell-tag">${esc(g.title)}<i data-lucide="${g.icon}" class="icon"></i></div>
-        <ul>${g.items.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
-      </div>`).join("");
-  }
-
-  function renderProgress(announce) {
-    let allDone = 0, allTotal = 0;
-    DATA.phases.forEach((p) => {
-      const ids = phaseIds(p);
-      const done = countDone(ids);
-      allDone += done; allTotal += ids.length;
-      const pct = ids.length ? Math.round(done / ids.length * 100) : 0;
-      const sec = document.querySelector(`[data-phase="${p.id}"]`);
-      sec.dataset.done = done; sec.dataset.total = ids.length;
-      sec.querySelector("[data-phase-num]").textContent = pct + "%";
-      sec.querySelector("[data-phase-lbl]").textContent = `${done} / ${ids.length} działań`;
-      sec.querySelector("[data-phase-bar]").style.width = pct + "%";
-      const gate = sec.querySelector("[data-gate]");
-      const gateIds = p.gate.checks.map((c, ci) => `${p.id}/gate/${ci}`);
-      gate.dataset.done = countDone(gateIds) === gateIds.length ? "true" : "false";
-      sec.querySelectorAll("[data-item]").forEach((cell) => {
-        const boxes = cell.querySelectorAll("input");
-        cell.dataset.done = Array.from(boxes).every((b) => b.checked) ? "true" : "false";
-      });
-      const step = stepperEl.querySelector(`[data-step="${p.id}"]`);
-      step.querySelector("[data-step-count]").textContent = `${done}/${ids.length}`;
-      step.querySelector("[data-step-bar]").style.width = pct + "%";
-    });
-    state.total = allTotal;
-    const pct = allTotal ? Math.round(allDone / allTotal * 100) : 0;
-    navProgress.style.width = pct + "%";
-    progressMeta.textContent = `${allDone} / ${allTotal} działań · ${pct}%`;
-    document.body.dataset.progress = pct;
-    document.body.dataset.done = allDone;
-    document.body.dataset.total = allTotal;
-    if (announce) liveEl.textContent = `Postęp: ${allDone} z ${allTotal} działań, ${pct} procent.`;
-  }
-
-  function renderAll() {
-    renderStepper();
-    phasesEl.innerHTML = DATA.phases.map(renderPhase).join("");
-    renderOngoing();
-    renderRegulation();
-    renderChallenges();
-    renderMetrics();
-    const actions = DATA.phases.reduce((n, p) => n + p.stages.reduce((m, s) => m + s.items.reduce((k, it) => k + it.actions.length, 0), 0), 0);
-    $("#heroMeta").textContent = `${DATA.phases.length} fazy · ${actions} działań · aktualizacja ${DATA.meta.updated}`;
-    renderProgress(false);
-    icons();
-  }
-
-  // ─── Behaviour: dots, reveal, nav ───
-  function initDots(canvas) {
-    const ctx = canvas.getContext("2d");
-    const dots = [];
-    function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
-    resize();
-    window.addEventListener("resize", resize);
-    for (let i = 0; i < 70; i++) {
-      dots.push({ x: Math.random(), y: Math.random(), r: 1 + Math.random() * 2.2, vx: (Math.random() - 0.5) * 0.0004, vy: (Math.random() - 0.5) * 0.0004, o: 0.12 + Math.random() * 0.5 });
-    }
-    function frame() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      dots.forEach((d) => {
-        d.x = (d.x + d.vx + 1) % 1; d.y = (d.y + d.vy + 1) % 1;
-        ctx.beginPath();
-        ctx.arc(d.x * canvas.width, d.y * canvas.height, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(210, 7, 87, " + d.o + ")";   // canvas cannot read var(--quantica-pink)
-        ctx.fill();
-      });
-      if (!REDUCED_MOTION) requestAnimationFrame(frame);
-    }
-    frame();
-  }
-  function initReveal() {
-    const els = document.querySelectorAll(".reveal");
-    if (REDUCED_MOTION || !("IntersectionObserver" in window)) { els.forEach((el) => el.classList.add("visible")); return; }
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("visible"); obs.unobserve(en.target); } });
-    }, { threshold: 0.08 });
-    els.forEach((el) => obs.observe(el));
-  }
-  function initMobileNav() {
-    const btn = $(".nav-burger"), links = $(".nav-links");
-    btn.addEventListener("click", () => { const open = links.classList.toggle("open"); btn.setAttribute("aria-expanded", open ? "true" : "false"); });
-    links.addEventListener("click", (e) => { if (e.target.tagName === "A") links.classList.remove("open"); });
-  }
-  function initActiveNav() {
-    const links = Array.from(document.querySelectorAll(".nav-links a:not(.nav-cta)"));
-    const targets = links.map((a) => document.querySelector(a.getAttribute("href"))).filter(Boolean);
-    if (!("IntersectionObserver" in window)) return;
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((en) => {
-        if (!en.isIntersecting) return;
-        const id = "#" + en.target.id;
-        links.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === id || (id.startsWith("#faza-") && a.getAttribute("href") === "#faza-1")));
-      });
-    }, { rootMargin: "-40% 0px -55% 0px" });
-    targets.forEach((t) => obs.observe(t));
-    document.querySelectorAll(".phase").forEach((t) => obs.observe(t));
-  }
-
-  // ─── Listeners ───
-  document.addEventListener("change", (e) => {
-    const box = e.target.closest("input[data-task]");
-    if (!box) return;
-    if (box.checked) state.done[box.dataset.task] = 1; else delete state.done[box.dataset.task];
-    saveProgress();
-    renderProgress(true);
-  });
-  $("#btnReset").addEventListener("click", () => {
-    const n = Object.keys(state.done).length;
-    if (!n) { toast("Nic do wyczyszczenia"); return; }
-    state.done = {};
-    saveProgress();
-    document.querySelectorAll("input[data-task]").forEach((b) => { b.checked = false; });
-    renderProgress(true);
-    toast(`Wyczyszczono ${n} odhaczeń`);
-  });
-  $("#btnHelp").addEventListener("click", () => helpEl.setAttribute("open", ""));
-  $("#btnHelpClose").addEventListener("click", () => helpEl.removeAttribute("open"));
-  helpEl.addEventListener("click", (e) => { if (e.target === helpEl) helpEl.removeAttribute("open"); });
-  $("#btnPrint").addEventListener("click", () => window.print());
-  document.addEventListener("keydown", (e) => {
-    if (e.target.matches("input, textarea") || e.ctrlKey || e.metaKey || e.altKey) return;
-    const go = (sel) => { const el = document.querySelector(sel); if (el) { el.scrollIntoView({ behavior: REDUCED_MOTION ? "auto" : "smooth" }); } };
-    if (e.key >= "1" && e.key <= "4") go(`#faza-${e.key}`);
-    else if (e.key === "0") go("#top");
-    else if (e.key === "p" || e.key === "P") go("#przeglad");
-    else if (e.key === "r" || e.key === "R") go("#regulacje");
-    else if (e.key === "?") helpEl.toggleAttribute("open");
-    else if (e.key === "Escape") helpEl.removeAttribute("open");
-  });
-
-  // ─── Probe (DOM contract) ───
-  window.ROADMAP_CHECK = function () {
-    const errors = [];
-    document.querySelectorAll(".bento").forEach((grid, gi) => {
-      const sum = Array.from(grid.children).reduce((n, c) => n + Number((c.className.match(/cell-(\d)/) || [0, 0])[1]), 0);
-      if (sum % 6 !== 0) errors.push(`bento ${gi}: spans sum ${sum}`);
-    });
-    const boxes = document.querySelectorAll("input[data-task]").length;
-    if (boxes !== state.total) errors.push(`checkboxes ${boxes} != total ${state.total}`);
-    if (/\u2014/.test(document.body.innerText)) errors.push("em-dash in text");
-    const dates = Array.from(document.querySelectorAll(".tl-item")).map((li) => li.dataset.date);
-    if (dates.join() !== dates.slice().sort().join()) errors.push("timeline unsorted");
-    if (!document.documentElement.classList.contains("app-ready")) errors.push("app not ready");
-    return { phases: DATA.phases.length, tasks: state.total, done: Number(document.body.dataset.done), progress: Number(document.body.dataset.progress), errors };
-  };
-
-  // ─── Init ───
-  if (!DATA) { document.body.innerHTML = "<p style='padding:40px;font-family:monospace'>Brak pliku roadmap.js</p>"; document.documentElement.classList.add("app-ready"); return; }
-  renderAll();
-  document.querySelectorAll("canvas[data-dots]").forEach(initDots);
-  initReveal();
-  initMobileNav();
-  initActiveNav();
-  Promise.race([
-    Promise.all(BRAND_FONTS.map((f) => document.fonts.load(f).catch(() => null))),
-    new Promise((r) => setTimeout(r, FONT_WAIT_MS))
-  ]).then(() => document.documentElement.classList.add("app-ready"));
-})();
-</script>
+<script src="app.js"></script>
 </body>
 </html>
