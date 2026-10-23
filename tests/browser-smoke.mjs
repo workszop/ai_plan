@@ -57,7 +57,7 @@ try {
   // The reduced-motion `* { transition-duration }` rule briefly transitions the padding; wait for it to settle.
   await page.waitForFunction(() => getComputedStyle(document.body).paddingLeft === "0px", null, { timeout: 2000 });
   assert.equal(await page.evaluate(() => getComputedStyle(document.querySelector(".hero")).display), "none");
-  assert.match(await page.locator("#planMeta").textContent(), /działań pozostało.*warunków decyzji/);
+  assert.match(await page.locator("#planMeta").textContent(), /Pozostało w fazie \d+: \d+ działa.* i \d+ warun.* decyzji/);
   assert.equal(await page.locator("#printSnapshot").getAttribute("data-scope"), "all-phases");
   await page.evaluate(() => localStorage.setItem("aiPlan.plan.v3", JSON.stringify({ schemaVersion: 3, done: { "sme.choice.action.001": 1 } })));
   await page.reload({ waitUntil: "domcontentloaded" });

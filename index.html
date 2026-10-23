@@ -566,9 +566,9 @@ body:not([data-mode="plan"]) .band-ink .mode-switch .is-active { background: var
     <div class="nav-links" id="navLinks">
       <a href="#przeglad">Przegląd</a>
       <a href="#faza-1">Fazy</a>
-      <a href="#wsparcie">Wsparcie</a>
+      <a href="#wsparcie">Po wdrożeniu</a>
       <a href="#regulacje">Regulacje</a>
-      <a href="#wyzwania">Wyzwania</a>
+      <a href="#wyzwania">Przeszkody</a>
       <a href="#mierniki">Mierniki</a>
       <a class="nav-cta" href="#plan">Mój plan</a>
     </div>
@@ -602,17 +602,17 @@ body:not([data-mode="plan"]) .band-ink .mode-switch .is-active { background: var
       <div class="cell cell-2 reveal">
         <div class="cell-tag">Kolejność<i data-lucide="list-ordered" class="icon"></i></div>
         <h3>Fazy i warunki decyzji</h3>
-        <p>Pracujesz etapami, ale cały przewodnik jest cały czas pod ręką. Każda faza kończy się listą warunków. Sprawdzasz je, zanim zdecydujesz, czy iść dalej, powtórzyć test, czy przerwać.</p>
+        <p>Pracujesz etapami, ale cały przewodnik masz zawsze pod ręką. Każda faza kończy się listą warunków. Sprawdzasz je, zanim zdecydujesz, czy iść dalej, powtórzyć test, czy przerwać.</p>
       </div>
       <div class="cell cell-2 reveal">
         <div class="cell-tag">Postęp<i data-lucide="check-square" class="icon"></i></div>
         <h3>Lista kontrolna</h3>
-        <p>Każde działanie ma pole do odhaczenia. Postęp zapisuje się w tej przeglądarce, więc możesz wracać do jednego zadania bez zakładania konta. Pasek pod nawigacją pokazuje, ile masz już za sobą.</p>
+        <p>Każde działanie ma pole do odhaczenia. Postęp zapisuje się w tej przeglądarce, więc możesz wracać do planu bez zakładania konta. Pasek pod menu pokazuje, ile masz już za sobą.</p>
       </div>
       <div class="cell cell-2 reveal">
         <div class="cell-tag">Zgodność<i data-lucide="scale" class="icon"></i></div>
         <h3>AI Act w tle</h3>
-        <p>Granice danych i przegląd wyniku przez człowieka są w planie od początku. Dodatkowe pytania pojawiają się dopiero wtedy, gdy zaznaczysz odpowiedni kontekst.</p>
+        <p>Granice danych i przegląd wyniku przez człowieka są w planie od początku. Dodatkowe pytania pojawiają się w widoku „Mój plan”, gdy zaznaczysz, czego dotyczy zadanie.</p>
       </div>
     </div>
   </div>
@@ -628,7 +628,7 @@ body:not([data-mode="plan"]) .band-ink .mode-switch .is-active { background: var
     <div class="stepper reveal" id="stepper"></div>
     <div class="tools reveal">
       <span class="meta" id="progressMeta">0 / 0 działań · 0 / 0 warunków decyzji</span>
-      <span class="save-status" id="saveStatus" data-state="saved" role="status"><i data-lucide="hard-drive" class="icon"></i><span data-save-label>Zapis lokalny gotowy</span><button type="button" data-retry-save hidden>Spróbuj ponownie</button><button type="button" data-ack-quarantine hidden>Potwierdź kwarantannę</button></span>
+      <span class="save-status" id="saveStatus" data-state="saved" role="status"><i data-lucide="hard-drive" class="icon"></i><span data-save-label>Plan zapisany w tej przeglądarce</span><button type="button" data-retry-save hidden>Spróbuj ponownie</button><button type="button" data-ack-quarantine hidden>Dane sprawdzone, kontynuuj</button></span>
       <details class="secondary-tools">
         <summary class="pill pill-ghost">Narzędzia planu</summary>
         <div class="tools-menu">
@@ -644,7 +644,7 @@ body:not([data-mode="plan"]) .band-ink .mode-switch .is-active { background: var
     <div class="mode-switch reveal" aria-label="Tryb strony">
       <button class="pill pill-ghost is-active" id="btnGuideMode" type="button" aria-pressed="true">Przewodnik</button>
       <button class="pill pill-ghost" id="btnPlanMode" type="button" aria-pressed="false">Mój plan</button>
-      <span class="meta">Tryb planu zapisuje się lokalnie w tej przeglądarce.</span>
+      <span class="meta">Przeglądarka zapamięta wybrany widok.</span>
     </div>
   </div>
 </section>
@@ -657,14 +657,14 @@ body:not([data-mode="plan"]) .band-ink .mode-switch .is-active { background: var
   <div class="wrap">
     <div class="workbench-head">
       <div>
-        <div class="eyebrow">Praca lokalna</div>
+        <div class="eyebrow">W tej przeglądarce</div>
         <h2 class="h-section">Mój <span class="h-pink">plan</span></h2>
         <p>Wpisz zadanie, osobę odpowiedzialną, pożądaną poprawę, kryterium sukcesu i następny krok. Możesz wrócić do ostatniego działania i dopisać wynik lub przykład. Plan zostaje na tym urządzeniu. Żeby przenieść go gdzie indziej, pobierz kopię JSON.</p>
       </div>
-      <div class="save-status" id="planSaveStatus" data-state="saved"><i data-lucide="hard-drive" class="icon"></i><span data-save-label>Zapis lokalny gotowy</span><button type="button" data-retry-save hidden>Spróbuj ponownie</button><button type="button" data-ack-quarantine hidden>Potwierdź kwarantannę</button></div>
+      <div class="save-status" id="planSaveStatus" data-state="saved"><i data-lucide="hard-drive" class="icon"></i><span data-save-label>Plan zapisany w tej przeglądarce</span><button type="button" data-retry-save hidden>Spróbuj ponownie</button><button type="button" data-ack-quarantine hidden>Dane sprawdzone, kontynuuj</button></div>
     </div>
     <form class="project-form" id="projectForm">
-      <label class="full">Jedno zadanie<input id="projectTask" name="task" maxlength="180" autocomplete="off" placeholder="np. Odpowiedzi na pytania klientów"></label>
+      <label class="full">Zadanie<input id="projectTask" name="task" maxlength="180" autocomplete="off" placeholder="np. odpowiadanie na pytania klientów"></label>
       <label>Osoba odpowiedzialna<input id="projectOwner" name="owner" maxlength="160" autocomplete="off" placeholder="Imię i rola"></label>
       <label class="wide">Pożądana poprawa<textarea id="projectImprovement" name="improvement" maxlength="1200" placeholder="Co ma być łatwiejsze, szybsze albo bardziej powtarzalne?"></textarea></label>
       <label class="wide">Kryterium sukcesu<textarea id="projectSuccess" name="successCriterion" maxlength="1600" placeholder="Po czym poznasz, że warto zostać przy tej rutynie?"></textarea></label>
@@ -826,7 +826,7 @@ body:not([data-mode="plan"]) .band-ink .mode-switch .is-active { background: var
     <h3 id="taskDialogTitle">Szczegóły zadania</h3>
     <p id="taskDialogText"></p>
     <form class="task-editor" id="taskEditor">
-      <label>Właściciel<input id="taskOwner" maxlength="160" autocomplete="off"></label>
+      <label>Osoba odpowiedzialna<input id="taskOwner" maxlength="160" autocomplete="off"></label>
       <label>Termin<input id="taskDue" type="date"></label>
       <label>Notatka<textarea id="taskNotes" maxlength="3000"></textarea></label>
       <label id="taskEvidenceLabel">Wynik lub przykład / link<input id="taskEvidence" maxlength="1000" type="url" placeholder="https://..."></label>

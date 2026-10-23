@@ -31,7 +31,7 @@ window.ROADMAP = {
               actions: [
                 { id: "sme.choice.action.001", text: "Wybór jednego powtarzalnego zadania oraz opisanie, jak jest teraz wykonywane i za pomocą jakich narzędzi.", hint: "Krótki opis zadania, kolejnych czynności i używanych narzędzi." },
                 { id: "sme.choice.action.002", text: "Wyznaczenie osoby wykonującej zadanie i osoby podejmującej decyzję; może to być ta sama osoba.", hint: "Imiona lub role obu osób oraz zakres ich odpowiedzialności." },
-                { id: "sme.choice.action.003", text: "Ustalenie, jak zadanie jest wykonywane teraz, co ma się poprawić i jak ocenić jakość wyniku.", hint: "Opis obecnej sytuacji, oczekiwanej zmiany i wyniku, który uznasz za wystarczająco dobry." }
+                { id: "sme.choice.action.003", text: "Ustalenie stanu wyjściowego: co ma się poprawić i jak ocenić jakość wyniku.", hint: "Opis obecnej sytuacji, oczekiwanej zmiany i wyniku, który uznasz za wystarczająco dobry." }
               ]
             }
           ]
@@ -170,7 +170,7 @@ window.ROADMAP = {
         "Zaktualizowana instrukcja i kryterium jakości",
         "Uporządkowane uprawnienia, dane i ustawienia",
         "Wyznaczona osoba odpowiedzialna i ustalone terminy przeglądów",
-        "Decyzja o dalszym używaniu, zmianie albo rezygnacji z tego sposobu pracy"
+        "Decyzja: zostać przy tym sposobie pracy, zmienić go albo z niego zrezygnować"
       ],
       stages: [
         {
@@ -193,7 +193,7 @@ window.ROADMAP = {
               title: "Regularne przeglądy i dalsze kroki",
               actions: [
                 { id: "sme.keep.action.004", text: "Ustalenie, kto odpowiada za ten sposób pracy, jak często go sprawdza i kto wprowadza zmiany.", hint: "Imię lub rola osoby odpowiedzialnej, termin przeglądu i sposób zgłaszania zmian." },
-                { id: "sme.keep.action.005", text: "Podjęcie decyzji o dalszym używaniu, zmianie albo rezygnacji z tego sposobu pracy na podstawie przeglądu.", hint: "Zapis decyzji wraz z uzasadnieniem wynikającym z przeglądu i następnym krokiem." }
+                { id: "sme.keep.action.005", text: "Podjęcie decyzji na podstawie przeglądu: zostać przy tym sposobie pracy, zmienić go albo z niego zrezygnować.", hint: "Zapis decyzji wraz z uzasadnieniem wynikającym z przeglądu i następnym krokiem." }
               ]
             }
           ]
@@ -204,14 +204,14 @@ window.ROADMAP = {
         checks: [
           { id: "sme.keep.gate.001", text: "Przegląd użyteczności, kosztu, błędów i czasu jest wykonany.", hint: "Karta okresowego przeglądu." },
           { id: "sme.keep.gate.002", text: "Instrukcja jest aktualna, a uprawnienia i dane uporządkowane.", hint: "Aktualna instrukcja i lista odebranych uprawnień." },
-          { id: "sme.keep.gate.003", text: "Decyzja o dalszym używaniu, zmianie albo rezygnacji z tego sposobu pracy wynika z danych.", hint: "Decyzja z uzasadnieniem i następnym krokiem." }
+          { id: "sme.keep.gate.003", text: "Decyzja, czy zostać przy tym sposobie pracy, zmienić go, czy z niego zrezygnować, wynika z danych.", hint: "Decyzja z uzasadnieniem i następnym krokiem." }
         ]
       }
     }
   ],
 
   ongoing: {
-    title: "Utrzymanie rutyny",
+    title: "Rytm przeglądów",
     lead: "Gdy rutyna działa, wystarczą regularne przeglądy. Każdy kończy się decyzją: zostawić ją, zmienić albo zatrzymać.",
     cadences: [
       { period: "Po wykonaniu", icon: "check-circle-2", actions: ["Przegląd wyniku przed przekazaniem", "Odnotowanie poprawy lub błędu"] },
@@ -229,7 +229,7 @@ window.ROADMAP = {
         title: "Podstawy",
         items: [
           "Minimalny zakres danych i dostępów",
-          "Przegląd człowieka przed przekazaniem wyniku",
+          "Sprawdzenie wyniku przez człowieka przed przekazaniem",
           "Ręczny sposób wykonania zadania na wypadek problemu"
         ]
       },
@@ -240,7 +240,7 @@ window.ROADMAP = {
           { context: "personalData", text: "Dane osobowe lub poufne: zakres, retencja, anonimizacja i podstawa przekazania." },
           { context: "externalOutput", text: "Wynik dla klienta lub na zewnątrz: przegląd treści, rola dostawcy i, jeśli trzeba, informacja dla odbiorcy." },
           { context: "multipleTeams", text: "Rozszerzenie na kolejny zespół: właściciel rutyny, dostęp według ról i wspólne kryterium jakości." },
-          { context: "integration", text: "Połączenie z innym systemem: zakres danych, właściciel integracji, test odtworzenia i ręczny sposób awaryjny." },
+          { context: "integration", text: "Połączenie z innym systemem: zakres danych, właściciel integracji, test przywracania danych i ręczny sposób awaryjny." },
           { context: "sensitiveDecision", text: "Wpływ na ludzi, pieniądze lub dostęp do usług: zatrzymanie automatycznej decyzji i konsultacja specjalisty przed użyciem." }
         ]
       },
@@ -263,7 +263,7 @@ window.ROADMAP = {
       title: "Co dotyczy Twojego zadania teraz?",
       lead: "Gdy znasz zakres, swoją rolę i dane, łatwiej oddzielić obowiązek od dobrej praktyki. Przed użyciem zapisz wynik i datę przeglądu.",
       items: [
-        { scope: "Dane osobowe / DPIA", action: "Wstępna ocena, czy przetwarzanie może nieść wysokie ryzyko, i DPIA, gdy jest wymagana.", sourceLabel: "Komisja Europejska: data-protection obligations", source: "https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/obligations_en", reviewed: "2026-10-22" },
+        { scope: "Dane osobowe / DPIA", action: "Wstępna ocena, czy przetwarzanie może nieść wysokie ryzyko, i DPIA (ocena skutków dla ochrony danych), gdy jest wymagana.", sourceLabel: "Komisja Europejska: data-protection obligations", source: "https://commission.europa.eu/law/law-topic/data-protection/information-business-and-organisations/obligations_en", reviewed: "2026-10-22" },
         { scope: "Umiejętności AI", action: "Zapewnienie osobom używającym systemu umiejętności dopasowanych do ich roli. Art. 4 nie wymaga jednego poziomu dla wszystkich.", sourceLabel: "AI Act Service Desk: art. 4", source: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-4", reviewed: "2026-10-22" },
         { scope: "Przejrzystość", action: "Sprawdzenie, czy występujesz jako dostawca czy wdrażający, oraz zasad oznaczania treści. Zasady zależą od rodzaju treści i wyjątków.", sourceLabel: "AI Act Service Desk: art. 50", source: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50", reviewed: "2026-10-22" },
         { scope: "Zastosowanie wrażliwe", action: "Sprawdzenie art. 6 i załącznika III oraz skierowanie przypadku do oceny prawnej przed użyciem.", sourceLabel: "AI Act Service Desk: art. 6", source: "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-6", reviewed: "2026-10-22" },
@@ -278,7 +278,7 @@ window.ROADMAP = {
       { date: "2026-08-02", title: "Przejrzystość (art. 50)", desc: "Obowiązki zależą od roli dostawcy lub wdrażającego, rodzaju treści i wyjątków. Przed oznaczeniem materiału sprawdź aktualne brzmienie przepisu." },
       { date: "2026-08-11", title: "Polska ustawa o systemach AI", desc: "Ustawa z 3 lipca 2026 r. (Dz.U. 2026 poz. 1003) wchodzi w życie. Przepisy przejściowe i podział kompetencji trzeba sprawdzić w tekście ustawy." },
       { date: "2026-10-28", title: "Wybrane przepisy krajowe", desc: "Zgodnie z przepisem przejściowym od 28 października stosuje się część przepisów o organie i nadzorze. Nie oznacza to, że tego dnia zaczną się kontrole." },
-      { date: "2026-12-02", title: "Nowe zakazy", desc: "Zakaz systemów generujących intymne treści bez zgody oraz materiały przedstawiające wykorzystywanie dzieci." },
+      { date: "2026-12-02", title: "Nowe zakazy", desc: "Zakaz systemów, które tworzą intymne treści z udziałem osób bez ich zgody albo materiały przedstawiające wykorzystywanie dzieci." },
       { date: "2027-12-02", title: "Systemy wysokiego ryzyka (załącznik III)", desc: "Pełne obowiązki dla samodzielnych systemów wysokiego ryzyka: m.in. rekrutacja, ocena zdolności kredytowej, edukacja, infrastruktura krytyczna." },
       { date: "2028-08-02", title: "AI w produktach regulowanych (załącznik I)", desc: "Obowiązki dla AI wbudowanej w maszyny, zabawki, wyroby medyczne i inne produkty objęte prawem harmonizacyjnym UE." }
     ],
@@ -293,11 +293,11 @@ window.ROADMAP = {
     title: "Typowe przeszkody",
     lead: "Typowe problemy widać już przy jednym zadaniu. Żeby je ograniczyć, nie trzeba planu dla całej firmy.",
     items: [
-      { title: "Nierówna użyteczność", icon: "users", problem: "Rutyna pomaga jednej osobie, ale nie pasuje do pozostałych przypadków.", fix: "Porównanie przykładów, zebranie pytań i dopasowanie instrukcji do rzeczywistego przebiegu zadania." },
-      { title: "Błędy wyniku", icon: "shield-check", problem: "Wynik wymaga wielu poprawek albo zawiera trudne do zauważenia błędy.", fix: "Kryterium akceptacji, przegląd człowieka, zapis błędów i ponowny test na reprezentatywnych przykładach." },
+      { title: "Działa tylko w części przypadków", icon: "users", problem: "Rutyna pomaga jednej osobie, ale nie pasuje do pozostałych przypadków.", fix: "Porównanie przykładów, zebranie pytań i dopasowanie instrukcji do rzeczywistego przebiegu zadania." },
+      { title: "Błędy w wynikach", icon: "shield-check", problem: "Wynik wymaga wielu poprawek albo zawiera trudne do zauważenia błędy.", fix: "Kryterium akceptacji, sprawdzenie przez człowieka, zapis błędów i ponowny test na reprezentatywnych przykładach." },
       { title: "Bezpieczeństwo danych", icon: "lock", problem: "Dane klientów lub poufne informacje mogą trafić do niewłaściwego narzędzia.", fix: "Minimalny zakres danych, sprawdzenie ustawień, ograniczenie dostępu i konsultacja specjalisty przy niejasności." },
       { title: "Wynik dla klienta", icon: "message-circle", problem: "Treść przygotowana z pomocą AI może trafić na zewnątrz bez odpowiedniej kontroli.", fix: "Przegląd treści, ustalenie roli człowieka i sprawdzenie zasad przejrzystości przed przekazaniem." },
-      { title: "Połączenie z systemem", icon: "plug", problem: "Ręczne przenoszenie danych zabiera czas albo tworzy nowe ryzyko.", fix: "Najpierw potwierdzenie potrzeby, mały zakres danych, test odtworzenia i ręczny sposób awaryjny." },
+      { title: "Połączenie z systemem", icon: "plug", problem: "Ręczne przenoszenie danych zabiera czas albo tworzy nowe ryzyko.", fix: "Najpierw potwierdzenie potrzeby, mały zakres danych, test przywracania danych i ręczny sposób awaryjny." },
       { title: "Koszt i dostęp", icon: "wallet", problem: "Koszt rośnie, a nie wiadomo, kto odpowiada za konto lub limity.", fix: "Właściciel konta, limit wydatków, przegląd kosztu i uporządkowanie dostępu po teście." }
     ]
   },
@@ -319,15 +319,15 @@ window.ROADMAP = {
     phases: [
       { title: "1. Wybór zadania", output: "Karta zadania, stan wyjściowy, osoba decyzyjna i granice danych.", threshold: "Kryterium sukcesu oraz zakres testu są zapisane." },
       { title: "2. Test w praktyce", output: "Jedno narzędzie, reprezentatywne przykłady i tabela porównawcza.", threshold: "Czas poprawek i koszt są porównane ze stanem wyjściowym." },
-      { title: "3. Wprowadzenie do pracy", output: "Krótka instrukcja, osoba przeglądająca i ręczny sposób awaryjny.", threshold: "Rutyna jest zrozumiała dla osób wykonujących zadanie." },
-      { title: "4. Utrzymanie i rozwój", output: "Karta przeglądu, aktualna instrukcja i uporządkowane dostępy.", threshold: "Decyzja o utrzymaniu, zmianie albo zatrzymaniu rutyny wynika z danych." }
+      { title: "3. Wprowadzenie do pracy", output: "Krótka instrukcja, osoba sprawdzająca wyniki i ręczny sposób awaryjny.", threshold: "Rutyna jest zrozumiała dla osób wykonujących zadanie." },
+      { title: "4. Utrzymanie i rozwój", output: "Karta przeglądu, aktualna instrukcja i uporządkowane uprawnienia.", threshold: "Decyzja o utrzymaniu, zmianie albo zatrzymaniu rutyny wynika z danych." }
     ]
   },
 
   glossary: [
     { term: "Stan wyjściowy (baseline)", definition: "Punkt odniesienia dla wyniku testu: czas, jakość, poprawki i koszt." },
     { term: "Kryterium sukcesu", definition: "Ustalony przed testem opis wyniku, który uzasadnia dalsze używanie narzędzia." },
-    { term: "Przegląd człowieka", definition: "Kontrola wyniku przez osobę, zanim trafi do klienta, systemu albo kolejnego etapu pracy." },
+    { term: "Sprawdzenie przez człowieka", definition: "Kontrola wyniku przez osobę, zanim trafi do klienta, systemu albo kolejnego etapu pracy." },
     { term: "Ręczny sposób awaryjny (fallback)", definition: "Opis zwykłego sposobu wykonania zadania, gdy narzędzie jest niedostępne lub wynik jest niepewny." },
     { term: "Dane wrażliwe", definition: "Dane wymagające dodatkowego ograniczenia zakresu, dostępu lub konsultacji specjalisty." },
     { term: "Wynik testu", definition: "Zapis obserwacji, przykładu i decyzji: kontynuacja, korekta z ponownym testem albo zatrzymanie." }
@@ -338,7 +338,7 @@ window.ROADMAP = {
     minimum: [
       "Jedno zadanie, jedna osoba wykonująca i jedna osoba podejmująca decyzję.",
       "Stan wyjściowy, kryterium sukcesu oraz porównanie czasu, poprawek i kosztu.",
-      "Jedno narzędzie, minimalny zakres danych i przegląd człowieka.",
+      "Jedno narzędzie, minimalny zakres danych i sprawdzenie wyników przez człowieka.",
       "Instrukcja, ręczny sposób awaryjny i decyzja o utrzymaniu, zmianie albo zatrzymaniu."
     ],
     extended: [
