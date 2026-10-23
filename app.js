@@ -13,7 +13,7 @@
   const MAX_IMPORT_BYTES = 1024 * 1024;
   const PHASE_COLOURS = 4;
   const RAIL_BEFORE = [{ id: "jak", label: "Jak korzystać" }, { id: "przeglad", label: "Przegląd" }];
-  const RAIL_AFTER = [{ id: "wsparcie", label: "Rytm przeglądów" }, { id: "regulacje", label: "Regulacje" }, { id: "wyzwania", label: "Przeszkody" }, { id: "mierniki", label: "Mierniki" }, { id: "przyklad", label: "Przykład i słownik" }];
+  const RAIL_AFTER = [{ id: "wsparcie", label: "Harmonogram kontroli" }, { id: "regulacje", label: "Regulacje" }, { id: "wyzwania", label: "Przeszkody" }, { id: "mierniki", label: "Mierniki" }, { id: "przyklad", label: "Przykład i słownik" }];
   const CONTEXT_LABELS = {
     personalData: "Dane osobowe lub poufne",
     externalOutput: "Wynik dla klienta lub na zewnątrz",
@@ -432,7 +432,7 @@
     const alt = index % 2 === 0 ? "" : " section-alt";
     const next = DATA.phases[index + 1];
     const nextHref = next ? `#faza-${next.num}` : "#wsparcie";
-    const nextLabel = next ? `Przejdź do fazy ${next.num}: ${next.title}` : "Przejdź do rytmu przeglądów";
+    const nextLabel = next ? `Przejdź do fazy ${next.num}: ${next.title}` : "Przejdź do harmonogramu kontroli";
     let actionOffset = 0;
     const outcomes = phase.outcomes.map((outcome) => `<span class="chip"><i data-lucide="file-text" class="icon"></i>${esc(outcome)}</span>`).join("");
     const stages = phase.stages.map((stage, stageIndex) => {

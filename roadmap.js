@@ -211,7 +211,7 @@ window.ROADMAP = {
   ],
 
   ongoing: {
-    title: "Rytm przeglądów",
+    title: "Harmonogram kontroli",
     lead: "Gdy rutyna działa, wystarczą regularne przeglądy. Każdy kończy się decyzją: zostawić ją, zmienić albo zatrzymać.",
     cadences: [
       { period: "Po wykonaniu", icon: "check-circle-2", actions: ["Przegląd wyniku przed przekazaniem", "Odnotowanie poprawy lub błędu"] },
